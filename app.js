@@ -9,13 +9,11 @@ import {
   _SunLight as SunLight,
 } from "@deck.gl/core";
 import * as d3 from "d3";
-import { venice_91 } from "./src/geojson/venice_91.geojson";
-import { venice_01 } from "./src/geojson/venice_01.geojson";
-import { venice_11 } from "./src/geojson/venice_11.geojson";
-import { venice_change } from "./src/geojson/venice_change.geojson";
+
 import { abnb20 } from "./src/geojson/abnb20.geojson";
 import { ab_change } from "./src/geojson/19_17_ab_diff.geojson";
 import { abnb_bnb_diff } from "./src/geojson/abnb_bnb_diff.geojson";
+import { hexagon } from "./src/geojson/hexagon.geojson";
 import InfoMenu from "./src/components/InfoMenu";
 
 import { Fab } from "@material-ui/core";
@@ -97,7 +95,7 @@ const INITIAL_VIEW_STATE = {
   longitude: 12.333794,
   zoom: 13,
   maxZoom: 16,
-  pitch: 45,
+  pitch: 0,
   bearing: 0,
 };
 
@@ -192,18 +190,21 @@ export default class App extends Component {
       layers.push(
         new GeoJsonLayer({
           id: "geojson",
-          data: venice_91,
+          data: hexagon,
           opacity: 0.8,
           stroked: false,
           filled: true,
           extruded: true,
           wireframe: true,
-          getElevation: (f) => f.properties.pop_hec,
+          getElevation: 0,
           getLineColor: [255, 255, 255],
-          getFillColor: (f) => COLOR_SCALE(f.properties.pop_hec),
+          getFillColor: (f) => COLOR_SCALE(f.properties["91_clip_pop"]),
           pickable: true,
           onHover: this._onHover,
           onClick: this._onClick,
+          updateTriggers: {
+            getFillColor: ["91_clip_pop"],
+          },
         })
       );
     }
@@ -212,18 +213,21 @@ export default class App extends Component {
       layers.push(
         new GeoJsonLayer({
           id: "geojson",
-          data: venice_01,
+          data: hexagon,
           opacity: 0.8,
           stroked: false,
           filled: true,
           extruded: true,
           wireframe: true,
-          getElevation: (f) => f.properties.pop_hec,
+          getElevation: 0,
           getLineColor: [255, 255, 255],
-          getFillColor: (f) => COLOR_SCALE(f.properties.pop_hec),
+          getFillColor: (f) => COLOR_SCALE(f.properties["01_clip_pop"]),
           pickable: true,
           onHover: this._onHover,
           onClick: this._onClick,
+          updateTriggers: {
+            getFillColor: ["01_clip_pop"],
+          },
         })
       );
     }
@@ -232,18 +236,21 @@ export default class App extends Component {
       layers.push(
         new GeoJsonLayer({
           id: "geojson",
-          data: venice_11,
+          data: hexagon,
           opacity: 0.8,
           stroked: false,
           filled: true,
           extruded: true,
           wireframe: true,
-          getElevation: (f) => f.properties.pop_hec,
+          getElevation: 0,
           getLineColor: [255, 255, 255],
-          getFillColor: (f) => COLOR_SCALE(f.properties.pop_hec),
+          getFillColor: (f) => COLOR_SCALE(f.properties["11_clip_pop"]),
           pickable: true,
           onHover: this._onHover,
           onClick: this._onClick,
+          updateTriggers: {
+            getFillColor: ["11_clip_pop"],
+          },
         })
       );
     }
@@ -252,18 +259,24 @@ export default class App extends Component {
       layers.push(
         new GeoJsonLayer({
           id: "geojson",
-          data: venice_change,
+          data: hexagon,
           opacity: 0.8,
           stroked: false,
           filled: true,
           extruded: true,
           wireframe: true,
-          getElevation: (f) => Math.abs(f.properties.pop_change),
+          getElevation: 0,
           getLineColor: [255, 255, 255],
-          getFillColor: (f) => COLOR_SCALE_change(f.properties.pop_change),
+          getFillColor: (f) =>
+            COLOR_SCALE_change(
+              f.properties["11_clip_pop"] - f.properties["91_clip_pop"]
+            ),
           pickable: true,
           onHover: this._onHover,
           onClick: this._onClick,
+          updateTriggers: {
+            getFillColor: ["91_clip_pop", "11_clip_pop"],
+          },
         })
       );
     }
@@ -272,18 +285,21 @@ export default class App extends Component {
       layers.push(
         new GeoJsonLayer({
           id: "geojson",
-          data: venice_91,
+          data: hexagon,
           opacity: 0.8,
           stroked: false,
           filled: true,
           extruded: true,
           wireframe: true,
-          getElevation: (f) => f.properties.uoh_hec * 6,
+          getElevation: 0,
           getLineColor: [255, 255, 255],
-          getFillColor: (f) => COLOR_SCALE_UOH(f.properties.uoh_hec),
+          getFillColor: (f) => COLOR_SCALE_UOH(f.properties["91_clip_uoh"]),
           pickable: true,
           onHover: this._onHover,
           onClick: this._onClick,
+          updateTriggers: {
+            getFillColor: ["91_clip_uoh"],
+          },
         })
       );
     }
@@ -292,18 +308,21 @@ export default class App extends Component {
       layers.push(
         new GeoJsonLayer({
           id: "geojson",
-          data: venice_01,
+          data: hexagon,
           opacity: 0.8,
           stroked: false,
           filled: true,
           extruded: true,
           wireframe: true,
-          getElevation: (f) => f.properties.emth_hec * 6,
+          getElevation: 0,
           getLineColor: [255, 255, 255],
-          getFillColor: (f) => COLOR_SCALE_UOH(f.properties.emth_hec),
+          getFillColor: (f) => COLOR_SCALE_UOH(f.properties["01_clip_uoh"]),
           pickable: true,
           onHover: this._onHover,
           onClick: this._onClick,
+          updateTriggers: {
+            getFillColor: ["01_clip_uoh"],
+          },
         })
       );
     }
@@ -312,18 +331,21 @@ export default class App extends Component {
       layers.push(
         new GeoJsonLayer({
           id: "geojson",
-          data: venice_11,
+          data: hexagon,
           opacity: 0.8,
           stroked: false,
           filled: true,
           extruded: true,
           wireframe: true,
-          getElevation: (f) => f.properties.uoh_hec * 6,
+          getElevation: 0,
           getLineColor: [255, 255, 255],
-          getFillColor: (f) => COLOR_SCALE_UOH(f.properties.uoh_hec),
+          getFillColor: (f) => COLOR_SCALE_UOH(f.properties["11_clip_uoh"]),
           pickable: true,
           onHover: this._onHover,
           onClick: this._onClick,
+          updateTriggers: {
+            getFillColor: ["11_clip_uoh"],
+          },
         })
       );
     }
@@ -332,18 +354,24 @@ export default class App extends Component {
       layers.push(
         new GeoJsonLayer({
           id: "geojson",
-          data: venice_change,
+          data: hexagon,
           opacity: 0.8,
           stroked: false,
           filled: true,
           extruded: true,
           wireframe: true,
-          getElevation: (f) => Math.abs(f.properties.uoh_change),
+          getElevation: 0,
           getLineColor: [255, 255, 255],
-          getFillColor: (f) => COLOR_SCALE_change_UOH(f.properties.uoh_change),
+          getFillColor: (f) =>
+            COLOR_SCALE_change_UOH(
+              f.properties["11_clip_uoh"] - f.properties["91_clip_uoh"]
+            ),
           pickable: true,
           onHover: this._onHover,
           onClick: this._onClick,
+          updateTriggers: {
+            getFillColor: ["91_clip_uoh", "11_clip_uoh"],
+          },
         })
       );
     }
@@ -358,7 +386,7 @@ export default class App extends Component {
           filled: true,
           extruded: true,
           wireframe: true,
-          getElevation: (f) => f.properties.ab_hec * 10,
+          getElevation: 0,
           getLineColor: [255, 255, 255],
           getFillColor: (f) => COLOR_SCALE_AB20(f.properties.ab_hec),
           pickable: true,
@@ -378,7 +406,7 @@ export default class App extends Component {
           filled: true,
           extruded: true,
           wireframe: true,
-          getElevation: (f) => Math.abs(f.properties.ab_diff) * 3,
+          getElevation: 0,
           getLineColor: [255, 255, 255],
           getFillColor: (f) => COLOR_SCALE_change_AB(f.properties.ab_diff),
           pickable: true,
@@ -398,7 +426,7 @@ export default class App extends Component {
           filled: true,
           extruded: true,
           wireframe: true,
-          getElevation: (f) => f.properties.mismatch,
+          getElevation: 0,
           getLineColor: [255, 255, 255],
           getFillColor: (f) => COLOR_SCALE_AB_BNB(f.properties.mismatch),
           pickable: true,
@@ -416,35 +444,60 @@ export default class App extends Component {
     return (
       hoveredObject && (
         <div className="tooltip" style={{ top: y, left: x }}>
-          {this.state.showMap < 3 && (
+          {this.state.showMap === 0 && (
             <>
-              <b>Population Density</b>
-              <div>{hoveredObject.properties.pop_hec} people per hectare</div>
+              <b>Population</b>
+              <div>{hoveredObject.properties["91_clip_pop"]} people</div>
+            </>
+          )}
+          {this.state.showMap === 1 && (
+            <>
+              <b>Population</b>
+              <div>{hoveredObject.properties["01_clip_pop"]} people</div>
+            </>
+          )}
+          {this.state.showMap === 2 && (
+            <>
+              <b>Population </b>
+              <div>{hoveredObject.properties["11_clip_pop"]} people</div>
             </>
           )}
           {this.state.showMap === 3 && (
             <>
-              <b>Population Change (1991-2011)</b>
-              <div>{hoveredObject.properties.pop_change}%</div>
+              <b>Population Difference</b>
+              <div>
+                {hoveredObject.properties["11_clip_pop"] -
+                  hoveredObject.properties["91_clip_pop"]}{" "}
+                people
+              </div>
             </>
           )}
-          {this.state.showMap === 4 ||
-            (this.state.showMap === 6 && (
-              <>
-                <b>Unoccupied Housing Density</b>
-                <div>{hoveredObject.properties.uoh_hec} houses per hectare</div>
-              </>
-            ))}
+          {this.state.showMap === 4 && (
+            <>
+              <b>Unoccupied Housing</b>
+              <div>{hoveredObject.properties["91_clip_uoh"]} dwellings</div>
+            </>
+          )}
           {this.state.showMap === 5 && (
             <>
-              <b>Unoccupied Housing Density</b>
-              <div>{hoveredObject.properties.emth_hec} houses per hectare</div>
+              <b>Unoccupied Housing</b>
+              <div>{hoveredObject.properties["01_clip_uoh"]} dwellings</div>
+            </>
+          )}
+          {this.state.showMap === 6 && (
+            <>
+              <b>Unoccupied Housing</b>
+              <div>{hoveredObject.properties["11_clip_uoh"]} dwellings</div>
             </>
           )}
           {this.state.showMap === 7 && (
             <>
-              <b>Unoccupied Housing Change (1991-2011)</b>
-              <div>{hoveredObject.properties.uoh_change}%</div>
+              <b>Unoccupied Housing Difference</b>
+              <div>
+                {hoveredObject.properties["11_clip_uoh"] -
+                  hoveredObject.properties["91_clip_uoh"]}{" "}
+                dwellings
+              </div>
             </>
           )}
           {this.state.showMap === 8 && (
@@ -499,7 +552,7 @@ export default class App extends Component {
         </Fab>
         <DeckGL
           layers={this._renderLayers()}
-          effects={this._effects}
+          //   effects={this._effects}
           initialViewState={INITIAL_VIEW_STATE}
           controller={true}
         >

@@ -6,7 +6,7 @@ import { GeoJsonLayer, PolygonLayer } from "@deck.gl/layers";
 import {
   LightingEffect,
   AmbientLight,
-  _SunLight as SunLight
+  _SunLight as SunLight,
 } from "@deck.gl/core";
 import * as d3 from "d3";
 import { venice_91 } from "./src/geojson/venice_91.geojson";
@@ -34,8 +34,8 @@ export const COLOR_SCALE = d3
   .domain([0, 10.71, 51.89, 108.04, 213.52, 40322.58])
   .range(
     d3.schemeReds[6]
-      .map(f => hexRgb(f, { format: "array" }))
-      .map(f => f.slice(0, 3))
+      .map((f) => hexRgb(f, { format: "array" }))
+      .map((f) => f.slice(0, 3))
   );
 
 export const COLOR_SCALE_change = d3
@@ -43,8 +43,8 @@ export const COLOR_SCALE_change = d3
   .domain([-100, -30, 0, 40.74, 266.67, 883.33, 1500])
   .range(
     d3.schemeSpectral[7]
-      .map(f => hexRgb(f, { format: "array" }))
-      .map(f => f.slice(0, 3))
+      .map((f) => hexRgb(f, { format: "array" }))
+      .map((f) => f.slice(0, 3))
   );
 
 export const COLOR_SCALE_UOH = d3
@@ -52,8 +52,8 @@ export const COLOR_SCALE_UOH = d3
   .domain([0, 9, 26, 51, 109, 214])
   .range(
     d3.schemeGreens[6]
-      .map(f => hexRgb(f, { format: "array" }))
-      .map(f => f.slice(0, 3))
+      .map((f) => hexRgb(f, { format: "array" }))
+      .map((f) => f.slice(0, 3))
   );
 
 export const COLOR_SCALE_change_UOH = d3
@@ -61,8 +61,8 @@ export const COLOR_SCALE_change_UOH = d3
   .domain([-100, 0, 114.29, 425, 1100, 2300, 4700])
   .range(
     d3.schemeSpectral[7]
-      .map(f => hexRgb(f, { format: "array" }))
-      .map(f => f.slice(0, 3))
+      .map((f) => hexRgb(f, { format: "array" }))
+      .map((f) => f.slice(0, 3))
   );
 
 export const COLOR_SCALE_AB20 = d3
@@ -70,8 +70,8 @@ export const COLOR_SCALE_AB20 = d3
   .domain([0, 7.321, 19.802, 35.088, 61.224, 128.205])
   .range(
     d3.schemePurples[6]
-      .map(f => hexRgb(f, { format: "array" }))
-      .map(f => f.slice(0, 3))
+      .map((f) => hexRgb(f, { format: "array" }))
+      .map((f) => f.slice(0, 3))
   );
 
 export const COLOR_SCALE_change_AB = d3
@@ -79,8 +79,8 @@ export const COLOR_SCALE_change_AB = d3
   .domain([-100, -40, 0, 41.67, 140, 316.67, 700])
   .range(
     d3.schemeSpectral[7]
-      .map(f => hexRgb(f, { format: "array" }))
-      .map(f => f.slice(0, 3))
+      .map((f) => hexRgb(f, { format: "array" }))
+      .map((f) => f.slice(0, 3))
   );
 
 export const COLOR_SCALE_AB_BNB = d3
@@ -88,8 +88,8 @@ export const COLOR_SCALE_AB_BNB = d3
   .domain([0, 62.5, 200, 500, 1000, 2500])
   .range(
     d3.schemePurples[6]
-      .map(f => hexRgb(f, { format: "array" }))
-      .map(f => f.slice(0, 3))
+      .map((f) => hexRgb(f, { format: "array" }))
+      .map((f) => f.slice(0, 3))
   );
 
 const INITIAL_VIEW_STATE = {
@@ -98,19 +98,19 @@ const INITIAL_VIEW_STATE = {
   zoom: 13,
   maxZoom: 16,
   pitch: 45,
-  bearing: 0
+  bearing: 0,
 };
 
 const ambientLight = new AmbientLight({
   color: [255, 255, 255],
-  intensity: 1.0
+  intensity: 1.0,
 });
 
 const dirLight = new SunLight({
   timestamp: Date.UTC(2019, 7, 1, 22),
   color: [255, 255, 255],
   intensity: 1.0,
-  _shadow: false
+  _shadow: false,
 });
 
 // const landCover = [
@@ -131,7 +131,7 @@ export default class App extends Component {
       clickedObject: null,
       showMenu: false,
       showInfoMenu: false,
-      showMap: 0
+      showMap: 0,
     };
     this._onHover = this._onHover.bind(this);
     this._onClick = this._onClick.bind(this);
@@ -155,13 +155,9 @@ export default class App extends Component {
       x_clicked: x,
       y_clicked: y,
       clickedObject: object,
-      showInfoMenu: true
+      showInfoMenu: true,
     });
-    console.log(
-      this.state.x_clicked,
-      this.state.y_clicked,
-      this.state.clickedObject
-    );
+    console.log(this.state.clickedObject);
   }
 
   onClose() {
@@ -202,12 +198,12 @@ export default class App extends Component {
           filled: true,
           extruded: true,
           wireframe: true,
-          getElevation: f => f.properties.pop_hec,
+          getElevation: (f) => f.properties.pop_hec,
           getLineColor: [255, 255, 255],
-          getFillColor: f => COLOR_SCALE(f.properties.pop_hec),
+          getFillColor: (f) => COLOR_SCALE(f.properties.pop_hec),
           pickable: true,
           onHover: this._onHover,
-          onClick: this._onClick
+          onClick: this._onClick,
         })
       );
     }
@@ -222,12 +218,12 @@ export default class App extends Component {
           filled: true,
           extruded: true,
           wireframe: true,
-          getElevation: f => f.properties.pop_hec,
+          getElevation: (f) => f.properties.pop_hec,
           getLineColor: [255, 255, 255],
-          getFillColor: f => COLOR_SCALE(f.properties.pop_hec),
+          getFillColor: (f) => COLOR_SCALE(f.properties.pop_hec),
           pickable: true,
           onHover: this._onHover,
-          onClick: this._onClick
+          onClick: this._onClick,
         })
       );
     }
@@ -242,12 +238,12 @@ export default class App extends Component {
           filled: true,
           extruded: true,
           wireframe: true,
-          getElevation: f => f.properties.pop_hec,
+          getElevation: (f) => f.properties.pop_hec,
           getLineColor: [255, 255, 255],
-          getFillColor: f => COLOR_SCALE(f.properties.pop_hec),
+          getFillColor: (f) => COLOR_SCALE(f.properties.pop_hec),
           pickable: true,
           onHover: this._onHover,
-          onClick: this._onClick
+          onClick: this._onClick,
         })
       );
     }
@@ -262,12 +258,12 @@ export default class App extends Component {
           filled: true,
           extruded: true,
           wireframe: true,
-          getElevation: f => Math.abs(f.properties.pop_change),
+          getElevation: (f) => Math.abs(f.properties.pop_change),
           getLineColor: [255, 255, 255],
-          getFillColor: f => COLOR_SCALE_change(f.properties.pop_change),
+          getFillColor: (f) => COLOR_SCALE_change(f.properties.pop_change),
           pickable: true,
           onHover: this._onHover,
-          onClick: this._onClick
+          onClick: this._onClick,
         })
       );
     }
@@ -282,12 +278,12 @@ export default class App extends Component {
           filled: true,
           extruded: true,
           wireframe: true,
-          getElevation: f => f.properties.uoh_hec * 6,
+          getElevation: (f) => f.properties.uoh_hec * 6,
           getLineColor: [255, 255, 255],
-          getFillColor: f => COLOR_SCALE_UOH(f.properties.uoh_hec),
+          getFillColor: (f) => COLOR_SCALE_UOH(f.properties.uoh_hec),
           pickable: true,
           onHover: this._onHover,
-          onClick: this._onClick
+          onClick: this._onClick,
         })
       );
     }
@@ -302,12 +298,12 @@ export default class App extends Component {
           filled: true,
           extruded: true,
           wireframe: true,
-          getElevation: f => f.properties.emth_hec * 6,
+          getElevation: (f) => f.properties.emth_hec * 6,
           getLineColor: [255, 255, 255],
-          getFillColor: f => COLOR_SCALE_UOH(f.properties.emth_hec),
+          getFillColor: (f) => COLOR_SCALE_UOH(f.properties.emth_hec),
           pickable: true,
           onHover: this._onHover,
-          onClick: this._onClick
+          onClick: this._onClick,
         })
       );
     }
@@ -322,12 +318,12 @@ export default class App extends Component {
           filled: true,
           extruded: true,
           wireframe: true,
-          getElevation: f => f.properties.uoh_hec * 6,
+          getElevation: (f) => f.properties.uoh_hec * 6,
           getLineColor: [255, 255, 255],
-          getFillColor: f => COLOR_SCALE_UOH(f.properties.uoh_hec),
+          getFillColor: (f) => COLOR_SCALE_UOH(f.properties.uoh_hec),
           pickable: true,
           onHover: this._onHover,
-          onClick: this._onClick
+          onClick: this._onClick,
         })
       );
     }
@@ -342,12 +338,12 @@ export default class App extends Component {
           filled: true,
           extruded: true,
           wireframe: true,
-          getElevation: f => Math.abs(f.properties.uoh_change),
+          getElevation: (f) => Math.abs(f.properties.uoh_change),
           getLineColor: [255, 255, 255],
-          getFillColor: f => COLOR_SCALE_change_UOH(f.properties.uoh_change),
+          getFillColor: (f) => COLOR_SCALE_change_UOH(f.properties.uoh_change),
           pickable: true,
           onHover: this._onHover,
-          onClick: this._onClick
+          onClick: this._onClick,
         })
       );
     }
@@ -362,12 +358,12 @@ export default class App extends Component {
           filled: true,
           extruded: true,
           wireframe: true,
-          getElevation: f => f.properties.ab_hec * 10,
+          getElevation: (f) => f.properties.ab_hec * 10,
           getLineColor: [255, 255, 255],
-          getFillColor: f => COLOR_SCALE_AB20(f.properties.ab_hec),
+          getFillColor: (f) => COLOR_SCALE_AB20(f.properties.ab_hec),
           pickable: true,
           onHover: this._onHover,
-          onClick: this._onClick
+          onClick: this._onClick,
         })
       );
     }
@@ -382,12 +378,12 @@ export default class App extends Component {
           filled: true,
           extruded: true,
           wireframe: true,
-          getElevation: f => Math.abs(f.properties.ab_diff) * 3,
+          getElevation: (f) => Math.abs(f.properties.ab_diff) * 3,
           getLineColor: [255, 255, 255],
-          getFillColor: f => COLOR_SCALE_change_AB(f.properties.ab_diff),
+          getFillColor: (f) => COLOR_SCALE_change_AB(f.properties.ab_diff),
           pickable: true,
           onHover: this._onHover,
-          onClick: this._onClick
+          onClick: this._onClick,
         })
       );
     }
@@ -402,12 +398,12 @@ export default class App extends Component {
           filled: true,
           extruded: true,
           wireframe: true,
-          getElevation: f => f.properties.mismatch,
+          getElevation: (f) => f.properties.mismatch,
           getLineColor: [255, 255, 255],
-          getFillColor: f => COLOR_SCALE_AB_BNB(f.properties.mismatch),
+          getFillColor: (f) => COLOR_SCALE_AB_BNB(f.properties.mismatch),
           pickable: true,
           onHover: this._onHover,
-          onClick: this._onClick
+          onClick: this._onClick,
         })
       );
     }
@@ -483,7 +479,7 @@ export default class App extends Component {
           onClose={() => this.onClose()}
           showMap={this.state.showMap}
           onSliderChange={(e, val) => this.setState({ showMap: val })}
-          onClick={x => this.setState({ showMap: x })}
+          onClick={(x) => this.setState({ showMap: x })}
         />
         <InfoMenu
           showMenu={this.state.showInfoMenu}
@@ -495,7 +491,7 @@ export default class App extends Component {
             zIndex: 1,
             marginLeft: 20,
             marginTop: 20,
-            backgroundColor: "gray"
+            backgroundColor: "gray",
           }}
           onClick={() => this.toggleDrawer()}
         >

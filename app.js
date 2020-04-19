@@ -29,7 +29,7 @@ const MAPBOX_TOKEN =
 
 export const COLOR_SCALE = d3
   .scaleThreshold()
-  .domain([0, 10.71, 51.89, 108.04, 213.52, 40322.58])
+  .domain([0, 20.48, 56.1, 94.92, 140.04, 226.96])
   .range(
     d3.schemeReds[6]
       .map((f) => hexRgb(f, { format: "array" }))
@@ -38,16 +38,29 @@ export const COLOR_SCALE = d3
 
 export const COLOR_SCALE_change = d3
   .scaleThreshold()
-  .domain([-100, -30, 0, 40.74, 266.67, 883.33, 1500])
+  .domain([
+    -100,
+    -47.613,
+    -33.192,
+    -24.232,
+    -13.24,
+    0,
+    334.8,
+    669.6,
+    1004.4,
+    1339.2,
+    1674.21,
+  ])
   .range(
-    d3.schemeSpectral[7]
+    d3.schemeRdBu[11]
       .map((f) => hexRgb(f, { format: "array" }))
       .map((f) => f.slice(0, 3))
+      .reverse()
   );
 
 export const COLOR_SCALE_UOH = d3
   .scaleThreshold()
-  .domain([0, 9, 26, 51, 109, 214])
+  .domain([0, 1.718, 4.911, 8.975, 15.171, 25.395])
   .range(
     d3.schemeGreens[6]
       .map((f) => hexRgb(f, { format: "array" }))
@@ -56,11 +69,12 @@ export const COLOR_SCALE_UOH = d3
 
 export const COLOR_SCALE_change_UOH = d3
   .scaleThreshold()
-  .domain([-100, 0, 114.29, 425, 1100, 2300, 4700])
+  .domain([-100, -29.22, -19.48, -9.74, 0, 25.39, 85.69, 216.49, 26643.48])
   .range(
-    d3.schemeSpectral[7]
+    d3.schemeRdBu[9]
       .map((f) => hexRgb(f, { format: "array" }))
       .map((f) => f.slice(0, 3))
+      .reverse()
   );
 
 export const COLOR_SCALE_AB20 = d3
@@ -111,15 +125,6 @@ const dirLight = new SunLight({
   _shadow: false,
 });
 
-// const landCover = [
-//   [
-//     [-123.0, 49.196],
-//     [-123.0, 49.324],
-//     [-123.306, 49.324],
-//     [-123.306, 49.196]
-//   ]
-// ];
-
 export default class App extends Component {
   constructor(props) {
     super(props);
@@ -167,24 +172,7 @@ export default class App extends Component {
   }
 
   _renderLayers() {
-    // console.log(
-    //   d3.schemeReds[6]
-    //     .map(f => hexRgb(f, { format: "array" }))
-    //     .map(f => f.slice(0, 3))
-    // );
-
     let layers = [];
-
-    // only needed when using shadows - a plane for shadows to drop on
-    // layers.push(
-    //   new PolygonLayer({
-    //     id: "ground",
-    //     data: landCover,
-    //     stroked: false,
-    //     getPolygon: f => f,
-    //     getFillColor: [0, 0, 0, 0]
-    //   })
-    // );
 
     if (this.state.showMap === 0) {
       layers.push(
@@ -198,12 +186,15 @@ export default class App extends Component {
           wireframe: true,
           getElevation: 0,
           getLineColor: [255, 255, 255],
-          getFillColor: (f) => COLOR_SCALE(f.properties["91_clip_pop"]),
+          getFillColor: (f) => {
+            if (f.properties.pop_91 === 0) return [255, 255, 255];
+            else return COLOR_SCALE(f.properties.pop_91);
+          },
           pickable: true,
           onHover: this._onHover,
           onClick: this._onClick,
           updateTriggers: {
-            getFillColor: ["91_clip_pop"],
+            getFillColor: ["pop_91"],
           },
         })
       );
@@ -221,12 +212,15 @@ export default class App extends Component {
           wireframe: true,
           getElevation: 0,
           getLineColor: [255, 255, 255],
-          getFillColor: (f) => COLOR_SCALE(f.properties["01_clip_pop"]),
+          getFillColor: (f) => {
+            if (f.properties.pop_01 === 0) return [255, 255, 255];
+            else return COLOR_SCALE(f.properties.pop_01);
+          },
           pickable: true,
           onHover: this._onHover,
           onClick: this._onClick,
           updateTriggers: {
-            getFillColor: ["01_clip_pop"],
+            getFillColor: ["pop_01"],
           },
         })
       );
@@ -244,12 +238,15 @@ export default class App extends Component {
           wireframe: true,
           getElevation: 0,
           getLineColor: [255, 255, 255],
-          getFillColor: (f) => COLOR_SCALE(f.properties["11_clip_pop"]),
+          getFillColor: (f) => {
+            if (f.properties.pop_11 === 0) return [255, 255, 255];
+            else return COLOR_SCALE(f.properties.pop_11);
+          },
           pickable: true,
           onHover: this._onHover,
           onClick: this._onClick,
           updateTriggers: {
-            getFillColor: ["11_clip_pop"],
+            getFillColor: ["pop_11"],
           },
         })
       );
@@ -267,15 +264,18 @@ export default class App extends Component {
           wireframe: true,
           getElevation: 0,
           getLineColor: [255, 255, 255],
-          getFillColor: (f) =>
-            COLOR_SCALE_change(
-              f.properties["11_clip_pop"] - f.properties["91_clip_pop"]
-            ),
+          getFillColor: (f) => {
+            if (f.properties.pop_91 === 0 && f.properties.pop_11 === 0) {
+              return [255, 255, 255];
+            } else if (f.properties.pop_91 === 0) {
+              return [128, 128, 128];
+            } else return COLOR_SCALE_change(f.properties.pop_pchang);
+          },
           pickable: true,
           onHover: this._onHover,
           onClick: this._onClick,
           updateTriggers: {
-            getFillColor: ["91_clip_pop", "11_clip_pop"],
+            getFillColor: ["pop_pchang"],
           },
         })
       );
@@ -293,12 +293,15 @@ export default class App extends Component {
           wireframe: true,
           getElevation: 0,
           getLineColor: [255, 255, 255],
-          getFillColor: (f) => COLOR_SCALE_UOH(f.properties["91_clip_uoh"]),
+          getFillColor: (f) => {
+            if (f.properties.uoh_91 === 0) return [255, 255, 255];
+            else return COLOR_SCALE_UOH(f.properties.uoh_91);
+          },
           pickable: true,
           onHover: this._onHover,
           onClick: this._onClick,
           updateTriggers: {
-            getFillColor: ["91_clip_uoh"],
+            getFillColor: ["uoh_91"],
           },
         })
       );
@@ -316,12 +319,15 @@ export default class App extends Component {
           wireframe: true,
           getElevation: 0,
           getLineColor: [255, 255, 255],
-          getFillColor: (f) => COLOR_SCALE_UOH(f.properties["01_clip_uoh"]),
+          getFillColor: (f) => {
+            if (f.properties.uoh_01 === 0) return [255, 255, 255];
+            else return COLOR_SCALE_UOH(f.properties.uoh_01);
+          },
           pickable: true,
           onHover: this._onHover,
           onClick: this._onClick,
           updateTriggers: {
-            getFillColor: ["01_clip_uoh"],
+            getFillColor: ["uoh_01"],
           },
         })
       );
@@ -339,12 +345,15 @@ export default class App extends Component {
           wireframe: true,
           getElevation: 0,
           getLineColor: [255, 255, 255],
-          getFillColor: (f) => COLOR_SCALE_UOH(f.properties["11_clip_uoh"]),
+          getFillColor: (f) => {
+            if (f.properties.uoh_11 === 0) return [255, 255, 255];
+            else return COLOR_SCALE_UOH(f.properties.uoh_11);
+          },
           pickable: true,
           onHover: this._onHover,
           onClick: this._onClick,
           updateTriggers: {
-            getFillColor: ["11_clip_uoh"],
+            getFillColor: ["uoh_11"],
           },
         })
       );
@@ -362,15 +371,18 @@ export default class App extends Component {
           wireframe: true,
           getElevation: 0,
           getLineColor: [255, 255, 255],
-          getFillColor: (f) =>
-            COLOR_SCALE_change_UOH(
-              f.properties["11_clip_uoh"] - f.properties["91_clip_uoh"]
-            ),
+          getFillColor: (f) => {
+            if (f.properties.uoh_91 === 0 && f.properties.uoh_11 === 0) {
+              return [255, 255, 255];
+            } else if (f.properties.uoh_91 === 0) {
+              return [128, 128, 128];
+            } else return COLOR_SCALE_change_UOH(f.properties.uoh_pchang);
+          },
           pickable: true,
           onHover: this._onHover,
           onClick: this._onClick,
           updateTriggers: {
-            getFillColor: ["91_clip_uoh", "11_clip_uoh"],
+            getFillColor: ["uoh_change"],
           },
         })
       );
@@ -447,57 +459,49 @@ export default class App extends Component {
           {this.state.showMap === 0 && (
             <>
               <b>Population</b>
-              <div>{hoveredObject.properties["91_clip_pop"]} people</div>
+              <div>{parseInt(hoveredObject.properties.pop_91)} people</div>
             </>
           )}
           {this.state.showMap === 1 && (
             <>
               <b>Population</b>
-              <div>{hoveredObject.properties["01_clip_pop"]} people</div>
+              <div>{parseInt(hoveredObject.properties.pop_01)} people</div>
             </>
           )}
           {this.state.showMap === 2 && (
             <>
               <b>Population </b>
-              <div>{hoveredObject.properties["11_clip_pop"]} people</div>
+              <div>{parseInt(hoveredObject.properties.pop_11)} people</div>
             </>
           )}
           {this.state.showMap === 3 && (
             <>
               <b>Population Difference</b>
-              <div>
-                {hoveredObject.properties["11_clip_pop"] -
-                  hoveredObject.properties["91_clip_pop"]}{" "}
-                people
-              </div>
+              <div>{parseInt(hoveredObject.properties.pop_pchang)} %</div>
             </>
           )}
           {this.state.showMap === 4 && (
             <>
-              <b>Unoccupied Housing</b>
-              <div>{hoveredObject.properties["91_clip_uoh"]} dwellings</div>
+              <b>Unoccupied Dwellings</b>
+              <div>{parseInt(hoveredObject.properties.uoh_91)} dwellings</div>
             </>
           )}
           {this.state.showMap === 5 && (
             <>
-              <b>Unoccupied Housing</b>
-              <div>{hoveredObject.properties["01_clip_uoh"]} dwellings</div>
+              <b>Unoccupied Dwellings</b>
+              <div>{parseInt(hoveredObject.properties.uoh_01)} dwellings</div>
             </>
           )}
           {this.state.showMap === 6 && (
             <>
-              <b>Unoccupied Housing</b>
-              <div>{hoveredObject.properties["11_clip_uoh"]} dwellings</div>
+              <b>Unoccupied Dwellings</b>
+              <div>{parseInt(hoveredObject.properties.uoh_11)} dwellings</div>
             </>
           )}
           {this.state.showMap === 7 && (
             <>
-              <b>Unoccupied Housing Difference</b>
-              <div>
-                {hoveredObject.properties["11_clip_uoh"] -
-                  hoveredObject.properties["91_clip_uoh"]}{" "}
-                dwellings
-              </div>
+              <b>Unoccupied Dwellings Difference</b>
+              <div>{parseInt(hoveredObject.properties.uoh_pchang)} %</div>
             </>
           )}
           {this.state.showMap === 8 && (
@@ -524,7 +528,7 @@ export default class App extends Component {
   }
 
   render() {
-    const { mapStyle = "mapbox://styles/mapbox/light-v9" } = this.props;
+    const { mapStyle = "mapbox://styles/mapbox/dark-v10" } = this.props;
     return (
       <>
         <Menu

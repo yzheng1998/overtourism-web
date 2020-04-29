@@ -6,47 +6,47 @@ import {
   ListItem,
   ListItemText,
   Typography,
-  Slider
+  Slider,
 } from "@material-ui/core";
 
 const marks = [
   {
     value: 0,
-    label: "1991"
+    label: "1991",
   },
   {
     value: 1,
-    label: "2001"
+    label: "2001",
   },
   {
     value: 2,
-    label: "2011"
-  }
+    label: "2011",
+  },
 ];
 
 const marksUOH = [
   {
     value: 4,
-    label: "1991"
+    label: "1991",
   },
   {
     value: 5,
-    label: "2001"
+    label: "2001",
   },
   {
     value: 6,
-    label: "2011"
-  }
+    label: "2011",
+  },
 ];
 
 const useStyles = makeStyles({
   root: {
     width: "80%",
-    marginLeft: 28
+    marginLeft: 28,
   },
   backDrop: {
-    backgroundColor: "transparent"
-  }
+    backgroundColor: "transparent",
+  },
 });
 
 function Menu(props) {
@@ -56,8 +56,8 @@ function Menu(props) {
     <Drawer
       BackdropProps={{
         classes: {
-          root: classes.backDrop
-        }
+          root: classes.backDrop,
+        },
       }}
       anchor="left"
       open={showMenu}
@@ -67,7 +67,7 @@ function Menu(props) {
         style={{
           width: 300,
           marginLeft: 20,
-          marginTop: 20
+          marginTop: 20,
         }}
       >
         <Typography variant="h6" gutterBottom>
@@ -86,13 +86,13 @@ function Menu(props) {
           style={{
             width: 250,
             marginLeft: 20,
-            marginTop: 10
+            marginTop: 10,
           }}
         ></Slider>
         <ListItem button onClick={() => onClick(3)}>
           <ListItemText primary="Change (1991-2011)"></ListItemText>
         </ListItem>
-        <Typography variant="h6">Unocupied Housing</Typography>
+        <Typography variant="h6">Unocupied Dwellings</Typography>
         <Slider
           defaultValue={0}
           aria-labelledby="year-slider"
@@ -106,7 +106,7 @@ function Menu(props) {
           style={{
             width: 250,
             marginLeft: 20,
-            marginTop: 10
+            marginTop: 10,
           }}
         ></Slider>
         <ListItem>
@@ -114,16 +114,6 @@ function Menu(props) {
             primary="Change (1991-2011)"
             onClick={() => onClick(7)}
           ></ListItemText>
-        </ListItem>
-        <Typography variant="h6">Bnb's</Typography>
-        <ListItem button onClick={() => onClick(8)}>
-          <ListItemText primary="Feb 2020"></ListItemText>
-        </ListItem>
-        <ListItem button onClick={() => onClick(9)}>
-          <ListItemText primary="Change (Summer 2017-2019)"></ListItemText>
-        </ListItem>
-        <ListItem button onClick={() => onClick(10)}>
-          <ListItemText primary="BNB Data Mismatch"></ListItemText>
         </ListItem>
       </List>
     </Drawer>

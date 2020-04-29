@@ -2,11 +2,11 @@ import React from "react";
 import { ResponsiveLine } from "@nivo/line";
 
 export default function Graph(props) {
-  const { data } = props;
+  const { data, label } = props;
   return (
     <ResponsiveLine
       data={data}
-      margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
+      margin={{ top: 30, right: 60, bottom: 50, left: 60 }}
       xScale={{ type: "point" }}
       yScale={{
         type: "linear",
@@ -28,10 +28,10 @@ export default function Graph(props) {
       }}
       axisLeft={{
         orient: "left",
-        tickSize: 5,
+        tickSize: "auto",
         tickPadding: 5,
         tickRotation: 0,
-        legend: "density",
+        legend: label,
         legendOffset: -40,
         legendPosition: "middle",
       }}

@@ -10,11 +10,9 @@ import {
 } from "@deck.gl/core";
 import * as d3 from "d3";
 
-import { abnb20 } from "./src/geojson/abnb20.geojson";
-import { ab_change } from "./src/geojson/19_17_ab_diff.geojson";
-import { abnb_bnb_diff } from "./src/geojson/abnb_bnb_diff.geojson";
 import { hexagon } from "./src/geojson/hexagon.geojson";
 import InfoMenu from "./src/components/InfoMenu";
+import Legend from "./src/components/Legend";
 
 import { Fab } from "@material-ui/core";
 import Menu from "./src/components/menu";
@@ -26,6 +24,41 @@ const MAPBOX_TOKEN =
   "pk.eyJ1IjoieXpoZW5nMTk5OCIsImEiOiJjazhqM2d2c3EwMzdlM2dwanc0Nnc1bW5wIn0.zee4RAVq4YvHdnWIKGSZ-w"; // eslint-disable-line
 
 // Source data GeoJSON
+const popLegend = [0, 20.48, 56.1, 94.92, 140.04, 226.96].map((a, i) => [
+  a,
+  d3.schemeReds[6][i],
+]);
+
+const popChangeLegend = [
+  -100,
+  -47.613,
+  -33.192,
+  -24.232,
+  -13.24,
+  0,
+  334.8,
+  669.6,
+  1004.4,
+  1339.2,
+  1674.21,
+].map((a, i) => [a, d3.schemePuOr[11][i]]);
+
+const uohLegend = [0, 1.718, 4.911, 8.975, 15.171, 25.395].map((a, i) => [
+  a,
+  d3.schemeGreens[6][i],
+]);
+
+const uohChangeLegend = [
+  -100,
+  -29.22,
+  -19.48,
+  -9.74,
+  0,
+  25.39,
+  85.69,
+  216.49,
+  26643.48,
+].map((a, i) => [a, d3.schemePuOr[9][i]]);
 
 export const COLOR_SCALE = d3
   .scaleThreshold()
@@ -52,10 +85,9 @@ export const COLOR_SCALE_change = d3
     1674.21,
   ])
   .range(
-    d3.schemeRdBu[11]
+    d3.schemePuOr[11]
       .map((f) => hexRgb(f, { format: "array" }))
       .map((f) => f.slice(0, 3))
-      .reverse()
   );
 
 export const COLOR_SCALE_UOH = d3
@@ -71,35 +103,7 @@ export const COLOR_SCALE_change_UOH = d3
   .scaleThreshold()
   .domain([-100, -29.22, -19.48, -9.74, 0, 25.39, 85.69, 216.49, 26643.48])
   .range(
-    d3.schemeRdBu[9]
-      .map((f) => hexRgb(f, { format: "array" }))
-      .map((f) => f.slice(0, 3))
-      .reverse()
-  );
-
-export const COLOR_SCALE_AB20 = d3
-  .scaleThreshold()
-  .domain([0, 7.321, 19.802, 35.088, 61.224, 128.205])
-  .range(
-    d3.schemePurples[6]
-      .map((f) => hexRgb(f, { format: "array" }))
-      .map((f) => f.slice(0, 3))
-  );
-
-export const COLOR_SCALE_change_AB = d3
-  .scaleThreshold()
-  .domain([-100, -40, 0, 41.67, 140, 316.67, 700])
-  .range(
-    d3.schemeSpectral[7]
-      .map((f) => hexRgb(f, { format: "array" }))
-      .map((f) => f.slice(0, 3))
-  );
-
-export const COLOR_SCALE_AB_BNB = d3
-  .scaleThreshold()
-  .domain([0, 62.5, 200, 500, 1000, 2500])
-  .range(
-    d3.schemePurples[6]
+    d3.schemePuOr[9]
       .map((f) => hexRgb(f, { format: "array" }))
       .map((f) => f.slice(0, 3))
   );
@@ -388,66 +392,6 @@ export default class App extends Component {
       );
     }
 
-    if (this.state.showMap === 8) {
-      layers.push(
-        new GeoJsonLayer({
-          id: "geojson",
-          data: abnb20,
-          opacity: 0.8,
-          stroked: false,
-          filled: true,
-          extruded: true,
-          wireframe: true,
-          getElevation: 0,
-          getLineColor: [255, 255, 255],
-          getFillColor: (f) => COLOR_SCALE_AB20(f.properties.ab_hec),
-          pickable: true,
-          onHover: this._onHover,
-          onClick: this._onClick,
-        })
-      );
-    }
-
-    if (this.state.showMap === 9) {
-      layers.push(
-        new GeoJsonLayer({
-          id: "geojson",
-          data: ab_change,
-          opacity: 0.8,
-          stroked: false,
-          filled: true,
-          extruded: true,
-          wireframe: true,
-          getElevation: 0,
-          getLineColor: [255, 255, 255],
-          getFillColor: (f) => COLOR_SCALE_change_AB(f.properties.ab_diff),
-          pickable: true,
-          onHover: this._onHover,
-          onClick: this._onClick,
-        })
-      );
-    }
-
-    if (this.state.showMap === 10) {
-      layers.push(
-        new GeoJsonLayer({
-          id: "geojson",
-          data: abnb_bnb_diff,
-          opacity: 0.8,
-          stroked: false,
-          filled: true,
-          extruded: true,
-          wireframe: true,
-          getElevation: 0,
-          getLineColor: [255, 255, 255],
-          getFillColor: (f) => COLOR_SCALE_AB_BNB(f.properties.mismatch),
-          pickable: true,
-          onHover: this._onHover,
-          onClick: this._onClick,
-        })
-      );
-    }
-
     return layers;
   }
 
@@ -504,27 +448,22 @@ export default class App extends Component {
               <div>{parseInt(hoveredObject.properties.uoh_pchang)} %</div>
             </>
           )}
-          {this.state.showMap === 8 && (
-            <>
-              <b>Airbnb Density (2020)</b>
-              <div>{hoveredObject.properties.ab_hec} Airbnbs per hectare</div>
-            </>
-          )}
-          {this.state.showMap === 9 && (
-            <>
-              <b>Airbnb Change (Summer 2017-2019)</b>
-              <div>{hoveredObject.properties.ab_diff}%</div>
-            </>
-          )}
-          {this.state.showMap === 10 && (
-            <>
-              <b>Airbnb Municipality Mismatch</b>
-              <div>{hoveredObject.properties.mismatch}%</div>
-            </>
-          )}
         </div>
       )
     );
+  }
+
+  renderLegend() {
+    const { showMap } = this.state;
+    if (showMap >= 0 && showMap < 3) {
+      return popLegend;
+    } else if (showMap === 3) {
+      return popChangeLegend;
+    } else if (showMap > 3 && showMap < 7) {
+      return uohLegend;
+    } else if (showMap === 7) {
+      return uohChangeLegend;
+    }
   }
 
   render() {
@@ -566,7 +505,7 @@ export default class App extends Component {
             preventStyleDiffing={true}
             mapboxApiAccessToken={MAPBOX_TOKEN}
           />
-
+          <Legend colors={this.renderLegend()} />
           {this._renderTooltip}
         </DeckGL>
       </>

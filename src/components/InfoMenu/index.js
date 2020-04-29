@@ -24,9 +24,32 @@ function InfoMenu(props) {
           {
             id: clickedObject.properties.OBJECTID,
             data: [
+              { x: 1991, y: clickedObject.properties.pop_91 },
+              { x: 2001, y: clickedObject.properties.pop_01 },
+              { x: 2011, y: clickedObject.properties.pop_11 },
+            ],
+          },
+        ]
+      : [
+          {
+            id: 0,
+            data: [
               { x: 1991, y: 300 },
               { x: 2001, y: 200 },
               { x: 2011, y: 150 },
+            ],
+          },
+        ];
+
+  const uohData =
+    clickedObject && clickedObject.properties
+      ? [
+          {
+            id: clickedObject.properties.OBJECTID,
+            data: [
+              { x: 1991, y: clickedObject.properties.uoh_91 },
+              { x: 2001, y: clickedObject.properties.uoh_01 },
+              { x: 2011, y: clickedObject.properties.uoh_11 },
             ],
           },
         ]
@@ -59,29 +82,23 @@ function InfoMenu(props) {
           marginTop: 20,
         }}
       >
-        <Typography style={{ marginBottom: 12 }}>
-          Neighborhood: {clickedObject && clickedObject.properties.neighbourh}
+        <Typography variant={"h6"}>
+          Hexagon ID: {clickedObject && clickedObject.properties.Id}
         </Typography>
-        <div style={{ height: "30vh" }}>
-          <Graph data={data} />
+        <div style={{ height: "40vh" }}>
+          <Graph data={data} label={"Population"} />
         </div>
         <Typography style={{ marginBottom: 12 }}>
-          Population: {clickedObject && clickedObject.properties.totPop} people
+          Population Change (1991-2011):{" "}
+          {clickedObject && clickedObject.properties.pop_pchang}%
         </Typography>
+        <div style={{ height: "40vh" }}>
+          <Graph data={uohData} label={"Unoccupied Dwellings"} />
+        </div>
         <Typography style={{ marginBottom: 12 }}>
-          Population Density:{" "}
-          {clickedObject && clickedObject.properties.pop_hec} people/hectare
+          Unoccupied Housing Change (1991-2011):{" "}
+          {clickedObject && clickedObject.properties.uoh_pchang}%
         </Typography>
-        <Typography style={{ marginBottom: 12 }}>
-          Unoccupied Housing: {clickedObject && clickedObject.properties.uoh}{" "}
-          homes
-        </Typography>
-        <Typography style={{ marginBottom: 12 }}>
-          Unoccupied Housing Density:{" "}
-          {clickedObject && clickedObject.properties.uoh_hec} homes/hectare
-        </Typography>
-        <Typography>TODO: Graph of trends</Typography>
-        <Typography>between 1991, 2001, 2011</Typography>
       </List>
     </Drawer>
   );

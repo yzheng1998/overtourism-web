@@ -24,45 +24,33 @@ const MAPBOX_TOKEN =
   "pk.eyJ1IjoieXpoZW5nMTk5OCIsImEiOiJjazhqM2d2c3EwMzdlM2dwanc0Nnc1bW5wIn0.zee4RAVq4YvHdnWIKGSZ-w"; // eslint-disable-line
 
 // Source data GeoJSON
-const popLegend = [0, 20.48, 56.1, 94.92, 140.04, 226.96].map((a, i) => [
-  a,
-  d3.schemeReds[6][i],
-]);
+const popSplit = [0, 20, 56, 95, 140, 227];
+const popLegend = popSplit.map((a, i) => [a, d3.schemeReds[6][i]]);
 
-const popChangeLegend = [
+const popChangeSplit = [
   -100,
-  -47.613,
-  -33.192,
-  -24.232,
-  -13.24,
+  -48,
+  -33,
+  -24,
+  -13,
   0,
-  334.8,
-  669.6,
-  1004.4,
-  1339.2,
-  1674.21,
-].map((a, i) => [a, d3.schemePuOr[11][i]]);
+  335,
+  670,
+  1005,
+  1339,
+  1674,
+];
+const popChangeLegend = popChangeSplit.map((a, i) => [a, d3.schemePuOr[11][i]]);
 
-const uohLegend = [0, 1.718, 4.911, 8.975, 15.171, 25.395].map((a, i) => [
-  a,
-  d3.schemeGreens[6][i],
-]);
+const uohSplit = [0, 2, 5, 9, 15, 25];
+const uohLegend = uohSplit.map((a, i) => [a, d3.schemeGreens[6][i]]);
 
-const uohChangeLegend = [
-  -100,
-  -29.22,
-  -19.48,
-  -9.74,
-  0,
-  25.39,
-  85.69,
-  216.49,
-  26643.48,
-].map((a, i) => [a, d3.schemePuOr[9][i]]);
+const uohChangeSplit = [-100, -29, -19, -10, 0, 25, 86, 216, 26643];
+const uohChangeLegend = uohChangeSplit.map((a, i) => [a, d3.schemePuOr[9][i]]);
 
 export const COLOR_SCALE = d3
   .scaleThreshold()
-  .domain([0, 20.48, 56.1, 94.92, 140.04, 226.96])
+  .domain(popSplit)
   .range(
     d3.schemeReds[6]
       .map((f) => hexRgb(f, { format: "array" }))
@@ -71,19 +59,7 @@ export const COLOR_SCALE = d3
 
 export const COLOR_SCALE_change = d3
   .scaleThreshold()
-  .domain([
-    -100,
-    -47.613,
-    -33.192,
-    -24.232,
-    -13.24,
-    0,
-    334.8,
-    669.6,
-    1004.4,
-    1339.2,
-    1674.21,
-  ])
+  .domain(popChangeSplit)
   .range(
     d3.schemePuOr[11]
       .map((f) => hexRgb(f, { format: "array" }))
@@ -92,7 +68,7 @@ export const COLOR_SCALE_change = d3
 
 export const COLOR_SCALE_UOH = d3
   .scaleThreshold()
-  .domain([0, 1.718, 4.911, 8.975, 15.171, 25.395])
+  .domain(uohSplit)
   .range(
     d3.schemeGreens[6]
       .map((f) => hexRgb(f, { format: "array" }))
@@ -101,7 +77,7 @@ export const COLOR_SCALE_UOH = d3
 
 export const COLOR_SCALE_change_UOH = d3
   .scaleThreshold()
-  .domain([-100, -29.22, -19.48, -9.74, 0, 25.39, 85.69, 216.49, 26643.48])
+  .domain(uohChangeSplit)
   .range(
     d3.schemePuOr[9]
       .map((f) => hexRgb(f, { format: "array" }))
@@ -117,18 +93,6 @@ const INITIAL_VIEW_STATE = {
   bearing: 0,
 };
 
-const ambientLight = new AmbientLight({
-  color: [255, 255, 255],
-  intensity: 1.0,
-});
-
-const dirLight = new SunLight({
-  timestamp: Date.UTC(2019, 7, 1, 22),
-  color: [255, 255, 255],
-  intensity: 1.0,
-  _shadow: false,
-});
-
 export default class App extends Component {
   constructor(props) {
     super(props);
@@ -143,10 +107,6 @@ export default class App extends Component {
     this._onHover = this._onHover.bind(this);
     this._onClick = this._onClick.bind(this);
     this._renderTooltip = this._renderTooltip.bind(this);
-
-    const lightingEffect = new LightingEffect({ ambientLight, dirLight });
-    lightingEffect.shadowColor = [0, 0, 0, 0.5];
-    this._effects = [lightingEffect];
   }
 
   toggleDrawer() {
@@ -178,12 +138,14 @@ export default class App extends Component {
   _renderLayers() {
     let layers = [];
 
+    const opacity = 1;
+
     if (this.state.showMap === 0) {
       layers.push(
         new GeoJsonLayer({
           id: "geojson",
           data: hexagon,
-          opacity: 0.8,
+          opacity,
           stroked: false,
           filled: true,
           extruded: true,
@@ -209,7 +171,7 @@ export default class App extends Component {
         new GeoJsonLayer({
           id: "geojson",
           data: hexagon,
-          opacity: 0.8,
+          opacity,
           stroked: false,
           filled: true,
           extruded: true,
@@ -235,7 +197,7 @@ export default class App extends Component {
         new GeoJsonLayer({
           id: "geojson",
           data: hexagon,
-          opacity: 0.8,
+          opacity,
           stroked: false,
           filled: true,
           extruded: true,
@@ -261,7 +223,7 @@ export default class App extends Component {
         new GeoJsonLayer({
           id: "geojson",
           data: hexagon,
-          opacity: 0.8,
+          opacity,
           stroked: false,
           filled: true,
           extruded: true,
@@ -290,7 +252,7 @@ export default class App extends Component {
         new GeoJsonLayer({
           id: "geojson",
           data: hexagon,
-          opacity: 0.8,
+          opacity,
           stroked: false,
           filled: true,
           extruded: true,
@@ -316,7 +278,7 @@ export default class App extends Component {
         new GeoJsonLayer({
           id: "geojson",
           data: hexagon,
-          opacity: 0.8,
+          opacity,
           stroked: false,
           filled: true,
           extruded: true,
@@ -342,7 +304,7 @@ export default class App extends Component {
         new GeoJsonLayer({
           id: "geojson",
           data: hexagon,
-          opacity: 0.8,
+          opacity,
           stroked: false,
           filled: true,
           extruded: true,
@@ -368,7 +330,7 @@ export default class App extends Component {
         new GeoJsonLayer({
           id: "geojson",
           data: hexagon,
-          opacity: 0.8,
+          opacity,
           stroked: false,
           filled: true,
           extruded: true,
@@ -414,13 +376,13 @@ export default class App extends Component {
           )}
           {this.state.showMap === 2 && (
             <>
-              <b>Population </b>
+              <b>Population</b>
               <div>{parseInt(hoveredObject.properties.pop_11)} people</div>
             </>
           )}
           {this.state.showMap === 3 && (
             <>
-              <b>Population Difference</b>
+              <b>Population Percent Change</b>
               <div>{parseInt(hoveredObject.properties.pop_pchang)} %</div>
             </>
           )}
@@ -444,7 +406,7 @@ export default class App extends Component {
           )}
           {this.state.showMap === 7 && (
             <>
-              <b>Unoccupied Dwellings Difference</b>
+              <b>Unoccupied Dwellings Percent Change</b>
               <div>{parseInt(hoveredObject.properties.uoh_pchang)} %</div>
             </>
           )}
@@ -505,7 +467,7 @@ export default class App extends Component {
             preventStyleDiffing={true}
             mapboxApiAccessToken={MAPBOX_TOKEN}
           />
-          <Legend colors={this.renderLegend()} />
+          <Legend colors={this.renderLegend()} type={this.state.showMap} />
           {this._renderTooltip}
         </DeckGL>
       </>

@@ -92,7 +92,7 @@ function Menu(props) {
         <ListItem button onClick={() => onClick(3)}>
           <ListItemText primary="Change (1991-2011)"></ListItemText>
         </ListItem>
-        <Typography variant="h6">Unocupied Dwellings</Typography>
+        <Typography variant="h6">Unoccupied Dwellings</Typography>
         <Slider
           defaultValue={0}
           aria-labelledby="year-slider"

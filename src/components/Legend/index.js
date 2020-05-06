@@ -3,18 +3,21 @@ import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 
 export default function Legend(props) {
-  const { colors } = props;
-  var updatedColors = colors.map(([x, y], i) => {
-    if (i === colors.length - 1) {
-      return [`> ${x}`, y];
-    } else {
-      return [`${x} - ${colors[i + 1][0]}`, y];
-    }
-  });
-  updatedColors = [[0, "#FFFFFF"], ...updatedColors];
-  updatedColors = [...updatedColors, [NaN, "#808080"]];
+  const { colors, type } = props;
+  var updatedColors = colors
+    .map(([x, y], i) => {
+      if (i === colors.length - 1) {
+        return [`> ${x}`, y];
+      } else {
+        return [`${x} - ${colors[i + 1][0]}`, y];
+      }
+    })
+    .reverse();
+  updatedColors =
+    type === 3 || type === 7
+      ? [...updatedColors, [NaN, "#808080"]]
+      : [...updatedColors, [0, "#FFFFFF"]];
 
-  console.log(updatedColors);
   return (
     <Paper
       style={{

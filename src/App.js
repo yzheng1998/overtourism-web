@@ -2,23 +2,19 @@ import React, { Component } from "react";
 import { render } from "react-dom";
 import { StaticMap } from "react-map-gl";
 import DeckGL from "@deck.gl/react";
-import { GeoJsonLayer, PolygonLayer } from "@deck.gl/layers";
-import {
-  LightingEffect,
-  AmbientLight,
-  _SunLight as SunLight,
-} from "@deck.gl/core";
+import { GeoJsonLayer } from "@deck.gl/layers";
+
 import * as d3 from "d3";
 
-import { hexagon } from "./src/geojson/hexagon.geojson";
-import InfoMenu from "./src/components/InfoMenu";
-import Legend from "./src/components/Legend";
+import { hexagon } from "./geojson/hexagon.js";
+
+import InfoMenu from "./components/InfoMenu";
+import Legend from "./components/Legend";
 
 import { Fab } from "@material-ui/core";
-import Menu from "./src/components/menu";
+import Menu from "./components/menu";
 
 const hexRgb = require("hex-rgb");
-
 // Set your mapbox token here
 const MAPBOX_TOKEN =
   "pk.eyJ1IjoieXpoZW5nMTk5OCIsImEiOiJjazhqM2d2c3EwMzdlM2dwanc0Nnc1bW5wIn0.zee4RAVq4YvHdnWIKGSZ-w"; // eslint-disable-line
@@ -457,7 +453,7 @@ export default class App extends Component {
         </Fab>
         <DeckGL
           layers={this._renderLayers()}
-          //   effects={this._effects}
+          // effects={this._effects}
           initialViewState={INITIAL_VIEW_STATE}
           controller={true}
         >

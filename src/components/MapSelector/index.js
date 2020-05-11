@@ -49,8 +49,8 @@ const useStyles = makeStyles({
   },
 });
 
-function Menu(props) {
-  const { onClose, showMap, showMenu, onSliderChange, onClick } = props;
+function MapSelector(props) {
+  const { onClose, showMap, showMapSelector, onSliderChange, onClick } = props;
   const classes = useStyles();
   return (
     <Drawer
@@ -60,7 +60,7 @@ function Menu(props) {
         },
       }}
       anchor="left"
-      open={showMenu}
+      open={showMapSelector}
       onClose={onClose}
     >
       <List
@@ -120,4 +120,4 @@ function Menu(props) {
   );
 }
 
-export default Menu;
+export default MapSelector;

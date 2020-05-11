@@ -1,23 +1,42 @@
 import React from "react";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
+import {
+  popLegend,
+  popChangeLegend,
+  uohLegend,
+  uohChangeLegend,
+} from "../BaseMap/utils/ColorScales";
 
 export default function Legend(props) {
-  const { colors, type } = props;
-  var updatedColors = colors
+  const { layerIndex, onClick } = props;
+
+  var legend;
+  if (layerIndex >= 0 && layerIndex < 3) {
+    legend = popLegend;
+  } else if (layerIndex === 3) {
+    legend = popChangeLegend;
+  } else if (layerIndex > 3 && layerIndex < 7) {
+    legend = uohLegend;
+  } else if (layerIndex === 7) {
+    legend = uohChangeLegend;
+  }
+
+  var updatedLegend = legend
     .map(([x, y], i) => {
-      if (i === colors.length - 1) {
+      if (i === legend.length - 1) {
         return [`> ${x}`, y];
       } else {
-        return [`${x} - ${colors[i + 1][0]}`, y];
+        return [`${x} - ${legend[i + 1][0]}`, y];
       }
     })
     .reverse();
-  updatedColors =
-    type === 3 || type === 7
-      ? [...updatedColors, [NaN, "#808080"]]
-      : [...updatedColors, [0, "#FFFFFF"]];
+  updatedLegend =
+    layerIndex === 3 || layerIndex === 7
+      ? [...updatedLegend, ["NaN", "#808080"]]
+      : [...updatedLegend, [0, "#B0B0B0"]];
 
+  const { disabled } = updatedLegend;
   return (
     <Paper
       style={{
@@ -28,7 +47,7 @@ export default function Legend(props) {
       }}
     >
       <Typography variant={"h6"}>Legend</Typography>
-      {updatedColors.map((value) => {
+      {updatedLegend.map((value) => {
         return (
           <div
             style={{
@@ -39,15 +58,39 @@ export default function Legend(props) {
             key={value[0]}
             className="input"
           >
-            <Typography variant={"subtitle1"} style={{ marginRight: "12px" }}>
-              {value[0]}
-            </Typography>
-            <input
-              className="legend-input"
-              type="color"
-              value={value[1]}
-              disabled={true}
-            />
+            <button
+              className="legend-button"
+              style={{
+                backgroundColor: disabled ? "grey" : "white",
+                border: 0.5,
+                borderColor: "black",
+                flexDirection: "row",
+                display: "inline-flex",
+                alignItems: "center",
+              }}
+              disabled={disabled}
+              onClick={onClick}
+            >
+              <div
+                className="legend-color"
+                style={{
+                  backgroundColor: value[1],
+                  height: "10px",
+                  width: "10px",
+                  borderRadius: "6px",
+                  marginRight: "12px",
+                }}
+              ></div>
+              <Typography
+                variant={"subtitle1"}
+                style={{
+                  marginRight: "12px",
+                  color: disabled ? "grey" : "black",
+                }}
+              >
+                {value[0]}
+              </Typography>
+            </button>
           </div>
         );
       })}

@@ -1,35 +1,45 @@
 import * as d3 from "d3";
 const hexRgb = require("hex-rgb");
 
-const popSplit = [0, 20, 56, 95, 140, 227];
-export const popLegend = popSplit.map((a, i) => [a, d3.schemeReds[6][i]]);
-
-const popChangeSplit = [
-  -100,
-  -48,
-  -33,
-  -24,
-  -13,
-  0,
-  335,
-  670,
-  1005,
-  1339,
-  1674,
-];
-export const popChangeLegend = popChangeSplit.map((a, i) => [
+const popSplit = [20, 50, 100, 150, 200];
+export const popLegend = [0, ...popSplit].map((a, i) => [
   a,
-  d3.schemePuOr[11][i],
+  d3.schemeReds[6][i],
 ]);
 
-const uohSplit = [0, 2, 5, 9, 15, 25];
-export const uohLegend = uohSplit.map((a, i) => [a, d3.schemeGreens[6][i]]);
+const popChangeSplit = [0.2, 0.5, 0.99, 1.01, 2, 5];
+export const popChangeLegend = [
+  "<1/5x",
+  "1/5x - 1/2x",
+  "1/2x - 1x",
+  "No Change",
+  "1x - 2x",
+  "2x - 5x",
+  ">5x",
+]
+  .map((a, i) => [a, d3.schemePuOr[7][i]])
+  .reverse()
+  .concat([["NaN", "#808080"]]);
 
-const uohChangeSplit = [-100, -29, -19, -10, 0, 25, 86, 216, 26643];
-export const uohChangeLegend = uohChangeSplit.map((a, i) => [
+const uohSplit = [2, 5, 10, 15, 25];
+export const uohLegend = [0, ...uohSplit].map((a, i) => [
   a,
-  d3.schemePuOr[9][i],
+  d3.schemeGreens[6][i],
 ]);
+
+const uohChangeSplit = popChangeSplit;
+export const uohChangeLegend = [
+  "<1/5x",
+  "1/5x - 1/2x",
+  "1/2x - 1x",
+  "No Change",
+  "1x - 2x",
+  "2x - 5x",
+  ">5x",
+]
+  .map((a, i) => [a, d3.schemePuOr[7][i]])
+  .reverse()
+  .concat([["NaN", "#808080"]]);
 
 export const COLOR_SCALE = d3
   .scaleThreshold()
@@ -44,7 +54,7 @@ export const COLOR_SCALE_change = d3
   .scaleThreshold()
   .domain(popChangeSplit)
   .range(
-    d3.schemePuOr[11]
+    d3.schemePuOr[7]
       .map((f) => hexRgb(f, { format: "array" }))
       .map((f) => f.slice(0, 3))
   );
@@ -62,7 +72,7 @@ export const COLOR_SCALE_change_UOH = d3
   .scaleThreshold()
   .domain(uohChangeSplit)
   .range(
-    d3.schemePuOr[9]
+    d3.schemePuOr[7]
       .map((f) => hexRgb(f, { format: "array" }))
       .map((f) => f.slice(0, 3))
   );

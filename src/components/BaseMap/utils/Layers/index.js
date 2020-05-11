@@ -70,7 +70,7 @@ export default function renderLayer(layerIndex, onHover, onClick) {
             return [255, 255, 255];
           } else if (f.properties.pop_91 === 0) {
             return [128, 128, 128];
-          } else return COLOR_SCALE_change(f.properties.pop_pchang);
+          } else return COLOR_SCALE_change(f.properties.pop_mult);
         },
         pickable: true,
         onHover: onHover,
@@ -115,7 +115,7 @@ export default function renderLayer(layerIndex, onHover, onClick) {
             return [255, 255, 255];
           } else if (f.properties.uoh_91 === 0) {
             return [128, 128, 128];
-          } else return COLOR_SCALE_change_UOH(f.properties.uoh_pchang);
+          } else return COLOR_SCALE_change_UOH(f.properties.uoh_mult);
         },
         pickable: true,
         onHover: onHover,

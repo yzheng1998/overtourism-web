@@ -10,30 +10,38 @@ import {
 export default function Legend(props) {
   const { layerIndex, onClick } = props;
 
+  const isPop = layerIndex >= 0 && layerIndex < 3;
+  const isPopChange = layerIndex === 3;
+  const isUOH = layerIndex >= 4 && layerIndex < 7;
+  const isUOHChange = layerIndex === 7;
+
   var legend;
-  if (layerIndex >= 0 && layerIndex < 3) {
+  if (isPop) {
     legend = popLegend;
-  } else if (layerIndex === 3) {
+  } else if (isPopChange) {
     legend = popChangeLegend;
-  } else if (layerIndex > 3 && layerIndex < 7) {
+  } else if (isUOH) {
     legend = uohLegend;
-  } else if (layerIndex === 7) {
+  } else if (isUOHChange) {
     legend = uohChangeLegend;
   }
 
-  var updatedLegend = legend
-    .map(([x, y], i) => {
-      if (i === legend.length - 1) {
-        return [`> ${x}`, y];
-      } else {
-        return [`${x + 1} - ${legend[i + 1][0]}`, y];
-      }
-    })
-    .reverse();
-  updatedLegend =
-    layerIndex === 3 || layerIndex === 7
-      ? [...updatedLegend, ["NaN", "#808080"]]
-      : [...updatedLegend, [0, "#FFFFFF"]];
+  var updatedLegend;
+
+  if (isPop || isUOH) {
+    updatedLegend = legend
+      .map(([x, y], i) => {
+        if (i === legend.length - 1) {
+          return [`>= ${x}`, y];
+        } else {
+          return [`${x} - ${legend[i + 1][0] - 1}`, y];
+        }
+      })
+      .reverse();
+    updatedLegend = [...updatedLegend, [0, "#FFFFFF"]];
+  } else {
+    updatedLegend = legend;
+  }
 
   const { disabled } = updatedLegend;
   return (
@@ -42,9 +50,6 @@ export default function Legend(props) {
         position: "absolute",
         right: "24px",
         bottom: "24px",
-        // padding: "12px",
-        // borderRadius: "12px",
-        // backgroundColor: "#2e2e2e",
         color: "#FFFFFF",
       }}
     >

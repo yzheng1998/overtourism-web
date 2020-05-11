@@ -66,10 +66,14 @@ export default function ToolTip(props) {
       {layerIndex === 3 && (
         <>
           <Typography classes={{ root: classes.title }}>
-            Population % Change
+            Population (Fraction of 1991)
           </Typography>
           <Typography classes={{ root: classes.body }}>
-            {Math.round(hoveredObject.properties.pop_pchang)} %
+            {hoveredObject.properties.pop_91 === 0
+              ? hoveredObject.properties.pop_11 === 0
+                ? "0"
+                : "NaN"
+              : hoveredObject.properties.pop_mult}
           </Typography>
         </>
       )}
@@ -109,10 +113,14 @@ export default function ToolTip(props) {
       {layerIndex === 7 && (
         <>
           <Typography classes={{ root: classes.title }}>
-            Unoccupied Dwellings % Change
+            Unoccupied Dwellings (Fraction of 1991)
           </Typography>
           <Typography classes={{ root: classes.body }}>
-            {Math.round(hoveredObject.properties.uoh_pchang)} %
+            {hoveredObject.properties.uoh_91 === 0
+              ? hoveredObject.properties.uoh_11 === 0
+                ? "1"
+                : "NaN"
+              : hoveredObject.properties.uoh_mult}
           </Typography>
         </>
       )}

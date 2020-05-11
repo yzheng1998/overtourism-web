@@ -8,7 +8,7 @@ import {
   COLOR_SCALE_change_UOH,
 } from "../ColorScales";
 
-export default function renderLayer(layerIndex, _onHover, _onClick) {
+export default function renderLayer(layerIndex, onHover, onClick) {
   var year;
   switch (layerIndex) {
     case 0:
@@ -45,12 +45,12 @@ export default function renderLayer(layerIndex, _onHover, _onClick) {
         opacity,
         getLineColor: [255, 255, 255, 0],
         getFillColor: (f) => {
-          if (f.properties[year] === 0) return [255, 255, 255];
-          else return COLOR_SCALE(f.properties[year]);
+          if (Math.round(f.properties[year]) === 0) return [255, 255, 255];
+          else return COLOR_SCALE(Math.round(f.properties[year]));
         },
         pickable: true,
-        onHover: _onHover,
-        onClick: _onClick,
+        onHover: onHover,
+        onClick: onClick,
         updateTriggers: {
           getFillColor: [layerIndex],
         },
@@ -64,7 +64,7 @@ export default function renderLayer(layerIndex, _onHover, _onClick) {
         id: "geojson",
         data: hexagon,
         opacity,
-        getLineColor: [255, 255, 255],
+        getLineColor: [255, 255, 255, 0],
         getFillColor: (f) => {
           if (f.properties.pop_91 === 0 && f.properties.pop_11 === 0) {
             return [255, 255, 255];
@@ -73,10 +73,10 @@ export default function renderLayer(layerIndex, _onHover, _onClick) {
           } else return COLOR_SCALE_change(f.properties.pop_pchang);
         },
         pickable: true,
-        onHover: _onHover,
-        onClick: _onClick,
+        onHover: onHover,
+        onClick: onClick,
         updateTriggers: {
-          getFillColor: ["pop_pchang"],
+          getFillColor: [layerIndex],
         },
       })
     );
@@ -88,14 +88,14 @@ export default function renderLayer(layerIndex, _onHover, _onClick) {
         id: "geojson",
         data: hexagon,
         opacity,
-        getLineColor: [255, 255, 255],
+        getLineColor: [255, 255, 255, 0],
         getFillColor: (f) => {
-          if (f.properties[year] === 0) return [255, 255, 255];
-          else return COLOR_SCALE_UOH(f.properties[year]);
+          if (Math.round(f.properties[year]) === 0) return [255, 255, 255];
+          else return COLOR_SCALE_UOH(Math.round(f.properties[year]));
         },
         pickable: true,
-        onHover: _onHover,
-        onClick: _onClick,
+        onHover: onHover,
+        onClick: onClick,
         updateTriggers: {
           getFillColor: [layerIndex],
         },
@@ -109,7 +109,7 @@ export default function renderLayer(layerIndex, _onHover, _onClick) {
         id: "geojson",
         data: hexagon,
         opacity,
-        getLineColor: [255, 255, 255],
+        getLineColor: [255, 255, 255, 0],
         getFillColor: (f) => {
           if (f.properties.uoh_91 === 0 && f.properties.uoh_11 === 0) {
             return [255, 255, 255];
@@ -118,10 +118,10 @@ export default function renderLayer(layerIndex, _onHover, _onClick) {
           } else return COLOR_SCALE_change_UOH(f.properties.uoh_pchang);
         },
         pickable: true,
-        onHover: _onHover,
-        onClick: _onClick,
+        onHover: onHover,
+        onClick: onClick,
         updateTriggers: {
-          getFillColor: ["uoh_change"],
+          getFillColor: [layerIndex],
         },
       })
     );

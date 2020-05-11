@@ -2,9 +2,36 @@ import React from "react";
 import { ResponsiveLine } from "@nivo/line";
 
 export default function Graph(props) {
-  const { data, label } = props;
+  const { data, label, color } = props;
+
+  const theme = {
+    axis: {
+      legend: {
+        text: {
+          fill: "#FFFFFF",
+          fontFamily: "Futura",
+        },
+      },
+      ticks: {
+        line: {
+          stroke: "#FFFFFF",
+        },
+        text: {
+          fill: "#FFFFFF",
+          fontFamily: "Futura",
+        },
+      },
+    },
+    grid: {
+      line: {
+        stroke: "#FFFFFF",
+      },
+    },
+  };
+
   return (
     <ResponsiveLine
+      theme={theme}
       data={data}
       margin={{ top: 30, right: 60, bottom: 50, left: 60 }}
       xScale={{ type: "point" }}
@@ -15,6 +42,7 @@ export default function Graph(props) {
         stacked: true,
         reverse: false,
       }}
+      textColor="#FFFFFF"
       axisTop={null}
       axisRight={null}
       axisBottom={{
@@ -22,53 +50,25 @@ export default function Graph(props) {
         tickSize: 5,
         tickPadding: 5,
         tickRotation: 0,
-        legend: "year",
+        legend: "Year",
         legendOffset: 36,
         legendPosition: "middle",
       }}
       axisLeft={{
         orient: "left",
-        tickSize: "auto",
+        tickSize: 5,
         tickPadding: 5,
         tickRotation: 0,
         legend: label,
         legendOffset: -40,
         legendPosition: "middle",
       }}
-      colors={{ scheme: "nivo" }}
-      pointSize={10}
-      pointColor={{ theme: "background" }}
-      pointBorderWidth={2}
-      pointBorderColor={{ from: "serieColor" }}
+      colors={color}
+      pointSize={6}
+      pointBorderWidth={0}
       pointLabel="y"
       pointLabelYOffset={-12}
       useMesh={true}
-      legends={[
-        {
-          anchor: "bottom-right",
-          direction: "column",
-          justify: false,
-          translateX: 100,
-          translateY: 0,
-          itemsSpacing: 0,
-          itemDirection: "left-to-right",
-          itemWidth: 80,
-          itemHeight: 20,
-          itemOpacity: 0.75,
-          symbolSize: 12,
-          symbolShape: "circle",
-          symbolBorderColor: "rgba(0, 0, 0, .5)",
-          effects: [
-            {
-              on: "hover",
-              style: {
-                itemBackground: "rgba(0, 0, 0, .03)",
-                itemOpacity: 1,
-              },
-            },
-          ],
-        },
-      ]}
     />
   );
 }

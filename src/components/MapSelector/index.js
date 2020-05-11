@@ -1,10 +1,10 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import { useStyles } from "./styles";
 import {
   Drawer,
   List,
   ListItem,
-  ListItemText,
+  Divider,
   Typography,
   Slider,
 } from "@material-ui/core";
@@ -39,18 +39,14 @@ const marksUOH = [
   },
 ];
 
-const useStyles = makeStyles({
-  root: {
-    width: "80%",
-    marginLeft: 28,
-  },
-  backDrop: {
-    backgroundColor: "transparent",
-  },
-});
-
 function MapSelector(props) {
-  const { onClose, showMap, showMapSelector, onSliderChange, onClick } = props;
+  const {
+    onClose,
+    layerIndex,
+    showMapSelector,
+    onSliderChange,
+    onClick,
+  } = props;
   const classes = useStyles();
   return (
     <Drawer
@@ -59,61 +55,73 @@ function MapSelector(props) {
           root: classes.backDrop,
         },
       }}
+      classes={{ paper: classes.paper }}
       anchor="left"
       open={showMapSelector}
       onClose={onClose}
     >
-      <List
-        style={{
-          width: 300,
-          marginLeft: 20,
-          marginTop: 20,
-        }}
-      >
-        <Typography variant="h6" gutterBottom>
+      <List classes={{ root: classes.list }}>
+        <Typography
+          classes={{ root: classes.typography }}
+          variant="h6"
+          gutterBottom
+        >
           Population
         </Typography>
         <Slider
           defaultValue={0}
           aria-labelledby="year-slider"
           step={1}
-          value={showMap}
+          value={layerIndex >= 0 && layerIndex < 3 ? layerIndex : null}
           valueLabelDisplay="off"
           marks={marks}
           onChange={onSliderChange}
           min={0}
           max={2}
-          style={{
-            width: 250,
-            marginLeft: 20,
-            marginTop: 10,
+          classes={{
+            root: classes.root,
+            markLabel: classes.markLabel,
+            track: classes.trackPop,
+            rail: classes.trackPop,
+            thumb: classes.trackPop,
+            mark: classes.trackPop,
           }}
         ></Slider>
         <ListItem button onClick={() => onClick(3)}>
-          <ListItemText primary="Change (1991-2011)"></ListItemText>
+          <Typography classes={{ root: classes.typography }}>
+            Change (1991-2011)
+          </Typography>
         </ListItem>
-        <Typography variant="h6">Unoccupied Dwellings</Typography>
+        <Divider classes={{ root: classes.divider }} />
+        <Typography classes={{ root: classes.typography }} variant="h6">
+          Unoccupied Dwellings
+        </Typography>
         <Slider
           defaultValue={0}
           aria-labelledby="year-slider"
           step={1}
-          value={showMap}
+          value={layerIndex >= 4 && layerIndex < 7 ? layerIndex : null}
           valueLabelDisplay="off"
           marks={marksUOH}
           onChange={onSliderChange}
           min={4}
           max={6}
-          style={{
-            width: 250,
-            marginLeft: 20,
-            marginTop: 10,
+          classes={{
+            root: classes.root,
+            markLabel: classes.markLabel,
+            track: classes.trackUOH,
+            rail: classes.trackUOH,
+            thumb: classes.trackUOH,
+            mark: classes.trackUOH,
           }}
         ></Slider>
         <ListItem>
-          <ListItemText
-            primary="Change (1991-2011)"
+          <Typography
+            classes={{ root: classes.typography }}
             onClick={() => onClick(7)}
-          ></ListItemText>
+          >
+            Change (1991-2011)
+          </Typography>
         </ListItem>
       </List>
     </Drawer>

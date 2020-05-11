@@ -1,5 +1,4 @@
 import React from "react";
-import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import {
   popLegend,
@@ -27,26 +26,28 @@ export default function Legend(props) {
       if (i === legend.length - 1) {
         return [`> ${x}`, y];
       } else {
-        return [`${x} - ${legend[i + 1][0]}`, y];
+        return [`${x + 1} - ${legend[i + 1][0]}`, y];
       }
     })
     .reverse();
   updatedLegend =
     layerIndex === 3 || layerIndex === 7
       ? [...updatedLegend, ["NaN", "#808080"]]
-      : [...updatedLegend, [0, "#B0B0B0"]];
+      : [...updatedLegend, [0, "#FFFFFF"]];
 
   const { disabled } = updatedLegend;
   return (
-    <Paper
+    <div
       style={{
         position: "absolute",
         right: "24px",
         bottom: "24px",
-        padding: "12px",
+        // padding: "12px",
+        // borderRadius: "12px",
+        // backgroundColor: "#2e2e2e",
+        color: "#FFFFFF",
       }}
     >
-      <Typography variant={"h6"}>Legend</Typography>
       {updatedLegend.map((value) => {
         return (
           <div
@@ -61,12 +62,18 @@ export default function Legend(props) {
             <button
               className="legend-button"
               style={{
-                backgroundColor: disabled ? "grey" : "white",
+                backgroundColor: disabled ? "grey" : "rgba(46, 46, 46, 0.4)",
+                width:
+                  layerIndex < 3 || (layerIndex >= 4 && layerIndex <= 6)
+                    ? 120
+                    : 130,
                 border: 0.5,
-                borderColor: "black",
                 flexDirection: "row",
                 display: "inline-flex",
                 alignItems: "center",
+                marginTop: 1,
+                marginBottom: 1,
+                borderRadius: 2,
               }}
               disabled={disabled}
               onClick={onClick}
@@ -82,10 +89,11 @@ export default function Legend(props) {
                 }}
               ></div>
               <Typography
-                variant={"subtitle1"}
+                variant={"subtitle2"}
                 style={{
+                  fontFamily: "Futura",
                   marginRight: "12px",
-                  color: disabled ? "grey" : "black",
+                  color: disabled ? "grey" : "white",
                 }}
               >
                 {value[0]}
@@ -94,6 +102,6 @@ export default function Legend(props) {
           </div>
         );
       })}
-    </Paper>
+    </div>
   );
 }

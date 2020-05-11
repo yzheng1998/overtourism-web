@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { withStyles } from "@material-ui/core/styles";
 import { StaticMap } from "react-map-gl";
 import DeckGL from "@deck.gl/react";
 import renderLayer from "./utils/Layers";
@@ -23,7 +24,18 @@ const INITIAL_VIEW_STATE = {
   bearing: 0,
 };
 
-export default class BaseMap extends Component {
+const styles = (theme) => ({
+  fab: {
+    zIndex: 1,
+    marginLeft: 20,
+    marginTop: 20,
+    backgroundColor: "#2e2e2e",
+    color: "#FFFFFF",
+    fontFamily: "Futura",
+  },
+});
+
+class BaseMap extends Component {
   state = {
     hoveredObject: null,
     clickedObject: null,
@@ -58,7 +70,8 @@ export default class BaseMap extends Component {
   }
 
   render() {
-    const { mapStyle = "mapbox://styles/mapbox/dark-v10" } = this.props;
+    const { classes } = this.props;
+    const mapStyle = "mapbox://styles/mapbox/dark-v10";
     const { layerIndex } = this.state;
     return (
       <>
@@ -75,12 +88,7 @@ export default class BaseMap extends Component {
           clickedObject={this.state.clickedObject}
         />
         <Fab
-          style={{
-            zIndex: 1,
-            marginLeft: 20,
-            marginTop: 20,
-            backgroundColor: "gray",
-          }}
+          classes={{ root: classes.fab }}
           onClick={() => this.toggleDrawer()}
         >
           Menu
@@ -108,3 +116,5 @@ export default class BaseMap extends Component {
     );
   }
 }
+
+export default withStyles(styles)(BaseMap);

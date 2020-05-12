@@ -7,8 +7,9 @@ export const useStyles = makeStyles({
   },
   paper: {
     height: "200px",
-    marginLeft: "20px",
-    marginTop: "20px",
+    position: "absolute",
+    left: "20px",
+    top: "20px",
     borderRadius: "12px",
     backgroundColor: "#2e2e2e",
     color: "#FFFFFF",
@@ -26,8 +27,13 @@ export const useStyles = makeStyles({
     fontFamily: "Futura",
   },
   slider: {
-    width: 250,
+    marginLeft: 10,
+    marginRight: 10,
     marginTop: 10,
+  },
+  sliderBox: {
+    width: 200,
+    backgroundColor: "green",
   },
   markLabel: {
     color: "#FFFFFF",

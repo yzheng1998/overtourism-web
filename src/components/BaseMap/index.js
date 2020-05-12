@@ -42,11 +42,12 @@ class BaseMap extends Component {
     showMapSelector: false,
     showInfoMenu: false,
     layerIndex: 0,
+    toggleState: [],
   };
 
-  toggleDrawer() {
+  toggleDrawer = () => {
     this.setState({ showMapSelector: !this.state.showMapSelector });
-  }
+  };
 
   onHover = ({ x, y, object }) => {
     this.setState({ x, y, hoveredObject: object });
@@ -61,40 +62,60 @@ class BaseMap extends Component {
     });
   };
 
-  onClose() {
+  onClose = () => {
     this.setState({ showMapSelector: false });
-  }
+  };
 
-  onInfoMenuClose() {
+  onInfoMenuClose = () => {
     this.setState({ showInfoMenu: false });
-  }
+  };
+
+  handleToggle = (value) => {
+    const i = this.state.toggleState.indexOf(value);
+    const updatedToggleState = [...this.state.toggleState];
+    if (i === -1) {
+      updatedToggleState.push(value);
+    } else {
+      updatedToggleState.splice(i, 1);
+    }
+    this.setState({ toggleState: updatedToggleState });
+  };
 
   render() {
     const { classes } = this.props;
     const mapStyle = "mapbox://styles/mapbox/dark-v10";
-    const { layerIndex } = this.state;
+    const {
+      layerIndex,
+      toggleState,
+      showMapSelector,
+      showInfoMenu,
+      hoveredObject,
+      clickedObject,
+    } = this.state;
     return (
       <>
         <MapSelector
-          showMapSelector={this.state.showMapSelector}
+          showMapSelector={showMapSelector}
           onClose={() => this.onClose()}
           layerIndex={layerIndex}
           onSliderChange={(e, val) => this.setState({ layerIndex: val })}
           onClick={(x) => this.setState({ layerIndex: x })}
         />
         <InfoMenu
-          showMenu={this.state.showInfoMenu}
-          onClose={() => this.onInfoMenuClose()}
-          clickedObject={this.state.clickedObject}
+          showMenu={showInfoMenu}
+          onClose={this.onInfoMenuClose}
+          clickedObject={clickedObject}
         />
-        <Fab
-          classes={{ root: classes.fab }}
-          onClick={() => this.toggleDrawer()}
-        >
+        <Fab classes={{ root: classes.fab }} onClick={this.toggleDrawer}>
           Menu
         </Fab>
         <DeckGL
-          layers={renderLayer(layerIndex, this.onHover, this.onClick)}
+          layers={renderLayer(
+            layerIndex,
+            this.onHover,
+            this.onClick,
+            toggleState
+          )}
           initialViewState={INITIAL_VIEW_STATE}
           controller={true}
         >
@@ -104,12 +125,16 @@ class BaseMap extends Component {
             preventStyleDiffing={true}
             mapboxApiAccessToken={MAPBOX_TOKEN}
           />
-          <Legend layerIndex={layerIndex} />
+          <Legend
+            layerIndex={layerIndex}
+            toggleState={toggleState}
+            onClick={this.handleToggle}
+          ></Legend>
           <ToolTip
             x={this.state.x}
             y={this.state.y}
-            hoveredObject={this.state.hoveredObject}
-            layerIndex={this.state.layerIndex}
+            hoveredObject={hoveredObject}
+            layerIndex={layerIndex}
           />
         </DeckGL>
       </>

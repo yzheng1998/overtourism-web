@@ -8,7 +8,7 @@ import {
 } from "../BaseMap/utils/ColorScales";
 
 export default function Legend(props) {
-  const { layerIndex, onClick } = props;
+  const { layerIndex, onClick, toggleState } = props;
 
   const isPop = layerIndex >= 0 && layerIndex < 3;
   const isPopChange = layerIndex === 3;
@@ -43,7 +43,10 @@ export default function Legend(props) {
     updatedLegend = legend;
   }
 
-  const { disabled } = updatedLegend;
+  const disabled = (value) => {
+    return toggleState.includes(value);
+  };
+
   return (
     <div
       style={{
@@ -67,7 +70,9 @@ export default function Legend(props) {
             <button
               className="legend-button"
               style={{
-                backgroundColor: disabled ? "grey" : "rgba(46, 46, 46, 0.4)",
+                backgroundColor: disabled(value[1])
+                  ? "rgba(46,46,46,.2)"
+                  : "rgba(46, 46, 46, 0.8)",
                 width:
                   layerIndex < 3 || (layerIndex >= 4 && layerIndex <= 6)
                     ? 120
@@ -80,8 +85,7 @@ export default function Legend(props) {
                 marginBottom: 1,
                 borderRadius: 2,
               }}
-              disabled={disabled}
-              onClick={onClick}
+              onClick={() => onClick(value[1])}
             >
               <div
                 className="legend-color"
@@ -98,7 +102,8 @@ export default function Legend(props) {
                 style={{
                   fontFamily: "Futura",
                   marginRight: "12px",
-                  color: disabled ? "grey" : "white",
+                  color: "white",
+                  opacity: disabled(value[1]) ? 0.5 : 1,
                 }}
               >
                 {value[0]}

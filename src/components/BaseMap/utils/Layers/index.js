@@ -8,7 +8,7 @@ import {
   COLOR_SCALE_change_UOH,
 } from "../ColorScales";
 
-export default function renderLayer(layerIndex, onHover, onClick) {
+export default function renderLayer(layerIndex, onHover, onClick, toggleState) {
   var year;
   switch (layerIndex) {
     case 0:
@@ -45,14 +45,13 @@ export default function renderLayer(layerIndex, onHover, onClick) {
         opacity,
         getLineColor: [255, 255, 255, 0],
         getFillColor: (f) => {
-          if (Math.round(f.properties[year]) === 0) return [255, 255, 255];
-          else return COLOR_SCALE(Math.round(f.properties[year]));
+          return COLOR_SCALE(Math.round(f.properties[year]), toggleState);
         },
         pickable: true,
         onHover: onHover,
         onClick: onClick,
         updateTriggers: {
-          getFillColor: [layerIndex],
+          getFillColor: [layerIndex, toggleState],
         },
       })
     );
@@ -66,17 +65,18 @@ export default function renderLayer(layerIndex, onHover, onClick) {
         opacity,
         getLineColor: [255, 255, 255, 0],
         getFillColor: (f) => {
-          if (f.properties.pop_91 === 0 && f.properties.pop_11 === 0) {
-            return [255, 255, 255];
-          } else if (f.properties.pop_91 === 0) {
-            return [128, 128, 128];
-          } else return COLOR_SCALE_change(f.properties.pop_mult);
+          return COLOR_SCALE_change(
+            f.properties.pop_mult,
+            toggleState,
+            f.properties.pop_91,
+            f.properties.pop_11
+          );
         },
         pickable: true,
         onHover: onHover,
         onClick: onClick,
         updateTriggers: {
-          getFillColor: [layerIndex],
+          getFillColor: [layerIndex, toggleState],
         },
       })
     );
@@ -90,14 +90,13 @@ export default function renderLayer(layerIndex, onHover, onClick) {
         opacity,
         getLineColor: [255, 255, 255, 0],
         getFillColor: (f) => {
-          if (Math.round(f.properties[year]) === 0) return [255, 255, 255];
-          else return COLOR_SCALE_UOH(Math.round(f.properties[year]));
+          return COLOR_SCALE_UOH(Math.round(f.properties[year]), toggleState);
         },
         pickable: true,
         onHover: onHover,
         onClick: onClick,
         updateTriggers: {
-          getFillColor: [layerIndex],
+          getFillColor: [layerIndex, toggleState],
         },
       })
     );
@@ -111,17 +110,18 @@ export default function renderLayer(layerIndex, onHover, onClick) {
         opacity,
         getLineColor: [255, 255, 255, 0],
         getFillColor: (f) => {
-          if (f.properties.uoh_91 === 0 && f.properties.uoh_11 === 0) {
-            return [255, 255, 255];
-          } else if (f.properties.uoh_91 === 0) {
-            return [128, 128, 128];
-          } else return COLOR_SCALE_change_UOH(f.properties.uoh_mult);
+          return COLOR_SCALE_change_UOH(
+            f.properties.uoh_mult,
+            toggleState,
+            f.properties.uoh_91,
+            f.properties.uoh_11
+          );
         },
         pickable: true,
         onHover: onHover,
         onClick: onClick,
         updateTriggers: {
-          getFillColor: [layerIndex],
+          getFillColor: [layerIndex, toggleState],
         },
       })
     );

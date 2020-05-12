@@ -66,7 +66,7 @@ export default function ToolTip(props) {
       {layerIndex === 3 && (
         <>
           <Typography classes={{ root: classes.title }}>
-            Population (Fraction of 1991)
+            Population (Ratio of 1991)
           </Typography>
           <Typography classes={{ root: classes.body }}>
             {hoveredObject.properties.pop_91 === 0
@@ -113,7 +113,7 @@ export default function ToolTip(props) {
       {layerIndex === 7 && (
         <>
           <Typography classes={{ root: classes.title }}>
-            Unoccupied Dwellings (Fraction of 1991)
+            Unoccupied Dwellings (Ratio of 1991)
           </Typography>
           <Typography classes={{ root: classes.body }}>
             {hoveredObject.properties.uoh_91 === 0

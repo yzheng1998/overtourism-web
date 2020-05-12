@@ -7,17 +7,17 @@ export const popLegend = [0, ...popSplit].map((a, i) => [
   d3.schemeReds[6][i],
 ]);
 
-const popChangeSplit = [0.2, 0.5, 0.99, 1.01, 2, 5];
+const popChangeSplit = [0.5, 0.75, 0.99, 1.01, 1.5, 2];
 export const popChangeLegend = [
-  "<1/5x",
-  "1/5x - 1/2x",
-  "1/2x - 1x",
+  "<.5x",
+  ".5x - .75x",
+  ".75x - 1x",
   "No Change",
-  "1x - 2x",
-  "2x - 5x",
-  ">5x",
+  "1x - 1.5x",
+  "1.5x - 2x",
+  ">2x",
 ]
-  .map((a, i) => [a, d3.schemePuOr[7][i]])
+  .map((a, i) => [a, d3.schemePiYG[7][i]])
   .reverse()
   .concat([["NaN", "#808080"]]);
 
@@ -27,7 +27,7 @@ export const uohLegend = [0, ...uohSplit].map((a, i) => [
   d3.schemeGreens[6][i],
 ]);
 
-const uohChangeSplit = popChangeSplit;
+const uohChangeSplit = [0.2, 0.5, 0.99, 1.01, 2, 5];
 export const uohChangeLegend = [
   "<1/5x",
   "1/5x - 1/2x",
@@ -41,38 +41,42 @@ export const uohChangeLegend = [
   .reverse()
   .concat([["NaN", "#808080"]]);
 
-export const COLOR_SCALE = d3
-  .scaleThreshold()
-  .domain(popSplit)
-  .range(
-    d3.schemeReds[6]
-      .map((f) => hexRgb(f, { format: "array" }))
-      .map((f) => f.slice(0, 3))
-  );
+export const COLOR_SCALE = (i, toggleState) => {
+  var x = d3.scaleThreshold().domain(popSplit).range(d3.schemeReds[6])(i);
+  if (i === 0) x = "#FFFFFF";
+  if (toggleState.includes(x)) {
+    return hexRgb(x, { format: "array" }).slice(0, 3).concat([0]);
+  } else return hexRgb(x, { format: "array" }).slice(0, 3);
+};
 
-export const COLOR_SCALE_change = d3
-  .scaleThreshold()
-  .domain(popChangeSplit)
-  .range(
-    d3.schemePuOr[7]
-      .map((f) => hexRgb(f, { format: "array" }))
-      .map((f) => f.slice(0, 3))
-  );
+export const COLOR_SCALE_change = (i, toggleState, pop91, pop11) => {
+  var x = d3.scaleThreshold().domain(popChangeSplit).range(d3.schemePiYG[7])(i);
+  if (pop91 === 0 && pop11 === 0) {
+    x = "#f7f7f7";
+  } else if (pop91 === 0) {
+    x = "#808080";
+  }
+  if (toggleState.includes(x)) {
+    return hexRgb(x, { format: "array" }).slice(0, 3).concat([0]);
+  } else return hexRgb(x, { format: "array" }).slice(0, 3);
+};
 
-export const COLOR_SCALE_UOH = d3
-  .scaleThreshold()
-  .domain(uohSplit)
-  .range(
-    d3.schemeGreens[6]
-      .map((f) => hexRgb(f, { format: "array" }))
-      .map((f) => f.slice(0, 3))
-  );
+export const COLOR_SCALE_UOH = (i, toggleState) => {
+  var x = d3.scaleThreshold().domain(uohSplit).range(d3.schemeGreens[6])(i);
+  if (i === 0) x = "#FFFFFF";
+  if (toggleState.includes(x)) {
+    return hexRgb(x, { format: "array" }).slice(0, 3).concat([0]);
+  } else return hexRgb(x, { format: "array" }).slice(0, 3);
+};
 
-export const COLOR_SCALE_change_UOH = d3
-  .scaleThreshold()
-  .domain(uohChangeSplit)
-  .range(
-    d3.schemePuOr[7]
-      .map((f) => hexRgb(f, { format: "array" }))
-      .map((f) => f.slice(0, 3))
-  );
+export const COLOR_SCALE_change_UOH = (i, toggleState, uoh91, uoh11) => {
+  var x = d3.scaleThreshold().domain(uohChangeSplit).range(d3.schemePuOr[7])(i);
+  if (uoh91 === 0 && uoh11 === 0) {
+    x = "#f7f7f7";
+  } else if (uoh91 === 0) {
+    x = "#808080";
+  }
+  if (toggleState.includes(x)) {
+    return hexRgb(x, { format: "array" }).slice(0, 3).concat([0]);
+  } else return hexRgb(x, { format: "array" }).slice(0, 3);
+};

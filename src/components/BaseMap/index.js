@@ -32,7 +32,8 @@ const styles = (theme) => ({
     marginTop: 20,
     backgroundColor: "#2e2e2e",
     color: "#FFFFFF",
-    fontFamily: "Futura",
+    fontWeight: "bold",
+    fontFamily: "Helvetica",
   },
 });
 

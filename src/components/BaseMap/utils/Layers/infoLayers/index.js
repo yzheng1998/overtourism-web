@@ -6,7 +6,7 @@ import { transitLines } from "../../../../../geojson/transitLines.js";
 
 export const infoArray = [
   { id: "transitLines", name: "Transit Lines", color: "rgb(255, 0, 0)" },
-  { id: "stops", name: "Stops", color: "rgb(62, 98, 156)" },
+  { id: "stops", name: "Stops", color: "rgb(182, 252, 207)" },
   { id: "groceries", name: "Groceries", color: "rgb(207, 23, 185)" },
   { id: "schools", name: "Schools", color: "rgb(245, 227, 27)" },
 ];
@@ -27,6 +27,7 @@ export default function infoLayers(infoToggleState, onHover, onClick) {
         data: transitLines,
         opacity,
         getLineColor: [255, 0, 0],
+        stroked: false,
         getLineWidth: 6,
       })
     );
@@ -38,7 +39,8 @@ export default function infoLayers(infoToggleState, onHover, onClick) {
         data: stops,
         opacity,
         getRadius: 20,
-        getFillColor: [62, 98, 156],
+        stroked: false,
+        getFillColor: [182, 252, 207],
       })
     );
 
@@ -48,6 +50,7 @@ export default function infoLayers(infoToggleState, onHover, onClick) {
         id: "groceries",
         data: groceries,
         opacity,
+        stroked: false,
         getRadius: 20,
         getFillColor: [207, 23, 185],
       })
@@ -59,6 +62,7 @@ export default function infoLayers(infoToggleState, onHover, onClick) {
         id: "schools",
         data: schools,
         opacity,
+        stroked: false,
         getRadius: 20,
         getFillColor: [245, 227, 27],
       })

@@ -20,14 +20,14 @@ const useStyles = makeStyles({
   },
   typography: {
     color: "#FFFFFF",
-    fontFamily: "Futura",
+    fontFamily: "Helvetica",
     fontSize: 14,
   },
   graphTitle: {
     marginTop: 15,
     color: "#FFFFFF",
     alignSelf: "center",
-    fontFamily: "Futura",
+    fontFamily: "Helvetica",
     fontSize: 18,
   },
 });

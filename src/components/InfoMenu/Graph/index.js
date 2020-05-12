@@ -9,7 +9,7 @@ export default function Graph(props) {
       legend: {
         text: {
           fill: "#FFFFFF",
-          fontFamily: "Futura",
+          fontFamily: "Helvetica",
         },
       },
       ticks: {
@@ -18,7 +18,7 @@ export default function Graph(props) {
         },
         text: {
           fill: "#FFFFFF",
-          fontFamily: "Futura",
+          fontFamily: "Helvetica",
         },
       },
     },

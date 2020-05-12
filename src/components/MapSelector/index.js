@@ -61,11 +61,7 @@ function MapSelector(props) {
       onClose={onClose}
     >
       <List classes={{ root: classes.list }}>
-        <Typography
-          classes={{ root: classes.typography }}
-          variant="h6"
-          gutterBottom
-        >
+        <Typography classes={{ root: classes.title }} variant="h6" gutterBottom>
           Population
         </Typography>
         <Slider
@@ -88,12 +84,12 @@ function MapSelector(props) {
           }}
         ></Slider>
         <ListItem button onClick={() => onClick(3)}>
-          <Typography classes={{ root: classes.typography }}>
+          <Typography classes={{ root: classes.subtitle }}>
             Change (1991-2011)
           </Typography>
         </ListItem>
         <Divider classes={{ root: classes.divider }} />
-        <Typography classes={{ root: classes.typography }} variant="h6">
+        <Typography classes={{ root: classes.title }} variant="h6">
           Unoccupied Dwellings
         </Typography>
         <Slider
@@ -117,7 +113,7 @@ function MapSelector(props) {
         ></Slider>
         <ListItem>
           <Typography
-            classes={{ root: classes.typography }}
+            classes={{ root: classes.subtitle }}
             onClick={() => onClick(7)}
           >
             Change (1991-2011)

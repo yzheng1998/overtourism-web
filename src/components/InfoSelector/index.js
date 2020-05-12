@@ -35,7 +35,7 @@ export default function InfoSelector(props) {
                 backgroundColor: display(id)
                   ? "rgba(46, 46, 46, 0.8)"
                   : "rgba(46, 46, 46, 0.2)",
-                width: 130,
+                width: 140,
                 border: 0.5,
                 flexDirection: "row",
                 display: "inline-flex",
@@ -59,8 +59,9 @@ export default function InfoSelector(props) {
               <Typography
                 variant={"subtitle2"}
                 style={{
-                  fontFamily: "Futura",
+                  fontFamily: "Helvetica",
                   marginRight: "12px",
+                  fontWeight: "bold",
                   color: "white",
                   opacity: display(id) ? 1 : 0.5,
                 }}

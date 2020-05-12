@@ -8,12 +8,12 @@ export default function ToolTip(props) {
   const useStyles = makeStyles({
     title: {
       color: "#FFFFFF",
-      fontFamily: "Futura",
+      fontFamily: "Helvetica",
       fontSize: 12,
     },
     body: {
       color: "#FFFFFF",
-      fontFamily: "Futura",
+      fontFamily: "Helvetica",
       fontSize: 10,
     },
   });

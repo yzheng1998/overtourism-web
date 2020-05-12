@@ -88,19 +88,36 @@ export default function Legend(props) {
               onClick={() => onClick(value[1])}
             >
               <div
+                style={{
+                  float: "left",
+                  borderRight: `3px solid ${value[1]}`,
+                  borderTop: "5.2px solid transparent",
+                  borderBottom: "5.2px solid transparent",
+                }}
+              ></div>
+              <div
                 className="legend-color"
                 style={{
+                  float: "left",
+                  width: "6px",
+                  height: "10.4px",
                   backgroundColor: value[1],
-                  height: "10px",
-                  width: "10px",
-                  borderRadius: "6px",
+                }}
+              ></div>
+              <div
+                style={{
+                  float: "left",
+                  borderLeft: `3px solid ${value[1]}`,
+                  borderTop: "5.2px solid transparent",
+                  borderBottom: "5.2px solid transparent",
                   marginRight: "12px",
                 }}
               ></div>
+
               <Typography
                 variant={"subtitle2"}
                 style={{
-                  fontFamily: "Futura",
+                  fontFamily: "Helvetica",
                   marginRight: "12px",
                   color: "white",
                   opacity: disabled(value[1]) ? 0.5 : 1,

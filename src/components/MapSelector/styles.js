@@ -23,8 +23,12 @@ export const useStyles = makeStyles({
     paddingRight: 20,
     marginTop: 20,
   },
-  typography: {
-    fontFamily: "Futura",
+  title: {
+    fontFamily: "Helvetica",
+    fontWeight: "bold",
+  },
+  subtitle: {
+    fontFamily: "Helvetica",
   },
   slider: {
     marginLeft: 10,
@@ -37,7 +41,7 @@ export const useStyles = makeStyles({
   },
   markLabel: {
     color: "#FFFFFF",
-    fontFamily: "Futura",
+    fontFamily: "Helvetica",
   },
   trackPop: {
     backgroundColor: "#EB7254",

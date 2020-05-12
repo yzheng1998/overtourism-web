@@ -1,5 +1,6 @@
 import { GeoJsonLayer } from "@deck.gl/layers";
 import { hexagon } from "../../../../geojson/hexagon.js";
+import infoLayers from "./infoLayers";
 
 import {
   COLOR_SCALE,
@@ -8,7 +9,13 @@ import {
   COLOR_SCALE_change_UOH,
 } from "../ColorScales";
 
-export default function renderLayer(layerIndex, onHover, onClick, toggleState) {
+export default function renderLayer(
+  layerIndex,
+  onHover,
+  onClick,
+  toggleState,
+  infoToggleState
+) {
   var year;
   switch (layerIndex) {
     case 0:
@@ -40,7 +47,7 @@ export default function renderLayer(layerIndex, onHover, onClick, toggleState) {
   if (layerIndex >= 0 && layerIndex < 3) {
     layers.push(
       new GeoJsonLayer({
-        id: "geojson",
+        id: "pop",
         data: hexagon,
         opacity,
         getLineColor: [255, 255, 255, 0],
@@ -60,7 +67,7 @@ export default function renderLayer(layerIndex, onHover, onClick, toggleState) {
   if (layerIndex === 3) {
     layers.push(
       new GeoJsonLayer({
-        id: "geojson",
+        id: "popChange",
         data: hexagon,
         opacity,
         getLineColor: [255, 255, 255, 0],
@@ -85,7 +92,7 @@ export default function renderLayer(layerIndex, onHover, onClick, toggleState) {
   if (layerIndex >= 4 && layerIndex < 7) {
     layers.push(
       new GeoJsonLayer({
-        id: "geojson",
+        id: "uoh",
         data: hexagon,
         opacity,
         getLineColor: [255, 255, 255, 0],
@@ -105,7 +112,7 @@ export default function renderLayer(layerIndex, onHover, onClick, toggleState) {
   if (layerIndex === 7) {
     layers.push(
       new GeoJsonLayer({
-        id: "geojson",
+        id: "uohChange",
         data: hexagon,
         opacity,
         getLineColor: [255, 255, 255, 0],
@@ -126,5 +133,6 @@ export default function renderLayer(layerIndex, onHover, onClick, toggleState) {
       })
     );
   }
-  return layers;
+
+  return layers.concat(infoLayers(infoToggleState));
 }

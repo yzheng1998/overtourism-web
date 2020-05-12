@@ -4,6 +4,7 @@ import { StaticMap } from "react-map-gl";
 import DeckGL from "@deck.gl/react";
 import renderLayer from "./utils/Layers";
 
+import InfoSelector from "../InfoSelector";
 import InfoMenu from "../InfoMenu";
 import Legend from "../Legend";
 import ToolTip from "./ToolTip";
@@ -43,8 +44,9 @@ class BaseMap extends Component {
     showInfoMenu: false,
     layerIndex: 0,
     toggleState: [],
+    visibleInfo: [],
+    infoToggleState: [],
   };
-
   toggleDrawer = () => {
     this.setState({ showMapSelector: !this.state.showMapSelector });
   };
@@ -81,6 +83,17 @@ class BaseMap extends Component {
     this.setState({ toggleState: updatedToggleState });
   };
 
+  handleInfoToggle = (value) => {
+    const i = this.state.infoToggleState.indexOf(value);
+    const updatedToggleState = [...this.state.infoToggleState];
+    if (i === -1) {
+      updatedToggleState.push(value);
+    } else {
+      updatedToggleState.splice(i, 1);
+    }
+    this.setState({ infoToggleState: updatedToggleState });
+  };
+
   render() {
     const { classes } = this.props;
     const mapStyle = "mapbox://styles/mapbox/dark-v10";
@@ -91,7 +104,9 @@ class BaseMap extends Component {
       showInfoMenu,
       hoveredObject,
       clickedObject,
+      infoToggleState,
     } = this.state;
+
     return (
       <>
         <MapSelector
@@ -114,7 +129,8 @@ class BaseMap extends Component {
             layerIndex,
             this.onHover,
             this.onClick,
-            toggleState
+            toggleState,
+            infoToggleState
           )}
           initialViewState={INITIAL_VIEW_STATE}
           controller={true}
@@ -130,6 +146,10 @@ class BaseMap extends Component {
             toggleState={toggleState}
             onClick={this.handleToggle}
           ></Legend>
+          <InfoSelector
+            infoToggleState={infoToggleState}
+            onClick={this.handleInfoToggle}
+          />
           <ToolTip
             x={this.state.x}
             y={this.state.y}

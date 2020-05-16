@@ -15,7 +15,7 @@ export default function infoLayers(infoToggleState, onHover, onClick) {
   let layers = [];
 
   const display = (id) => {
-    return infoToggleState.includes(id);
+    return !infoToggleState.includes(id);
   };
 
   const opacity = 1;
@@ -29,6 +29,9 @@ export default function infoLayers(infoToggleState, onHover, onClick) {
         getLineColor: [255, 0, 0],
         stroked: false,
         getLineWidth: 6,
+        pickable: true,
+        onHover: onHover,
+        onClick: onClick,
       })
     );
 
@@ -41,6 +44,9 @@ export default function infoLayers(infoToggleState, onHover, onClick) {
         getRadius: 20,
         stroked: false,
         getFillColor: [182, 252, 207],
+        pickable: true,
+        onHover: onHover,
+        onClick: onClick,
       })
     );
 
@@ -53,6 +59,9 @@ export default function infoLayers(infoToggleState, onHover, onClick) {
         stroked: false,
         getRadius: 20,
         getFillColor: [207, 23, 185],
+        pickable: true,
+        onHover: onHover,
+        onClick: onClick,
       })
     );
 
@@ -65,6 +74,9 @@ export default function infoLayers(infoToggleState, onHover, onClick) {
         stroked: false,
         getRadius: 20,
         getFillColor: [245, 227, 27],
+        pickable: true,
+        onHover: onHover,
+        onClick: onClick,
       })
     );
 

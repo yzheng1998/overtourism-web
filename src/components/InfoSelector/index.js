@@ -6,7 +6,7 @@ export default function InfoSelector(props) {
   const { infoToggleState, onClick } = props;
 
   const display = (id) => {
-    return infoToggleState.includes(id);
+    return !infoToggleState.includes(id);
   };
 
   return (
@@ -14,7 +14,7 @@ export default function InfoSelector(props) {
       style={{
         position: "absolute",
         right: "24px",
-        top: "24px",
+        bottom: "24px",
         color: "#FFFFFF",
       }}
     >

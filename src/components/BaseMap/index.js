@@ -1,7 +1,12 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
-import { StaticMap } from "react-map-gl";
+import {
+  _MapContext as MapContext,
+  StaticMap,
+  NavigationControl,
+} from "react-map-gl";
 import DeckGL from "@deck.gl/react";
+import { MapController } from "deck.gl";
 import renderLayer from "./utils/Layers";
 
 import InfoSelector from "../InfoSelector";
@@ -96,7 +101,7 @@ class BaseMap extends Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, mapIndex } = this.props;
     const mapStyle = "mapbox://styles/mapbox/dark-v10";
     const {
       layerIndex,
@@ -110,47 +115,64 @@ class BaseMap extends Component {
 
     return (
       <>
-        <MapSelector
-          showMapSelector={showMapSelector}
-          onClose={() => this.onClose()}
-          layerIndex={layerIndex}
-          onSliderChange={(e, val) => this.setState({ layerIndex: val })}
-          onClick={(x) => this.setState({ layerIndex: x })}
-        />
-        <InfoMenu
-          showMenu={showInfoMenu}
-          onClose={this.onInfoMenuClose}
-          clickedObject={clickedObject}
-        />
-        <Fab classes={{ root: classes.fab }} onClick={this.toggleDrawer}>
-          Menu
-        </Fab>
+        {mapIndex === 1 && (
+          <>
+            <MapSelector
+              showMapSelector={showMapSelector}
+              onClose={() => this.onClose()}
+              layerIndex={layerIndex}
+              onSliderChange={(e, val) => this.setState({ layerIndex: val })}
+              onClick={(x) => this.setState({ layerIndex: x })}
+            />
+            <InfoMenu
+              showMenu={showInfoMenu}
+              onClose={this.onInfoMenuClose}
+              clickedObject={clickedObject}
+            />
+            <Fab classes={{ root: classes.fab }} onClick={this.toggleDrawer}>
+              Menu
+            </Fab>
+          </>
+        )}
+
         <DeckGL
           layers={renderLayer(
             layerIndex,
             this.onHover,
             this.onClick,
             toggleState,
-            infoToggleState
+            infoToggleState,
+            mapIndex
           )}
+          ContextProvider={MapContext.Provider}
           initialViewState={INITIAL_VIEW_STATE}
-          controller={true}
+          controller={{ type: MapController, scrollZoom: false }}
         >
+          <div className="mapboxgl-ctrl-top-right">
+            <NavigationControl
+              onViewportChange={(viewport) => this.setState({ viewport })}
+            />
+          </div>
           <StaticMap
             reuseMaps
             mapStyle={mapStyle}
             preventStyleDiffing={true}
             mapboxApiAccessToken={MAPBOX_TOKEN}
-          />
-          <Legend
-            layerIndex={layerIndex}
-            toggleState={toggleState}
-            onClick={this.handleToggle}
-          ></Legend>
-          <InfoSelector
-            infoToggleState={infoToggleState}
-            onClick={this.handleInfoToggle}
-          />
+          ></StaticMap>
+          {mapIndex === 1 && (
+            <Legend
+              layerIndex={layerIndex}
+              toggleState={toggleState}
+              onClick={this.handleToggle}
+            ></Legend>
+          )}
+          {mapIndex === 2 && (
+            <InfoSelector
+              infoToggleState={infoToggleState}
+              onClick={this.handleInfoToggle}
+            />
+          )}
+
           <ToolTip
             x={this.state.x}
             y={this.state.y}

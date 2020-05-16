@@ -1,6 +1,10 @@
 import { GeoJsonLayer } from "@deck.gl/layers";
 import { hexagon } from "../../../../geojson/hexagon.js";
-import infoLayers from "./infoLayers";
+import map2Layers from "./map2Layers";
+import map3Layers from "./map3Layers";
+import map4Layers from "./map4Layers";
+import map5Layers from "./map5Layers";
+import map6Layers from "./map6Layers";
 
 import {
   COLOR_SCALE,
@@ -14,7 +18,11 @@ export default function renderLayer(
   onHover,
   onClick,
   toggleState,
-  infoToggleState,
+  map2State,
+  map3State,
+  map4State,
+  map5State,
+  map6State,
   mapIndex
 ) {
   var year;
@@ -138,7 +146,23 @@ export default function renderLayer(
   }
 
   if (mapIndex === 2) {
-    layers.push(infoLayers(infoToggleState, onHover));
+    layers.push(map2Layers(map2State, onHover));
+  }
+
+  if (mapIndex === 3) {
+    layers.push(map3Layers(map3State, onHover));
+  }
+
+  if (mapIndex === 4) {
+    layers.push(map4Layers(map4State, onHover));
+  }
+
+  if (mapIndex === 5) {
+    layers.push(map5Layers(map5State, onHover));
+  }
+
+  if (mapIndex === 6) {
+    layers.push(map6Layers(map6State, onHover));
   }
 
   return layers;

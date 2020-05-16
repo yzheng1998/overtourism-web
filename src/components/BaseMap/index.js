@@ -9,7 +9,8 @@ import DeckGL from "@deck.gl/react";
 import { MapController } from "deck.gl";
 import renderLayer from "./utils/Layers";
 
-import InfoSelector from "../InfoSelector";
+import Map2Legend from "../Legend/Map2Legend";
+import Map3Legend from "../Legend/Map3Legend";
 import InfoMenu from "../InfoMenu";
 import Legend from "../Legend";
 import ToolTip from "./ToolTip";
@@ -51,7 +52,11 @@ class BaseMap extends Component {
     layerIndex: 0,
     toggleState: [],
     visibleInfo: [],
-    infoToggleState: [],
+    map2State: [],
+    map3State: [],
+    map4State: [],
+    map5State: [],
+    map6State: [],
   };
   toggleDrawer = () => {
     this.setState({ showMapSelector: !this.state.showMapSelector });
@@ -78,26 +83,15 @@ class BaseMap extends Component {
     this.setState({ showInfoMenu: false });
   };
 
-  handleToggle = (value) => {
-    const i = this.state.toggleState.indexOf(value);
-    const updatedToggleState = [...this.state.toggleState];
+  handleToggle = (value, stateName) => {
+    const i = this.state[stateName].indexOf(value);
+    const updatedToggleState = [...this.state[stateName]];
     if (i === -1) {
       updatedToggleState.push(value);
     } else {
       updatedToggleState.splice(i, 1);
     }
-    this.setState({ toggleState: updatedToggleState });
-  };
-
-  handleInfoToggle = (value) => {
-    const i = this.state.infoToggleState.indexOf(value);
-    const updatedToggleState = [...this.state.infoToggleState];
-    if (i === -1) {
-      updatedToggleState.push(value);
-    } else {
-      updatedToggleState.splice(i, 1);
-    }
-    this.setState({ infoToggleState: updatedToggleState });
+    this.setState({ [stateName]: updatedToggleState });
   };
 
   render() {
@@ -110,7 +104,11 @@ class BaseMap extends Component {
       showInfoMenu,
       hoveredObject,
       clickedObject,
-      infoToggleState,
+      map2State,
+      map3State,
+      map4State,
+      map5State,
+      map6State,
     } = this.state;
 
     return (
@@ -141,7 +139,11 @@ class BaseMap extends Component {
             this.onHover,
             this.onClick,
             toggleState,
-            infoToggleState,
+            map2State,
+            map3State,
+            map4State,
+            map5State,
+            map6State,
             mapIndex
           )}
           ContextProvider={MapContext.Provider}
@@ -150,6 +152,7 @@ class BaseMap extends Component {
         >
           <div className="mapboxgl-ctrl-top-right">
             <NavigationControl
+              showCompass={false}
               onViewportChange={(viewport) => this.setState({ viewport })}
             />
           </div>
@@ -163,13 +166,19 @@ class BaseMap extends Component {
             <Legend
               layerIndex={layerIndex}
               toggleState={toggleState}
-              onClick={this.handleToggle}
+              onClick={(x) => this.handleToggle(x, "toggleState")}
             ></Legend>
           )}
           {mapIndex === 2 && (
-            <InfoSelector
-              infoToggleState={infoToggleState}
-              onClick={this.handleInfoToggle}
+            <Map2Legend
+              map2State={map2State}
+              onClick={(x) => this.handleToggle(x, "map2State")}
+            />
+          )}
+          {mapIndex === 3 && (
+            <Map3Legend
+              map3State={map3State}
+              onClick={(x) => this.handleToggle(x, "map3State")}
             />
           )}
 

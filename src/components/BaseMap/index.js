@@ -97,6 +97,7 @@ class BaseMap extends Component {
   render() {
     const { classes, mapIndex } = this.props;
     const mapStyle = "mapbox://styles/mapbox/dark-v10";
+    console.log("mapIndex", mapIndex);
     const {
       layerIndex,
       toggleState,

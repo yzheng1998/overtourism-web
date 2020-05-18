@@ -6,8 +6,9 @@ import map5Layers from "./map5Layers";
 import map6Layers from "./map6Layers";
 
 export default function renderLayer(
-  layerIndex,
+  map1LayerIndex,
   map4LayerIndex,
+  map5LayerIndex,
   onHover,
   onClick,
   map1State,
@@ -15,6 +16,7 @@ export default function renderLayer(
   map3State,
   map4State,
   map5State,
+  urbanFormState,
   map6State,
   mapIndex
 ) {
@@ -22,7 +24,7 @@ export default function renderLayer(
 
   switch (mapIndex) {
     case 1:
-      layers.push(map1Layers(layerIndex, map1State, onHover, onClick));
+      layers.push(map1Layers(map1LayerIndex, map1State, onHover, onClick));
       break;
     case 2:
       layers.push(map2Layers(map2State, onHover));
@@ -34,7 +36,9 @@ export default function renderLayer(
       layers.push(map4Layers(map4LayerIndex, map4State, onHover));
       break;
     case 5:
-      layers.push(map5Layers(map5State, onHover));
+      layers.push(
+        map5Layers(map5LayerIndex, map5State, urbanFormState, onHover)
+      );
       break;
     case 6:
       layers.push(map6Layers(map6State, onHover));

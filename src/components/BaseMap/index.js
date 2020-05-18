@@ -13,12 +13,17 @@ import Map1Legend from "../Legend/Map1Legend";
 import Map2Legend from "../Legend/Map2Legend";
 import Map3Legend from "../Legend/Map3Legend";
 import Map4Legend from "../Legend/Map4Legend";
+import Map5Legend from "../Legend/Map5Legend";
+
 import InfoMenu from "../InfoMenu";
 import ToolTip from "./ToolTip";
 
 import { Fab } from "@material-ui/core";
 import MapSelector from "../Map1Selector";
 import Map4Selector from "../Map4Selector";
+import Map5Selector from "../Map5Selector";
+
+import UrbanFormSelector from "../UrbanFormSelector";
 
 // Set your mapbox token here
 const MAPBOX_TOKEN =
@@ -51,14 +56,16 @@ class BaseMap extends Component {
     clickedObject: null,
     showMapSelector: false,
     showInfoMenu: false,
-    layerIndex: 0,
+    map1LayerIndex: 0,
     map4LayerIndex: 1,
+    map5LayerIndex: 1,
     visibleInfo: [],
     map1State: [],
     map2State: [],
     map3State: [],
     map4State: [],
     map5State: [],
+    urbanFormState: [],
     map6State: [],
   };
   toggleDrawer = () => {
@@ -101,8 +108,9 @@ class BaseMap extends Component {
     const { classes, mapIndex } = this.props;
     const mapStyle = "mapbox://styles/mapbox/dark-v10";
     const {
-      layerIndex,
+      map1LayerIndex,
       map4LayerIndex,
+      map5LayerIndex,
       map1State,
       showMapSelector,
       showInfoMenu,
@@ -112,6 +120,7 @@ class BaseMap extends Component {
       map3State,
       map4State,
       map5State,
+      urbanFormState,
       map6State,
     } = this.state;
 
@@ -122,9 +131,11 @@ class BaseMap extends Component {
             <MapSelector
               showMapSelector={showMapSelector}
               onClose={() => this.onClose()}
-              layerIndex={layerIndex}
-              onSliderChange={(e, val) => this.setState({ layerIndex: val })}
-              onClick={(x) => this.setState({ layerIndex: x })}
+              layerIndex={map1LayerIndex}
+              onSliderChange={(e, val) =>
+                this.setState({ map1LayerIndex: val })
+              }
+              onClick={(x) => this.setState({ map1LayerIndex: x })}
             />
             <InfoMenu
               showMenu={showInfoMenu}
@@ -139,8 +150,9 @@ class BaseMap extends Component {
 
         <DeckGL
           layers={renderLayer(
-            layerIndex,
+            map1LayerIndex,
             map4LayerIndex,
+            map5LayerIndex,
             this.onHover,
             this.onClick,
             map1State,
@@ -148,6 +160,7 @@ class BaseMap extends Component {
             map3State,
             map4State,
             map5State,
+            urbanFormState,
             map6State,
             mapIndex
           )}
@@ -169,7 +182,7 @@ class BaseMap extends Component {
           ></StaticMap>
           {mapIndex === 1 && (
             <Map1Legend
-              layerIndex={layerIndex}
+              layerIndex={map1LayerIndex}
               mapState={map1State}
               onClick={(x) => this.handleToggle(x, "map1State")}
             ></Map1Legend>
@@ -199,12 +212,29 @@ class BaseMap extends Component {
               />
             </>
           )}
+          {mapIndex === 5 && (
+            <>
+              <UrbanFormSelector
+                mapState={urbanFormState}
+                onClick={(x) => this.handleToggle(x, "urbanFormState")}
+              />
+              <Map5Selector
+                layerIndex={map5LayerIndex}
+                onClick={(x) => this.setState({ map5LayerIndex: x })}
+              />
+              <Map5Legend
+                mapState={map5State}
+                layerIndex={map5LayerIndex}
+                onClick={(x) => this.handleToggle(x, "map5State")}
+              />
+            </>
+          )}
 
           <ToolTip
             x={this.state.x}
             y={this.state.y}
             hoveredObject={hoveredObject}
-            layerIndex={layerIndex}
+            layerIndex={map1LayerIndex}
           />
         </DeckGL>
       </>

@@ -1,84 +1,131 @@
 import { GeoJsonLayer } from "@deck.gl/layers";
-import { groceries } from "../../../../../geojson/groceries.js";
-import { schools } from "../../../../../geojson/schools.js";
-import { stops } from "../../../../../geojson/stops.js";
-import { transitLines } from "../../../../../geojson/transitLines.js";
+import { hexagon } from "../../../../../geojson/hexagon.js";
 
-export const infoArray = [
-  { id: "transitLines", name: "Transit Lines", color: "rgb(255, 0, 0)" },
-  { id: "stops", name: "Stops", color: "rgb(182, 252, 207)" },
-  { id: "groceries", name: "Groceries", color: "rgb(207, 23, 185)" },
-  { id: "schools", name: "Schools", color: "rgb(245, 227, 27)" },
-];
+import {
+  COLOR_SCALE,
+  COLOR_SCALE_change,
+  COLOR_SCALE_UOH,
+  COLOR_SCALE_change_UOH,
+} from "../../ColorScales";
 
-export default function map2Layers(map2State, onHover, onClick) {
-  let layers = [];
+export default function map1Layers(layerIndex, map1State, onHover, onClick) {
+  var year;
+  switch (layerIndex) {
+    case 0:
+      year = "pop_91";
+      break;
+    case 1:
+      year = "pop_01";
+      break;
+    case 2:
+      year = "pop_11";
+      break;
+    case 4:
+      year = "uoh_91";
+      break;
+    case 5:
+      year = "uoh_01";
+      break;
+    case 6:
+      year = "uoh_11";
+      break;
+    default:
+      year = null;
+  }
 
-  const display = (id) => {
-    return !map2State.includes(id);
-  };
+  var layers = [];
 
   const opacity = 1;
 
-  display("transitLines") &&
+  if (layerIndex >= 0 && layerIndex < 3) {
     layers.push(
       new GeoJsonLayer({
-        id: "transitLines",
-        data: transitLines,
+        id: "pop",
+        data: hexagon,
         opacity,
-        getLineColor: [255, 0, 0],
-        stroked: false,
-        getLineWidth: 6,
+        getLineColor: [255, 255, 255, 0],
+        getFillColor: (f) => {
+          return COLOR_SCALE(Math.round(f.properties[year]), map1State);
+        },
         pickable: true,
         onHover: onHover,
         onClick: onClick,
+        updateTriggers: {
+          getFillColor: [layerIndex, map1State],
+        },
       })
     );
+  }
 
-  display("stops") &&
+  if (layerIndex === 3) {
     layers.push(
       new GeoJsonLayer({
-        id: "stops",
-        data: stops,
+        id: "popChange",
+        data: hexagon,
         opacity,
-        getRadius: 20,
-        stroked: false,
-        getFillColor: [182, 252, 207],
+        getLineColor: [255, 255, 255, 0],
+        getFillColor: (f) => {
+          return COLOR_SCALE_change(
+            f.properties.pop_mult,
+            map1State,
+            f.properties.pop_91,
+            f.properties.pop_11
+          );
+        },
         pickable: true,
         onHover: onHover,
         onClick: onClick,
+        updateTriggers: {
+          getFillColor: [layerIndex, map1State],
+        },
       })
     );
+  }
 
-  display("groceries") &&
+  if (layerIndex >= 4 && layerIndex < 7) {
     layers.push(
       new GeoJsonLayer({
-        id: "groceries",
-        data: groceries,
+        id: "uoh",
+        data: hexagon,
         opacity,
-        stroked: false,
-        getRadius: 20,
-        getFillColor: [207, 23, 185],
+        getLineColor: [255, 255, 255, 0],
+        getFillColor: (f) => {
+          return COLOR_SCALE_UOH(Math.round(f.properties[year]), map1State);
+        },
         pickable: true,
         onHover: onHover,
         onClick: onClick,
+        updateTriggers: {
+          getFillColor: [layerIndex, map1State],
+        },
       })
     );
+  }
 
-  display("schools") &&
+  if (layerIndex === 7) {
     layers.push(
       new GeoJsonLayer({
-        id: "schools",
-        data: schools,
+        id: "uohChange",
+        data: hexagon,
         opacity,
-        stroked: false,
-        getRadius: 20,
-        getFillColor: [245, 227, 27],
+        getLineColor: [255, 255, 255, 0],
+        getFillColor: (f) => {
+          return COLOR_SCALE_change_UOH(
+            f.properties.uoh_mult,
+            map1State,
+            f.properties.uoh_91,
+            f.properties.uoh_11
+          );
+        },
         pickable: true,
         onHover: onHover,
         onClick: onClick,
+        updateTriggers: {
+          getFillColor: [layerIndex, map1State],
+        },
       })
     );
+  }
 
   return layers;
 }

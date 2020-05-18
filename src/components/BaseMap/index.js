@@ -50,8 +50,8 @@ class BaseMap extends Component {
     showMapSelector: false,
     showInfoMenu: false,
     layerIndex: 0,
-    toggleState: [],
     visibleInfo: [],
+    map1State: [],
     map2State: [],
     map3State: [],
     map4State: [],
@@ -85,13 +85,13 @@ class BaseMap extends Component {
 
   handleToggle = (value, stateName) => {
     const i = this.state[stateName].indexOf(value);
-    const updatedToggleState = [...this.state[stateName]];
+    const updatedmap1State = [...this.state[stateName]];
     if (i === -1) {
-      updatedToggleState.push(value);
+      updatedmap1State.push(value);
     } else {
-      updatedToggleState.splice(i, 1);
+      updatedmap1State.splice(i, 1);
     }
-    this.setState({ [stateName]: updatedToggleState });
+    this.setState({ [stateName]: updatedmap1State });
   };
 
   render() {
@@ -100,7 +100,7 @@ class BaseMap extends Component {
     console.log("mapIndex", mapIndex);
     const {
       layerIndex,
-      toggleState,
+      map1State,
       showMapSelector,
       showInfoMenu,
       hoveredObject,
@@ -139,7 +139,7 @@ class BaseMap extends Component {
             layerIndex,
             this.onHover,
             this.onClick,
-            toggleState,
+            map1State,
             map2State,
             map3State,
             map4State,
@@ -166,8 +166,8 @@ class BaseMap extends Component {
           {mapIndex === 1 && (
             <Legend
               layerIndex={layerIndex}
-              toggleState={toggleState}
-              onClick={(x) => this.handleToggle(x, "toggleState")}
+              map1State={map1State}
+              onClick={(x) => this.handleToggle(x, "map1State")}
             ></Legend>
           )}
           {mapIndex === 2 && (

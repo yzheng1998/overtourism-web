@@ -8,7 +8,7 @@ import {
 } from "../BaseMap/utils/ColorScales";
 
 export default function Legend(props) {
-  const { layerIndex, onClick, toggleState } = props;
+  const { layerIndex, onClick, map1State } = props;
 
   const isPop = layerIndex >= 0 && layerIndex < 3;
   const isPopChange = layerIndex === 3;
@@ -44,7 +44,7 @@ export default function Legend(props) {
   }
 
   const disabled = (value) => {
-    return toggleState.includes(value);
+    return map1State.includes(value);
   };
 
   return (

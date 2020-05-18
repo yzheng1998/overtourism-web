@@ -14,7 +14,7 @@ export const map3InfoArray = [
 ];
 
 export default function map3Layers(map3State, onHover, onClick) {
-  let layers = [];
+  var layers = [];
 
   const display = (id) => {
     return !map3State.includes(id);

@@ -12,7 +12,7 @@ export const map2InfoArray = [
 ];
 
 export default function map2Layers(map2State, onHover, onClick) {
-  let layers = [];
+  var layers = [];
 
   const display = (id) => {
     return !map2State.includes(id);

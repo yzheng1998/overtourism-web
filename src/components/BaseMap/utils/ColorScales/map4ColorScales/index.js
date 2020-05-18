@@ -7,6 +7,12 @@ export const tourismIndexLegend = [0, ...tourismIndexSplit].map((a, i) => [
   d3.schemeReds[5][i],
 ]);
 
+const internationalitySplit = [1.5, 2.25, 3];
+export const internationalityLegend = [
+  0,
+  ...internationalitySplit,
+].map((a, i) => [a, d3.schemeBlues[4][i]]);
+
 const bedsSplit = [4, 8, 12, 18];
 export const bedsLegend = [0, ...bedsSplit].map((a, i) => [
   a,
@@ -17,6 +23,17 @@ export const tourismIndexColorScale = (i, mapState) => {
   var x = d3.scaleThreshold().domain(tourismIndexSplit).range(d3.schemeReds[5])(
     i
   );
+  if (i <= 0) x = "#FFFFFF";
+  if (mapState.includes(x)) {
+    return hexRgb(x, { format: "array" }).slice(0, 3).concat([0]);
+  } else return hexRgb(x, { format: "array" }).slice(0, 3);
+};
+
+export const internationalityColorScale = (i, mapState) => {
+  var x = d3
+    .scaleThreshold()
+    .domain(internationalitySplit)
+    .range(d3.schemeBlues[4])(i);
   if (i <= 0) x = "#FFFFFF";
   if (mapState.includes(x)) {
     return hexRgb(x, { format: "array" }).slice(0, 3).concat([0]);

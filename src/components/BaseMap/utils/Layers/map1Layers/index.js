@@ -1,5 +1,6 @@
 import { GeoJsonLayer } from "@deck.gl/layers";
 import { hexagon } from "../../../../../geojson/hexagon.js";
+import { landmarks } from "../../../../../geojson/landmarks.js";
 
 import {
   popColorScale,
@@ -8,25 +9,35 @@ import {
   uohChangeColorScale,
 } from "../../ColorScales/map1ColorScales";
 
-export default function map1Layers(layerIndex, mapState, onHover, onClick) {
+export const UrbanFormInfoArray = [
+  { id: "landmarks", name: "Landmarks", color: "rgb(0, 0, 0)", index: 1 },
+];
+
+export default function map1Layers(
+  layerIndex,
+  mapState,
+  urbanFormState,
+  onHover,
+  onClick
+) {
   var year;
   switch (layerIndex) {
-    case 0:
+    case 1:
       year = "pop_91";
       break;
-    case 1:
+    case 2:
       year = "pop_01";
       break;
-    case 2:
+    case 3:
       year = "pop_11";
       break;
-    case 4:
+    case 5:
       year = "uoh_91";
       break;
-    case 5:
+    case 6:
       year = "uoh_01";
       break;
-    case 6:
+    case 7:
       year = "uoh_11";
       break;
     default:
@@ -35,9 +46,9 @@ export default function map1Layers(layerIndex, mapState, onHover, onClick) {
 
   var layers = [];
 
-  const opacity = 1;
+  const opacity = 0.8;
 
-  if (layerIndex >= 0 && layerIndex < 3) {
+  if (layerIndex >= 1 && layerIndex < 4) {
     layers.push(
       new GeoJsonLayer({
         id: "pop",
@@ -57,7 +68,7 @@ export default function map1Layers(layerIndex, mapState, onHover, onClick) {
     );
   }
 
-  if (layerIndex === 3) {
+  if (layerIndex === 4) {
     layers.push(
       new GeoJsonLayer({
         id: "popChange",
@@ -82,7 +93,7 @@ export default function map1Layers(layerIndex, mapState, onHover, onClick) {
     );
   }
 
-  if (layerIndex >= 4 && layerIndex < 7) {
+  if (layerIndex >= 5 && layerIndex < 8) {
     layers.push(
       new GeoJsonLayer({
         id: "uoh",
@@ -102,7 +113,7 @@ export default function map1Layers(layerIndex, mapState, onHover, onClick) {
     );
   }
 
-  if (layerIndex === 7) {
+  if (layerIndex === 8) {
     layers.push(
       new GeoJsonLayer({
         id: "uohChange",
@@ -126,6 +137,20 @@ export default function map1Layers(layerIndex, mapState, onHover, onClick) {
       })
     );
   }
+
+  !urbanFormState.includes(1) &&
+    layers.push(
+      new GeoJsonLayer({
+        id: "landmarks",
+        data: landmarks,
+        opacity,
+        getLineColor: [255, 255, 255, 0],
+        getFillColor: [0, 0, 0],
+        pickable: true,
+        onHover: onHover,
+        onClick: onClick,
+      })
+    );
 
   return layers;
 }

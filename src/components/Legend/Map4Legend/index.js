@@ -2,6 +2,7 @@ import React from "react";
 import Typography from "@material-ui/core/Typography";
 import {
   tourismIndexLegend,
+  internationalityLegend,
   bedsLegend,
 } from "../../BaseMap/utils/ColorScales/map4ColorScales";
 
@@ -12,6 +13,9 @@ export default function Map4Legend(props) {
   switch (layerIndex) {
     case 1:
       legend = tourismIndexLegend;
+      break;
+    case 2:
+      legend = internationalityLegend;
       break;
     case 3:
       legend = bedsLegend;

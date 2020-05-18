@@ -11,30 +11,30 @@ import {
 
 const marks = [
   {
-    value: 0,
+    value: 1,
     label: "1991",
   },
   {
-    value: 1,
+    value: 2,
     label: "2001",
   },
   {
-    value: 2,
+    value: 3,
     label: "2011",
   },
 ];
 
 const marksUOH = [
   {
-    value: 4,
+    value: 5,
     label: "1991",
   },
   {
-    value: 5,
+    value: 6,
     label: "2001",
   },
   {
-    value: 6,
+    value: 7,
     label: "2011",
   },
 ];
@@ -68,12 +68,12 @@ function MapSelector(props) {
           defaultValue={0}
           aria-labelledby="year-slider"
           step={1}
-          value={layerIndex >= 0 && layerIndex < 3 ? layerIndex : null}
+          value={layerIndex >= 1 && layerIndex < 4 ? layerIndex : null}
           valueLabelDisplay="off"
           marks={marks}
           onChange={onSliderChange}
-          min={0}
-          max={2}
+          min={1}
+          max={3}
           classes={{
             root: classes.root,
             markLabel: classes.markLabel,
@@ -83,7 +83,7 @@ function MapSelector(props) {
             mark: classes.trackPop,
           }}
         ></Slider>
-        <ListItem button onClick={() => onClick(3)}>
+        <ListItem button onClick={() => onClick(4)}>
           <Typography classes={{ root: classes.subtitle }}>
             Change (1991-2011)
           </Typography>
@@ -96,12 +96,12 @@ function MapSelector(props) {
           defaultValue={0}
           aria-labelledby="year-slider"
           step={1}
-          value={layerIndex >= 4 && layerIndex < 7 ? layerIndex : null}
+          value={layerIndex >= 5 && layerIndex < 8 ? layerIndex : null}
           valueLabelDisplay="off"
           marks={marksUOH}
           onChange={onSliderChange}
-          min={4}
-          max={6}
+          min={5}
+          max={7}
           classes={{
             root: classes.root,
             markLabel: classes.markLabel,
@@ -114,7 +114,7 @@ function MapSelector(props) {
         <ListItem>
           <Typography
             classes={{ root: classes.subtitle }}
-            onClick={() => onClick(7)}
+            onClick={() => onClick(8)}
           >
             Change (1991-2011)
           </Typography>

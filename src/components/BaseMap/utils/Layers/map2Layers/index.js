@@ -6,7 +6,7 @@ import { transitLines } from "../../../../../geojson/transitLines.js";
 
 export const map2InfoArray = [
   { id: "transitLines", name: "Transit Lines", color: "rgb(255, 0, 0)" },
-  { id: "stops", name: "Stops", color: "rgb(182, 252, 207)" },
+  { id: "stops", name: "Transit Stops", color: "rgb(182, 252, 207)" },
   { id: "groceries", name: "Groceries", color: "rgb(207, 23, 185)" },
   { id: "schools", name: "Schools", color: "rgb(245, 227, 27)" },
 ];

@@ -1,47 +1,23 @@
 import React from "react";
 import Typography from "@material-ui/core/Typography";
-import {
-  popLegend,
-  popChangeLegend,
-  uohLegend,
-  uohChangeLegend,
-} from "../../BaseMap/utils/ColorScales/map1ColorScales";
+import { tourismIndexLegend } from "../../BaseMap/utils/ColorScales/map4ColorScales";
 
-export default function Legend(props) {
+export default function Map4Legend(props) {
   const { layerIndex, onClick, mapState } = props;
 
-  const isPop = layerIndex >= 1 && layerIndex < 4;
-  const isPopChange = layerIndex === 4;
-  const isUOH = layerIndex >= 5 && layerIndex < 8;
-  const isUOHChange = layerIndex === 8;
-
-  var legend;
-  if (isPop) {
-    legend = popLegend;
-  } else if (isPopChange) {
-    legend = popChangeLegend;
-  } else if (isUOH) {
-    legend = uohLegend;
-  } else if (isUOHChange) {
-    legend = uohChangeLegend;
-  }
+  var legend = tourismIndexLegend;
 
   var updatedLegend;
-
-  if (isPop || isUOH) {
-    updatedLegend = legend
-      .map(([x, y], i) => {
-        if (i === legend.length - 1) {
-          return [`>= ${x}`, y];
-        } else {
-          return [`${x} - ${legend[i + 1][0] - 1}`, y];
-        }
-      })
-      .reverse();
-    updatedLegend = [...updatedLegend, [0, "#FFFFFF"]];
-  } else {
-    updatedLegend = legend;
-  }
+  updatedLegend = legend
+    .map(([x, y], i) => {
+      if (i === legend.length - 1) {
+        return [`>= ${x}`, y];
+      } else {
+        return [`${x} - ${legend[i + 1][0] - +(layerIndex === 3)}`, y];
+      }
+    })
+    .reverse();
+  updatedLegend = [...updatedLegend, [0, "#FFFFFF"]];
 
   const disabled = (value) => {
     return mapState.includes(value);
@@ -73,10 +49,7 @@ export default function Legend(props) {
                 backgroundColor: disabled(value[1])
                   ? "rgba(46,46,46,.2)"
                   : "rgba(46, 46, 46, 0.8)",
-                width:
-                  layerIndex < 4 || (layerIndex >= 5 && layerIndex <= 7)
-                    ? 120
-                    : 130,
+                width: 120,
                 border: 0.5,
                 flexDirection: "row",
                 display: "inline-flex",

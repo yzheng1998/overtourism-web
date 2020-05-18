@@ -63,7 +63,7 @@ export default function map5Layers(
   layerIndex === 2 &&
     layers.push(
       new GeoJsonLayer({
-        id: "built",
+        id: "water",
         data: hexagonMapping,
         opacity,
         getLineColor: [255, 255, 255, 0],
@@ -82,7 +82,7 @@ export default function map5Layers(
   layerIndex === 3 &&
     layers.push(
       new GeoJsonLayer({
-        id: "built",
+        id: "open",
         data: hexagonMapping,
         opacity,
         getLineColor: [255, 255, 255, 0],
@@ -138,8 +138,8 @@ export default function map5Layers(
         id: "streetIntersections",
         data: streetIntersections,
         opacity,
-        getRadius: 3,
         stroked: false,
+        getRadius: (f) => 2 * Math.log(f.properties.percent_ch),
         getFillColor: [245, 227, 27],
         pickable: true,
         onHover: onHover,

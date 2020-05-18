@@ -22,6 +22,9 @@ export default function App() {
           <Route path="/map5">
             <BaseMap mapIndex={5} />
           </Route>
+          <Route path="/map6">
+            <BaseMap mapIndex={6} />
+          </Route>
           <Route path="/">
             <Home />
           </Route>

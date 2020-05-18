@@ -3,10 +3,10 @@ import Typography from "@material-ui/core/Typography";
 import { map2InfoArray } from "../../BaseMap/utils/Layers/map2Layers";
 
 export default function Map2Legend(props) {
-  const { map2State, onClick } = props;
+  const { mapState, onClick } = props;
 
   const display = (id) => {
-    return !map2State.includes(id);
+    return !mapState.includes(id);
   };
 
   return (

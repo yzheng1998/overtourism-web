@@ -2,13 +2,13 @@ import { GeoJsonLayer } from "@deck.gl/layers";
 import { hexagon } from "../../../../../geojson/hexagon.js";
 
 import {
-  COLOR_SCALE,
-  COLOR_SCALE_change,
-  COLOR_SCALE_UOH,
-  COLOR_SCALE_change_UOH,
-} from "../../ColorScales";
+  popColorScale,
+  popChangeColorScale,
+  uohColorScale,
+  uohChangeColorScale,
+} from "../../ColorScales/map1ColorScales";
 
-export default function map1Layers(layerIndex, map1State, onHover, onClick) {
+export default function map1Layers(layerIndex, mapState, onHover, onClick) {
   var year;
   switch (layerIndex) {
     case 0:
@@ -45,13 +45,13 @@ export default function map1Layers(layerIndex, map1State, onHover, onClick) {
         opacity,
         getLineColor: [255, 255, 255, 0],
         getFillColor: (f) => {
-          return COLOR_SCALE(Math.round(f.properties[year]), map1State);
+          return popColorScale(Math.round(f.properties[year]), mapState);
         },
         pickable: true,
         onHover: onHover,
         onClick: onClick,
         updateTriggers: {
-          getFillColor: [layerIndex, map1State],
+          getFillColor: [layerIndex, mapState],
         },
       })
     );
@@ -65,9 +65,9 @@ export default function map1Layers(layerIndex, map1State, onHover, onClick) {
         opacity,
         getLineColor: [255, 255, 255, 0],
         getFillColor: (f) => {
-          return COLOR_SCALE_change(
+          return popChangeColorScale(
             f.properties.pop_mult,
-            map1State,
+            mapState,
             f.properties.pop_91,
             f.properties.pop_11
           );
@@ -76,7 +76,7 @@ export default function map1Layers(layerIndex, map1State, onHover, onClick) {
         onHover: onHover,
         onClick: onClick,
         updateTriggers: {
-          getFillColor: [layerIndex, map1State],
+          getFillColor: [layerIndex, mapState],
         },
       })
     );
@@ -90,13 +90,13 @@ export default function map1Layers(layerIndex, map1State, onHover, onClick) {
         opacity,
         getLineColor: [255, 255, 255, 0],
         getFillColor: (f) => {
-          return COLOR_SCALE_UOH(Math.round(f.properties[year]), map1State);
+          return uohColorScale(Math.round(f.properties[year]), mapState);
         },
         pickable: true,
         onHover: onHover,
         onClick: onClick,
         updateTriggers: {
-          getFillColor: [layerIndex, map1State],
+          getFillColor: [layerIndex, mapState],
         },
       })
     );
@@ -110,9 +110,9 @@ export default function map1Layers(layerIndex, map1State, onHover, onClick) {
         opacity,
         getLineColor: [255, 255, 255, 0],
         getFillColor: (f) => {
-          return COLOR_SCALE_change_UOH(
+          return uohChangeColorScale(
             f.properties.uoh_mult,
-            map1State,
+            mapState,
             f.properties.uoh_91,
             f.properties.uoh_11
           );
@@ -121,7 +121,7 @@ export default function map1Layers(layerIndex, map1State, onHover, onClick) {
         onHover: onHover,
         onClick: onClick,
         updateTriggers: {
-          getFillColor: [layerIndex, map1State],
+          getFillColor: [layerIndex, mapState],
         },
       })
     );

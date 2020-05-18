@@ -1,50 +1,40 @@
 import React from "react";
 import Typography from "@material-ui/core/Typography";
 import {
-  popLegend,
-  popChangeLegend,
-  uohLegend,
-  uohChangeLegend,
-} from "../BaseMap/utils/ColorScales";
+  tourismIndexLegend,
+  bedsLegend,
+} from "../../BaseMap/utils/ColorScales/map4ColorScales";
 
-export default function Legend(props) {
-  const { layerIndex, onClick, map1State } = props;
-
-  const isPop = layerIndex >= 0 && layerIndex < 3;
-  const isPopChange = layerIndex === 3;
-  const isUOH = layerIndex >= 4 && layerIndex < 7;
-  const isUOHChange = layerIndex === 7;
+export default function Map4Legend(props) {
+  const { layerIndex, onClick, mapState } = props;
 
   var legend;
-  if (isPop) {
-    legend = popLegend;
-  } else if (isPopChange) {
-    legend = popChangeLegend;
-  } else if (isUOH) {
-    legend = uohLegend;
-  } else if (isUOHChange) {
-    legend = uohChangeLegend;
+  switch (layerIndex) {
+    case 1:
+      legend = tourismIndexLegend;
+      break;
+    case 3:
+      legend = bedsLegend;
+      break;
+    default:
+      legend = tourismIndexLegend;
+      break;
   }
 
   var updatedLegend;
-
-  if (isPop || isUOH) {
-    updatedLegend = legend
-      .map(([x, y], i) => {
-        if (i === legend.length - 1) {
-          return [`>= ${x}`, y];
-        } else {
-          return [`${x} - ${legend[i + 1][0] - 1}`, y];
-        }
-      })
-      .reverse();
-    updatedLegend = [...updatedLegend, [0, "#FFFFFF"]];
-  } else {
-    updatedLegend = legend;
-  }
+  updatedLegend = legend
+    .map(([x, y], i) => {
+      if (i === legend.length - 1) {
+        return [`>= ${x}`, y];
+      } else {
+        return [`${x} - ${legend[i + 1][0] - +(layerIndex === 3)}`, y];
+      }
+    })
+    .reverse();
+  updatedLegend = [...updatedLegend, [0, "#FFFFFF"]];
 
   const disabled = (value) => {
-    return map1State.includes(value);
+    return mapState.includes(value);
   };
 
   return (
@@ -73,10 +63,7 @@ export default function Legend(props) {
                 backgroundColor: disabled(value[1])
                   ? "rgba(46,46,46,.2)"
                   : "rgba(46, 46, 46, 0.8)",
-                width:
-                  layerIndex < 3 || (layerIndex >= 4 && layerIndex <= 6)
-                    ? 120
-                    : 130,
+                width: 120,
                 border: 0.5,
                 flexDirection: "row",
                 display: "inline-flex",

@@ -1,24 +1,23 @@
 import React from "react";
 import Typography from "@material-ui/core/Typography";
-import { map3InfoArray } from "../../BaseMap/utils/Layers/map3Layers";
+import { map4Maps } from "../BaseMap/utils/Layers/map4Layers";
 
-export default function Map3Legend(props) {
-  const { mapState, onClick } = props;
+export default function Map4Selector(props) {
+  const { layerIndex, onClick } = props;
 
-  const display = (id) => {
-    return !mapState.includes(id);
+  const display = (index) => {
+    return layerIndex === index;
   };
-
   return (
     <div
       style={{
         position: "absolute",
-        right: "24px",
+        left: "24px",
         bottom: "24px",
         color: "#FFFFFF",
       }}
     >
-      {map3InfoArray.map(({ id, name, color }) => {
+      {map4Maps.map(({ id, name, index }) => {
         return (
           <div
             style={{
@@ -32,10 +31,10 @@ export default function Map3Legend(props) {
             <button
               className="map3-info-selector-button"
               style={{
-                backgroundColor: display(id)
+                backgroundColor: display(index)
                   ? "rgba(46, 46, 46, 0.8)"
                   : "rgba(46, 46, 46, 0.2)",
-                width: 180,
+                width: 150,
                 border: 0.5,
                 flexDirection: "row",
                 display: "inline-flex",
@@ -44,18 +43,8 @@ export default function Map3Legend(props) {
                 marginBottom: 1,
                 borderRadius: 2,
               }}
-              onClick={() => onClick(id)}
+              onClick={() => onClick(index)}
             >
-              <div
-                className="map3-info-selector-color"
-                style={{
-                  backgroundColor: color,
-                  height: "10px",
-                  width: "10px",
-                  borderRadius: "6px",
-                  marginRight: "12px",
-                }}
-              ></div>
               <Typography
                 variant={"subtitle2"}
                 style={{
@@ -63,7 +52,7 @@ export default function Map3Legend(props) {
                   marginRight: "12px",
                   fontWeight: "bold",
                   color: "white",
-                  opacity: display(id) ? 1 : 0.5,
+                  opacity: display(index) ? 1 : 0.5,
                 }}
               >
                 {name}

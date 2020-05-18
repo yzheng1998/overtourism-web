@@ -9,14 +9,16 @@ import DeckGL from "@deck.gl/react";
 import { MapController } from "deck.gl";
 import renderLayer from "./utils/Layers";
 
+import Map1Legend from "../Legend/Map1Legend";
 import Map2Legend from "../Legend/Map2Legend";
 import Map3Legend from "../Legend/Map3Legend";
+import Map4Legend from "../Legend/Map4Legend";
 import InfoMenu from "../InfoMenu";
-import Legend from "../Legend";
 import ToolTip from "./ToolTip";
 
 import { Fab } from "@material-ui/core";
-import MapSelector from "../MapSelector";
+import MapSelector from "../Map1Selector";
+import Map4Selector from "../Map4Selector";
 
 // Set your mapbox token here
 const MAPBOX_TOKEN =
@@ -50,6 +52,7 @@ class BaseMap extends Component {
     showMapSelector: false,
     showInfoMenu: false,
     layerIndex: 0,
+    map4LayerIndex: 1,
     visibleInfo: [],
     map1State: [],
     map2State: [],
@@ -97,9 +100,9 @@ class BaseMap extends Component {
   render() {
     const { classes, mapIndex } = this.props;
     const mapStyle = "mapbox://styles/mapbox/dark-v10";
-    console.log("mapIndex", mapIndex);
     const {
       layerIndex,
+      map4LayerIndex,
       map1State,
       showMapSelector,
       showInfoMenu,
@@ -137,6 +140,7 @@ class BaseMap extends Component {
         <DeckGL
           layers={renderLayer(
             layerIndex,
+            map4LayerIndex,
             this.onHover,
             this.onClick,
             map1State,
@@ -164,23 +168,36 @@ class BaseMap extends Component {
             mapboxApiAccessToken={MAPBOX_TOKEN}
           ></StaticMap>
           {mapIndex === 1 && (
-            <Legend
+            <Map1Legend
               layerIndex={layerIndex}
-              map1State={map1State}
+              mapState={map1State}
               onClick={(x) => this.handleToggle(x, "map1State")}
-            ></Legend>
+            ></Map1Legend>
           )}
           {mapIndex === 2 && (
             <Map2Legend
-              map2State={map2State}
+              mapState={map2State}
               onClick={(x) => this.handleToggle(x, "map2State")}
             />
           )}
           {mapIndex === 3 && (
             <Map3Legend
-              map3State={map3State}
+              mapState={map3State}
               onClick={(x) => this.handleToggle(x, "map3State")}
             />
+          )}
+          {mapIndex === 4 && (
+            <>
+              <Map4Selector
+                layerIndex={map4LayerIndex}
+                onClick={(x) => this.setState({ map4LayerIndex: x })}
+              />
+              <Map4Legend
+                mapState={map4State}
+                layerIndex={map4LayerIndex}
+                onClick={(x) => this.handleToggle(x, "map4State")}
+              />
+            </>
           )}
 
           <ToolTip

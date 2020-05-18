@@ -11,11 +11,11 @@ export const map2InfoArray = [
   { id: "schools", name: "Schools", color: "rgb(245, 227, 27)" },
 ];
 
-export default function map2Layers(map2State, onHover, onClick) {
+export default function map2Layers(mapState, onHover, onClick) {
   var layers = [];
 
   const display = (id) => {
-    return !map2State.includes(id);
+    return !mapState.includes(id);
   };
 
   const opacity = 1;

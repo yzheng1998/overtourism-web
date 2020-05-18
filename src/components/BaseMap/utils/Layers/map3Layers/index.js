@@ -13,11 +13,11 @@ export const map3InfoArray = [
   { id: "restaurants", name: "Restaurants", color: "rgb(245, 227, 27)" },
 ];
 
-export default function map3Layers(map3State, onHover, onClick) {
+export default function map3Layers(mapState, onHover, onClick) {
   var layers = [];
 
   const display = (id) => {
-    return !map3State.includes(id);
+    return !mapState.includes(id);
   };
 
   const opacity = 1;

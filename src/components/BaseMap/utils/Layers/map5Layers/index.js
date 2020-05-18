@@ -1,6 +1,8 @@
 import { GeoJsonLayer } from "@deck.gl/layers";
 import { hexagonMapping } from "../../../../../geojson/hexagon_mapping.js";
 import { landmarks } from "../../../../../geojson/landmarks.js";
+import { streets } from "../../../../../geojson/streets.js";
+import { streetIntersections } from "../../../../../geojson/street_intersections.js";
 import {
   builtColorScale,
   waterColorScale,
@@ -15,7 +17,7 @@ export const map5Maps = [
 
 export const UrbanFormInfoArray = [
   { id: "landmarks", name: "Landmarks", color: "rgb(0, 0, 0)", index: 1 },
-  { id: "streets", name: "Streets", color: "rgb(255, 0, 0)", index: 2 },
+  { id: "streets", name: "Streets", color: "rgb(128, 0, 128)", index: 2 },
   {
     id: "intersections",
     name: "Intersection % Change",
@@ -32,6 +34,10 @@ export default function map5Layers(
   onClick
 ) {
   var layers = [];
+
+  const display = (id) => {
+    return !urbanFormState.includes(id);
+  };
 
   const opacity = 1;
 
@@ -92,7 +98,7 @@ export default function map5Layers(
       })
     );
 
-  !urbanFormState.includes(1) &&
+  display(1) &&
     layers.push(
       new GeoJsonLayer({
         id: "landmarks",
@@ -106,6 +112,38 @@ export default function map5Layers(
         updateTriggers: {
           getFillColor: [layerIndex, mapState, urbanFormState],
         },
+      })
+    );
+
+  display(2) &&
+    layers.push(
+      new GeoJsonLayer({
+        id: "streets",
+        data: streets,
+        opacity,
+        getLineColor: [255, 255, 255, 0],
+        getFillColor: [128, 0, 128],
+        pickable: true,
+        onHover: onHover,
+        onClick: onClick,
+        updateTriggers: {
+          getFillColor: [layerIndex, mapState, urbanFormState],
+        },
+      })
+    );
+
+  display(3) &&
+    layers.push(
+      new GeoJsonLayer({
+        id: "streetIntersections",
+        data: streetIntersections,
+        opacity,
+        getRadius: 3,
+        stroked: false,
+        getFillColor: [245, 227, 27],
+        pickable: true,
+        onHover: onHover,
+        onClick: onClick,
       })
     );
 

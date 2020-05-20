@@ -37,8 +37,7 @@ export const waterColorScale = (i, mapState) => {
 
 export const openColorScale = (i, mapState) => {
   var x = d3.scaleThreshold().domain(builtSplit).range(d3.schemeGreens[6])(i);
-  if (i <= 0) x = "#FFFFFF";
-  if (mapState.includes(x)) {
+  if (mapState.includes(x) || i <= 0) {
     return hexRgb(x, { format: "array" }).slice(0, 3).concat([0]);
   } else return hexRgb(x, { format: "array" }).slice(0, 3);
 };

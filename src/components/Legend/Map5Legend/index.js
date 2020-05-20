@@ -1,10 +1,6 @@
 import React from "react";
 import Typography from "@material-ui/core/Typography";
-import {
-  builtLegend,
-  waterLegend,
-  openLegend,
-} from "../../BaseMap/utils/ColorScales/map5ColorScales";
+import { openLegend } from "../../BaseMap/utils/ColorScales/map5ColorScales";
 
 export default function Map5Legend(props) {
   const { layerIndex, onClick, mapState } = props;
@@ -12,16 +8,10 @@ export default function Map5Legend(props) {
   var legend;
   switch (layerIndex) {
     case 1:
-      legend = builtLegend;
-      break;
-    case 2:
-      legend = waterLegend;
-      break;
-    case 3:
       legend = openLegend;
       break;
     default:
-      legend = builtLegend;
+      legend = openLegend;
       break;
   }
 

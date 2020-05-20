@@ -1,6 +1,7 @@
 import { GeoJsonLayer } from "@deck.gl/layers";
 import { hexagonMapping } from "../../../../../geojson/hexagon_mapping.js";
 import { hexagonBeds } from "../../../../../geojson/hexagon_beds.js";
+import { landmarks } from "../../../../../geojson/landmarks.js";
 import {
   tourismIndexColorScale,
   internationalityColorScale,
@@ -16,7 +17,7 @@ export const map4Maps = [
 export default function map4Layers(layerIndex, mapState, onHover, onClick) {
   var layers = [];
 
-  const opacity = 1;
+  const opacity = 0.8;
 
   layerIndex === 1 &&
     layers.push(
@@ -24,10 +25,18 @@ export default function map4Layers(layerIndex, mapState, onHover, onClick) {
         id: "tourismIndex",
         data: hexagonMapping,
         opacity,
-        getLineColor: [255, 255, 255, 0],
+        getLineColor: (f) => {
+          return tourismIndexColorScale(
+            f.properties.tourism__1,
+            mapState
+          )[3] === 0
+            ? [220, 220, 220]
+            : [0, 0, 0, 0];
+        },
         getFillColor: (f) => {
           return tourismIndexColorScale(f.properties.tourism__1, mapState);
         },
+        getLineWidth: 2,
         pickable: true,
         onHover: onHover,
         onClick: onClick,
@@ -43,7 +52,14 @@ export default function map4Layers(layerIndex, mapState, onHover, onClick) {
         id: "internationality",
         data: hexagonMapping,
         opacity,
-        getLineColor: [255, 255, 255, 0],
+        getLineColor: (f) => {
+          return internationalityColorScale(
+            f.properties.componen_6,
+            mapState
+          )[3] === 0
+            ? [220, 220, 220]
+            : [0, 0, 0, 0];
+        },
         getFillColor: (f) => {
           return internationalityColorScale(f.properties.componen_6, mapState);
         },
@@ -62,7 +78,12 @@ export default function map4Layers(layerIndex, mapState, onHover, onClick) {
         id: "beds",
         data: hexagonBeds,
         opacity,
-        getLineColor: [255, 255, 255, 0],
+        getLineColor: (f) => {
+          return bedsColorScale(Math.round(f.properties.beds), mapState)[3] ===
+            0
+            ? [220, 220, 220]
+            : [0, 0, 0, 0];
+        },
         getFillColor: (f) => {
           return bedsColorScale(Math.round(f.properties.beds), mapState);
         },
@@ -74,6 +95,18 @@ export default function map4Layers(layerIndex, mapState, onHover, onClick) {
         },
       })
     );
+  layers.push(
+    new GeoJsonLayer({
+      id: "landmarks",
+      data: landmarks,
+      opacity,
+      getLineColor: [255, 255, 255, 0],
+      getFillColor: [0, 0, 0],
+      pickable: true,
+      onHover: onHover,
+      onClick: onClick,
+    })
+  );
 
   return layers;
 }

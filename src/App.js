@@ -1,10 +1,10 @@
 import React from "react";
-import { BrowserRouter as Router, Link, Switch, Route } from "react-router-dom";
+import { HashRouter, Link, Switch, Route } from "react-router-dom";
 import BaseMap from "./components/BaseMap";
 
 export default function App() {
   return (
-    <Router>
+    <HashRouter basename="/">
       <div>
         <Switch>
           <Route path="/map1">
@@ -25,12 +25,12 @@ export default function App() {
           <Route path="/map6">
             <BaseMap mapIndex={6} />
           </Route>
-          <Route path="/">
+          <Route exact path="/">
             <Home />
           </Route>
         </Switch>
       </div>
-    </Router>
+    </HashRouter>
   );
 }
 

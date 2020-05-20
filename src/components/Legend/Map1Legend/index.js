@@ -33,6 +33,10 @@ export default function Legend(props) {
       .map(([x, y], i) => {
         if (i === legend.length - 1) {
           return [`>= ${x}`, y];
+        } else if (x + 1 === legend[i + 1][0] - 1) {
+          return [x + 1, y];
+        } else if (i === 0) {
+          return [`${x + 1} - ${legend[i + 1][0] - 1}`, y];
         } else {
           return [`${x} - ${legend[i + 1][0] - 1}`, y];
         }

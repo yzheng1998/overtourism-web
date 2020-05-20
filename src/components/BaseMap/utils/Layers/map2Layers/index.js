@@ -18,7 +18,7 @@ export default function map2Layers(mapState, onHover, onClick) {
     return !mapState.includes(id);
   };
 
-  const opacity = 1;
+  const opacity = 0.8;
 
   display("transitLines") &&
     layers.push(
@@ -42,6 +42,7 @@ export default function map2Layers(mapState, onHover, onClick) {
         data: stops,
         opacity,
         getRadius: 20,
+        pointRadiusMaxPixels: 5,
         stroked: false,
         getFillColor: [182, 252, 207],
         pickable: true,
@@ -58,6 +59,7 @@ export default function map2Layers(mapState, onHover, onClick) {
         opacity,
         stroked: false,
         getRadius: 20,
+        pointRadiusMaxPixels: 5,
         getFillColor: [207, 23, 185],
         pickable: true,
         onHover: onHover,
@@ -73,6 +75,7 @@ export default function map2Layers(mapState, onHover, onClick) {
         opacity,
         stroked: false,
         getRadius: 20,
+        pointRadiusMaxPixels: 5,
         getFillColor: [245, 227, 27],
         pickable: true,
         onHover: onHover,

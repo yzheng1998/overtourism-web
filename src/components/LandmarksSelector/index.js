@@ -35,7 +35,7 @@ export default function UrbanFormSelector(props) {
                 backgroundColor: display(index)
                   ? "rgba(46, 46, 46, 0.8)"
                   : "rgba(46, 46, 46, 0.2)",
-                width: 120,
+                width: 140,
                 border: 0.5,
                 flexDirection: "row",
                 display: "inline-flex",

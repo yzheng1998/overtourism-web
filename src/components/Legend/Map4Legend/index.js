@@ -30,6 +30,13 @@ export default function Map4Legend(props) {
     .map(([x, y], i) => {
       if (i === legend.length - 1) {
         return [`>= ${x}`, y];
+      } else if (i === 0) {
+        return [
+          `${x + +(layerIndex === 3)} - ${
+            legend[i + 1][0] - +(layerIndex === 3)
+          }`,
+          y,
+        ];
       } else {
         return [`${x} - ${legend[i + 1][0] - +(layerIndex === 3)}`, y];
       }

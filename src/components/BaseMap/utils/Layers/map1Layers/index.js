@@ -1,6 +1,7 @@
 import { GeoJsonLayer } from "@deck.gl/layers";
 import { hexagon } from "../../../../../geojson/hexagon.js";
 import { landmarks } from "../../../../../geojson/landmarks.js";
+import { canal } from "../../../../../geojson/canal.js";
 
 import {
   popColorScale,
@@ -11,6 +12,7 @@ import {
 
 export const UrbanFormInfoArray = [
   { id: "landmarks", name: "Landmarks", color: "rgb(0, 0, 0)", index: 1 },
+  { id: "canal", name: "Grand Canal", color: "rgb(0, 0, 0)", index: 2 },
 ];
 
 export default function map1Layers(
@@ -54,7 +56,12 @@ export default function map1Layers(
         id: "pop",
         data: hexagon,
         opacity,
-        getLineColor: [255, 255, 255, 0],
+        getLineColor: (f) => {
+          return popColorScale(Math.round(f.properties[year]), mapState)[3] ===
+            0
+            ? [220, 220, 220]
+            : [0, 0, 0, 0];
+        },
         getFillColor: (f) => {
           return popColorScale(Math.round(f.properties[year]), mapState);
         },
@@ -63,6 +70,7 @@ export default function map1Layers(
         onClick: onClick,
         updateTriggers: {
           getFillColor: [layerIndex, mapState],
+          getLineColor: [layerIndex, mapState],
         },
       })
     );
@@ -74,7 +82,16 @@ export default function map1Layers(
         id: "popChange",
         data: hexagon,
         opacity,
-        getLineColor: [255, 255, 255, 0],
+        getLineColor: (f) => {
+          return popChangeColorScale(
+            f.properties.pop_mult,
+            mapState,
+            f.properties.pop_91,
+            f.properties.pop_11
+          )[3] === 0
+            ? [220, 220, 220]
+            : [0, 0, 0, 0];
+        },
         getFillColor: (f) => {
           return popChangeColorScale(
             f.properties.pop_mult,
@@ -88,6 +105,7 @@ export default function map1Layers(
         onClick: onClick,
         updateTriggers: {
           getFillColor: [layerIndex, mapState],
+          getLineColor: [layerIndex, mapState],
         },
       })
     );
@@ -99,7 +117,12 @@ export default function map1Layers(
         id: "uoh",
         data: hexagon,
         opacity,
-        getLineColor: [255, 255, 255, 0],
+        getLineColor: (f) => {
+          return uohColorScale(Math.round(f.properties[year]), mapState)[3] ===
+            0
+            ? [220, 220, 220]
+            : [0, 0, 0, 0];
+        },
         getFillColor: (f) => {
           return uohColorScale(Math.round(f.properties[year]), mapState);
         },
@@ -108,6 +131,7 @@ export default function map1Layers(
         onClick: onClick,
         updateTriggers: {
           getFillColor: [layerIndex, mapState],
+          getLineColor: [layerIndex, mapState],
         },
       })
     );
@@ -119,7 +143,16 @@ export default function map1Layers(
         id: "uohChange",
         data: hexagon,
         opacity,
-        getLineColor: [255, 255, 255, 0],
+        getLineColor: (f) => {
+          return uohChangeColorScale(
+            f.properties.uoh_mult,
+            mapState,
+            f.properties.uoh_91,
+            f.properties.uoh_11
+          )[3] === 0
+            ? [220, 220, 220]
+            : [0, 0, 0, 0];
+        },
         getFillColor: (f) => {
           return uohChangeColorScale(
             f.properties.uoh_mult,
@@ -133,6 +166,7 @@ export default function map1Layers(
         onClick: onClick,
         updateTriggers: {
           getFillColor: [layerIndex, mapState],
+          getLineColor: [layerIndex, mapState],
         },
       })
     );
@@ -146,6 +180,20 @@ export default function map1Layers(
         opacity,
         getLineColor: [255, 255, 255, 0],
         getFillColor: [0, 0, 0],
+        pickable: true,
+        onHover: onHover,
+        onClick: onClick,
+      })
+    );
+
+  !urbanFormState.includes(2) &&
+    layers.push(
+      new GeoJsonLayer({
+        id: "canal",
+        data: canal,
+        opacity,
+        getLineColor: [0, 0, 0],
+        getLineWidth: 4,
         pickable: true,
         onHover: onHover,
         onClick: onClick,

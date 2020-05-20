@@ -4,6 +4,7 @@ import { airbnb } from "../../../../../geojson/airbnb.js";
 import { jewelryShops } from "../../../../../geojson/jewelry_shops.js";
 import { clothingShops } from "../../../../../geojson/clothing_shops.js";
 import { maskShops } from "../../../../../geojson/mask_shops.js";
+import { restaurantColorScale } from "../../ColorScales/map3ColorScales";
 
 export const map3InfoArray = [
   { id: "airbnb", name: "Airbnbs (Jan 2020)", color: "rgb(0, 0, 255)" },
@@ -20,7 +21,7 @@ export default function map3Layers(mapState, onHover, onClick) {
     return !mapState.includes(id);
   };
 
-  const opacity = 1;
+  const opacity = 0.4;
 
   display("maskShops") &&
     layers.push(
@@ -28,7 +29,8 @@ export default function map3Layers(mapState, onHover, onClick) {
         id: "maskShops",
         data: maskShops,
         opacity,
-        getRadius: 20,
+        getRadius: 15,
+        pointRadiusMaxPixels: 5,
         stroked: false,
         getFillColor: [255, 0, 0],
         pickable: true,
@@ -43,7 +45,8 @@ export default function map3Layers(mapState, onHover, onClick) {
         id: "clothingShops",
         data: clothingShops,
         opacity,
-        getRadius: 20,
+        getRadius: 15,
+        pointRadiusMaxPixels: 5,
         stroked: false,
         getFillColor: [182, 252, 207],
         pickable: true,
@@ -59,7 +62,8 @@ export default function map3Layers(mapState, onHover, onClick) {
         data: jewelryShops,
         opacity,
         stroked: false,
-        getRadius: 20,
+        getRadius: 15,
+        pointRadiusMaxPixels: 5,
         getFillColor: [207, 23, 185],
         pickable: true,
         onHover: onHover,
@@ -74,8 +78,10 @@ export default function map3Layers(mapState, onHover, onClick) {
         data: restaurants,
         opacity,
         stroked: false,
-        getRadius: 20,
-        getFillColor: [245, 227, 27],
+        getRadius: 15,
+        pointRadiusMaxPixels: 5,
+        getFillColor: (f) =>
+          restaurantColorScale(f.properties.composite_, mapState),
         pickable: true,
         onHover: onHover,
         onClick: onClick,
@@ -88,7 +94,7 @@ export default function map3Layers(mapState, onHover, onClick) {
         id: "airbnb",
         data: airbnb,
         opacity,
-        getRadius: 20,
+        getRadius: (f) => 2 * f.properties.beds,
         stroked: false,
         getFillColor: [0, 0, 255],
         pickable: true,

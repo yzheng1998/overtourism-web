@@ -43,40 +43,34 @@ export const uohChangeLegend = [
 
 export const popColorScale = (i, mapState) => {
   var x = d3.scaleThreshold().domain(popSplit).range(d3.schemeReds[6])(i);
-  if (i === 0) x = "#FFFFFF";
-  if (mapState.includes(x)) {
+  if (mapState.includes(x) || i === 0) {
     return hexRgb(x, { format: "array" }).slice(0, 3).concat([0]);
   } else return hexRgb(x, { format: "array" }).slice(0, 3);
 };
 
 export const popChangeColorScale = (i, mapState, pop91, pop11) => {
   var x = d3.scaleThreshold().domain(popChangeSplit).range(d3.schemePiYG[7])(i);
-  if (pop91 === 0 && pop11 === 0) {
-    x = "#f7f7f7";
-  } else if (pop91 === 0) {
+  if (pop91 === 0) {
     x = "#808080";
   }
-  if (mapState.includes(x)) {
+  if (mapState.includes(x) || (pop91 === 0 && pop11 === 0)) {
     return hexRgb(x, { format: "array" }).slice(0, 3).concat([0]);
   } else return hexRgb(x, { format: "array" }).slice(0, 3);
 };
 
 export const uohColorScale = (i, mapState) => {
   var x = d3.scaleThreshold().domain(uohSplit).range(d3.schemeGreens[6])(i);
-  if (i === 0) x = "#FFFFFF";
-  if (mapState.includes(x)) {
+  if (mapState.includes(x) || i === 0) {
     return hexRgb(x, { format: "array" }).slice(0, 3).concat([0]);
   } else return hexRgb(x, { format: "array" }).slice(0, 3);
 };
 
 export const uohChangeColorScale = (i, mapState, uoh91, uoh11) => {
   var x = d3.scaleThreshold().domain(uohChangeSplit).range(d3.schemePuOr[7])(i);
-  if (uoh91 === 0 && uoh11 === 0) {
-    x = "#f7f7f7";
-  } else if (uoh91 === 0) {
+  if (uoh91 === 0) {
     x = "#808080";
   }
-  if (mapState.includes(x)) {
+  if (mapState.includes(x) || (uoh91 === 0 && uoh11 === 0)) {
     return hexRgb(x, { format: "array" }).slice(0, 3).concat([0]);
   } else return hexRgb(x, { format: "array" }).slice(0, 3);
 };

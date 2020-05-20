@@ -30,7 +30,7 @@ export default function Map1ToolTip(props) {
         left: x,
       }}
     >
-      {layerIndex === 0 && (
+      {layerIndex === 1 && (
         <>
           <Typography classes={{ root: classes.title }}>Population</Typography>
           <Typography classes={{ root: classes.body }}>
@@ -41,7 +41,7 @@ export default function Map1ToolTip(props) {
           </Typography>
         </>
       )}
-      {layerIndex === 1 && (
+      {layerIndex === 2 && (
         <>
           <Typography classes={{ root: classes.title }}>Population</Typography>
           <Typography classes={{ root: classes.body }}>
@@ -52,7 +52,7 @@ export default function Map1ToolTip(props) {
           </Typography>
         </>
       )}
-      {layerIndex === 2 && (
+      {layerIndex === 3 && (
         <>
           <Typography classes={{ root: classes.title }}>Population</Typography>
           <Typography classes={{ root: classes.body }}>
@@ -63,7 +63,7 @@ export default function Map1ToolTip(props) {
           </Typography>
         </>
       )}
-      {layerIndex === 3 && (
+      {layerIndex === 4 && (
         <>
           <Typography classes={{ root: classes.title }}>
             Population (Ratio of 1991)
@@ -77,7 +77,7 @@ export default function Map1ToolTip(props) {
           </Typography>
         </>
       )}
-      {layerIndex === 4 && (
+      {layerIndex === 5 && (
         <>
           <Typography classes={{ root: classes.title }}>
             Unoccupied Dwellings
@@ -88,7 +88,7 @@ export default function Map1ToolTip(props) {
           </Typography>
         </>
       )}
-      {layerIndex === 5 && (
+      {layerIndex === 6 && (
         <>
           <Typography classes={{ root: classes.title }}>
             Unoccupied Dwellings
@@ -99,7 +99,7 @@ export default function Map1ToolTip(props) {
           </Typography>
         </>
       )}
-      {layerIndex === 6 && (
+      {layerIndex === 7 && (
         <>
           <Typography classes={{ root: classes.title }}>
             Unoccupied Dwellings
@@ -110,7 +110,7 @@ export default function Map1ToolTip(props) {
           </Typography>
         </>
       )}
-      {layerIndex === 7 && (
+      {layerIndex === 8 && (
         <>
           <Typography classes={{ root: classes.title }}>
             Unoccupied Dwellings (Ratio of 1991)

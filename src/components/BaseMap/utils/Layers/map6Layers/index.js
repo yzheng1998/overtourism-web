@@ -5,7 +5,7 @@ import { tourismIndexColorScale } from "../../ColorScales/map4ColorScales";
 export default function map6Layers(mapState, onHover, onClick) {
   var layers = [];
 
-  const opacity = 1;
+  const opacity = 0.8;
 
   layers.push(
     new GeoJsonLayer({

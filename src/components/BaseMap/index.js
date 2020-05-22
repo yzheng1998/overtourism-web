@@ -16,6 +16,7 @@ import Map4Legend from "../Legend/Map4Legend";
 import Map5Legend from "../Legend/Map5Legend";
 import Map6Legend from "../Legend/Map6Legend";
 import Map3SizeLegend from "../Legend/Map3SizeLegend";
+import Map5SizeLegend from "../Legend/Map5SizeLegend";
 
 import InfoMenu from "../InfoMenu";
 import ToolTip from "./ToolTip";
@@ -23,7 +24,6 @@ import ToolTip from "./ToolTip";
 import { Fab } from "@material-ui/core";
 import MapSelector from "../Map1Selector";
 import Map4Selector from "../Map4Selector";
-import Map5Selector from "../Map5Selector";
 
 import UrbanFormSelector from "../UrbanFormSelector";
 import LandmarksSelector from "../LandmarksSelector";
@@ -225,15 +225,12 @@ class BaseMap extends Component {
                 mapState={urbanFormState}
                 onClick={(x) => this.handleToggle(x, "urbanFormState")}
               />
-              <Map5Selector
-                layerIndex={layerIndex}
-                onClick={(x) => this.setState({ layerIndex: x })}
-              />
               <Map5Legend
                 mapState={mapState}
                 layerIndex={layerIndex}
                 onClick={(x) => this.handleToggle(x, "mapState")}
               />
+              <Map5SizeLegend urbanFormState={urbanFormState} />
             </>
           )}
           {mapIndex === 6 && (

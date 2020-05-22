@@ -47,3 +47,12 @@ export const openLineColor = (i, mapState) => {
     ? [140, 140, 140]
     : [0, 0, 0, 0];
 };
+
+const landmarksSplit = [4, 4.2, 4.4, 4.6, 4.8];
+export const landmarksLegend = [0, ...landmarksSplit].map((a, i) => [
+  a,
+  [2, 4, 8, 16, 32, 64][i],
+]);
+
+export const landmarksScale = (i) =>
+  d3.scaleThreshold().domain(landmarksSplit).range([2, 4, 8, 16, 32, 64])(i);

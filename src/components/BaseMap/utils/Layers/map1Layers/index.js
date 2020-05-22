@@ -17,7 +17,7 @@ import {
 export const UrbanFormInfoArray = [
   {
     id: "landmarks",
-    name: "Relavent Landmarks",
+    name: "Relevant Landmarks",
     color: "rgb(0, 0, 0)",
     index: 1,
   },

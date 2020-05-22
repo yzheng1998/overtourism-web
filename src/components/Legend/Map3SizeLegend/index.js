@@ -91,7 +91,6 @@ export default function Map3SizeLegend(props) {
                       height: value[1] / 4,
                       backgroundColor: map3InfoArray[0].color,
                       borderRadius: value[1] / 4,
-                      marginRight: 6,
                     }}
                   ></div>
                   <Typography
@@ -161,7 +160,6 @@ export default function Map3SizeLegend(props) {
                       height: value[1] / 4,
                       backgroundColor: map3InfoArray[1].color,
                       borderRadius: value[1] / 4,
-                      marginRight: 6,
                     }}
                   ></div>
                   <Typography

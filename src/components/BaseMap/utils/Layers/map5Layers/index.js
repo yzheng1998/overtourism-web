@@ -5,12 +5,13 @@ import { streets } from "../../../../../geojson/streets.js";
 import {
   openColorScale,
   openLineColor,
+  landmarksScale,
 } from "../../ColorScales/map5ColorScales";
 
 export const map5Maps = [{ id: "openSpace", name: "% Open Space", index: 1 }];
 
 export const UrbanFormInfoArray = [
-  { id: "landmarks", name: "Landmarks", color: "rgb(0, 0, 255)", index: 1 },
+  { id: "landmarks", name: "Landmarks", color: "rgb(0, 0, 205)", index: 1 },
   { id: "streets", name: "Streets", color: "rgb(255, 0, 255)", index: 2 },
 ];
 
@@ -72,10 +73,10 @@ export default function map5Layers(
       new GeoJsonLayer({
         id: "landmarks",
         data: landmarksPoints,
-        opacity,
+        opacity: 0.5,
         getLineColor: [255, 255, 255, 0],
-        getFillColor: [0, 0, 255],
-        getRadius: (f) => 5 * f.properties.rating,
+        getFillColor: [0, 0, 205],
+        getRadius: (f) => landmarksScale(f.properties.rating),
         pickable: true,
         onHover: onHover,
         onClick: onClick,

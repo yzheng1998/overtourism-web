@@ -46,13 +46,16 @@ export default function Map5ToolTip(props) {
           <Typography classes={{ root: classes.body }}>
             {hoveredObject.properties.name}
           </Typography>
+          <Typography classes={{ root: classes.body }}>
+            Rating: {hoveredObject.properties.rating}
+          </Typography>
         </>
       )}
-      {/* {hoveredLayer === "streets" && (
+      {hoveredLayer === "streets" && (
         <>
           <Typography classes={{ root: classes.title }}>Street</Typography>
         </>
-      )} */}
+      )}
     </div>
   ) : (
     <></>

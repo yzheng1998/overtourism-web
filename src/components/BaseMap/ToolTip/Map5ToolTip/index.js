@@ -47,7 +47,7 @@ export default function Map5ToolTip(props) {
             {hoveredObject.properties.name}
           </Typography>
           <Typography classes={{ root: classes.body }}>
-            Rating: {hoveredObject.properties.rating}
+            # of Ratings: {hoveredObject.properties.user_ratings_total}
           </Typography>
         </>
       )}

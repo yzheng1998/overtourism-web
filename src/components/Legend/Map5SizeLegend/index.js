@@ -8,7 +8,7 @@ export default function Map5SizeLegend(props) {
   var updatedLandmarksLegend = landmarksLegend
     .map(([x, y], i) => {
       if (i === landmarksLegend.length - 1) {
-        return [`${x} - 5`, y];
+        return [`>${x}`, y];
       } else if (i === 0) {
         return [`${x} - ${landmarksLegend[i + 1][0]}`, y];
       } else {
@@ -43,7 +43,7 @@ export default function Map5SizeLegend(props) {
                 borderRadius: 2,
               }}
             >
-              <Typography>Ratings</Typography>
+              <Typography># of Ratings</Typography>
             </div>
             {updatedLandmarksLegend.map((value) => {
               return (
@@ -74,10 +74,10 @@ export default function Map5SizeLegend(props) {
                     <div
                       className="legend-color"
                       style={{
-                        width: value[1] / 2,
-                        height: value[1] / 2,
+                        width: value[1] / 4,
+                        height: value[1] / 4,
                         backgroundColor: UrbanFormInfoArray[0].color,
-                        borderRadius: value[1] / 2,
+                        borderRadius: value[1] / 4,
                       }}
                     ></div>
                     <Typography

@@ -76,7 +76,7 @@ export default function map5Layers(
         opacity: 0.5,
         getLineColor: [255, 255, 255, 0],
         getFillColor: [0, 0, 205],
-        getRadius: (f) => landmarksScale(f.properties.rating),
+        getRadius: (f) => landmarksScale(f.properties.user_ratings_total),
         pickable: true,
         onHover: onHover,
         onClick: onClick,

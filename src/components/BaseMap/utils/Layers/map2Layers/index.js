@@ -3,6 +3,7 @@ import { groceries } from "../../../../../geojson/groceries.js";
 import { schools } from "../../../../../geojson/schools.js";
 import { stops } from "../../../../../geojson/stops.js";
 import { transitLines } from "../../../../../geojson/transitLines.js";
+import { landmarks } from "../../../../../geojson/landmarks.js";
 
 export const map2InfoArray = [
   { id: "transitLines", name: "Transit Lines", color: "rgb(255, 0, 0)" },
@@ -11,7 +12,7 @@ export const map2InfoArray = [
   { id: "schools", name: "Schools", color: "rgb(245, 227, 27)" },
 ];
 
-export default function map2Layers(mapState, onHover, onClick) {
+export default function map2Layers(mapState, urbanFormState, onHover, onClick) {
   var layers = [];
 
   const display = (id) => {
@@ -77,6 +78,20 @@ export default function map2Layers(mapState, onHover, onClick) {
         getRadius: 20,
         pointRadiusMaxPixels: 5,
         getFillColor: [245, 227, 27],
+        pickable: true,
+        onHover: onHover,
+        onClick: onClick,
+      })
+    );
+
+  !urbanFormState.includes(1) &&
+    layers.push(
+      new GeoJsonLayer({
+        id: "landmarks",
+        data: landmarks,
+        opacity,
+        getLineColor: [255, 255, 255, 0],
+        getFillColor: [0, 0, 0],
         pickable: true,
         onHover: onHover,
         onClick: onClick,

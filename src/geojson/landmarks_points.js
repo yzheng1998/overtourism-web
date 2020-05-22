@@ -1,4 +1,4 @@
-export const landmarks_points = {
+export const landmarksPoints = {
   type: "FeatureCollection",
   name: "landmarks_points",
   crs: { type: "name", properties: { name: "urn:ogc:def:crs:OGC:1.3:CRS84" } },

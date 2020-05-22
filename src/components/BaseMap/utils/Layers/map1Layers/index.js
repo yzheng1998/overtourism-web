@@ -1,5 +1,5 @@
 import { GeoJsonLayer } from "@deck.gl/layers";
-import { hexagon } from "../../../../../geojson/hexagon.js";
+import { hexagonMapping } from "../../../../../geojson/hexagon_mapping.js";
 import { landmarks } from "../../../../../geojson/landmarks.js";
 import { canal } from "../../../../../geojson/canal.js";
 
@@ -8,11 +8,19 @@ import {
   popChangeColorScale,
   uohColorScale,
   uohChangeColorScale,
+  popLineColor,
+  popChangeLineColor,
+  uohLineColor,
+  uohChangeLineColor,
 } from "../../ColorScales/map1ColorScales";
 
 export const UrbanFormInfoArray = [
-  { id: "landmarks", name: "Landmarks", color: "rgb(0, 0, 0)", index: 1 },
-  { id: "canal", name: "Grand Canal", color: "rgb(0, 0, 0)", index: 2 },
+  {
+    id: "landmarks",
+    name: "Relavent Landmarks",
+    color: "rgb(0, 0, 0)",
+    index: 1,
+  },
 ];
 
 export default function map1Layers(
@@ -54,13 +62,10 @@ export default function map1Layers(
     layers.push(
       new GeoJsonLayer({
         id: "pop",
-        data: hexagon,
+        data: hexagonMapping,
         opacity,
         getLineColor: (f) => {
-          return popColorScale(Math.round(f.properties[year]), mapState)[3] ===
-            0
-            ? [220, 220, 220]
-            : [0, 0, 0, 0];
+          return popLineColor(Math.round(f.properties[year]), mapState);
         },
         getFillColor: (f) => {
           return popColorScale(Math.round(f.properties[year]), mapState);
@@ -80,21 +85,18 @@ export default function map1Layers(
     layers.push(
       new GeoJsonLayer({
         id: "popChange",
-        data: hexagon,
+        data: hexagonMapping,
         opacity,
         getLineColor: (f) => {
-          return popChangeColorScale(
-            f.properties.pop_mult,
+          return popChangeLineColor(
             mapState,
             f.properties.pop_91,
             f.properties.pop_11
-          )[3] === 0
-            ? [220, 220, 220]
-            : [0, 0, 0, 0];
+          );
         },
         getFillColor: (f) => {
           return popChangeColorScale(
-            f.properties.pop_mult,
+            f.properties.pop_pchang,
             mapState,
             f.properties.pop_91,
             f.properties.pop_11
@@ -115,13 +117,10 @@ export default function map1Layers(
     layers.push(
       new GeoJsonLayer({
         id: "uoh",
-        data: hexagon,
+        data: hexagonMapping,
         opacity,
         getLineColor: (f) => {
-          return uohColorScale(Math.round(f.properties[year]), mapState)[3] ===
-            0
-            ? [220, 220, 220]
-            : [0, 0, 0, 0];
+          return uohLineColor(Math.round(f.properties[year]), mapState);
         },
         getFillColor: (f) => {
           return uohColorScale(Math.round(f.properties[year]), mapState);
@@ -141,27 +140,30 @@ export default function map1Layers(
     layers.push(
       new GeoJsonLayer({
         id: "uohChange",
-        data: hexagon,
+        data: hexagonMapping,
         opacity,
         getLineColor: (f) => {
-          return uohChangeColorScale(
-            f.properties.uoh_mult,
-            mapState,
-            f.properties.uoh_91,
-            f.properties.uoh_11
-          )[3] === 0
-            ? [220, 220, 220]
-            : [0, 0, 0, 0];
-        },
-        getFillColor: (f) => {
-          return uohChangeColorScale(
-            f.properties.uoh_mult,
+          return uohChangeLineColor(
             mapState,
             f.properties.uoh_91,
             f.properties.uoh_11
           );
         },
-        pickable: true,
+        getFillColor: (f) => {
+          return uohChangeColorScale(
+            f.properties.uoh_pchang,
+            mapState,
+            f.properties.uoh_91,
+            f.properties.uoh_11
+          );
+        },
+        pickable: (f) =>
+          uohChangeColorScale(
+            f.properties.uoh_pchang,
+            mapState,
+            f.properties.uoh_91,
+            f.properties.uoh_11
+          )[3] !== 0,
         onHover: onHover,
         onClick: onClick,
         updateTriggers: {
@@ -186,7 +188,7 @@ export default function map1Layers(
       })
     );
 
-  !urbanFormState.includes(2) &&
+  !urbanFormState.includes(1) &&
     layers.push(
       new GeoJsonLayer({
         id: "canal",

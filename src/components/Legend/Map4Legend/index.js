@@ -24,26 +24,29 @@ export default function Map4Legend(props) {
       legend = tourismIndexLegend;
       break;
   }
-
   var updatedLegend;
-  updatedLegend = legend
-    .map(([x, y], i) => {
-      if (i === legend.length - 1) {
-        return [`>= ${x}`, y];
-      } else if (i === 0) {
-        return [
-          `${x + +(layerIndex === 3)} - ${
-            legend[i + 1][0] - +(layerIndex === 3)
-          }`,
-          y,
-        ];
-      } else {
-        return [`${x} - ${legend[i + 1][0] - +(layerIndex === 3)}`, y];
-      }
-    })
-    .reverse();
-  updatedLegend = [...updatedLegend, [0, "#FFFFFF"]];
 
+  if (legend === tourismIndexLegend) {
+    updatedLegend = legend.slice(4, 11).reverse();
+  } else {
+    updatedLegend = legend
+      .map(([x, y], i) => {
+        if (i === legend.length - 1) {
+          return [`>= ${x}`, y];
+        } else if (i === 0) {
+          return [
+            `${x + +(layerIndex === 3)} - ${
+              legend[i + 1][0] - +(layerIndex === 3)
+            }`,
+            y,
+          ];
+        } else {
+          return [`${x} - ${legend[i + 1][0] - +(layerIndex === 3)}`, y];
+        }
+      })
+      .reverse();
+    updatedLegend = [...updatedLegend, [0, "#FFFFFF"]];
+  }
   const disabled = (value) => {
     return mapState.includes(value);
   };

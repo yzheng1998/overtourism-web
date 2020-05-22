@@ -65,6 +65,14 @@ export default function Map2ToolTip(props) {
           </Typography>
         </>
       )}
+      {hoveredLayer === "landmarks" && (
+        <>
+          <Typography classes={{ root: classes.title }}>Landmark</Typography>
+          <Typography classes={{ root: classes.body }}>
+            {hoveredObject.properties.Name}
+          </Typography>
+        </>
+      )}
     </div>
   ) : (
     <></>

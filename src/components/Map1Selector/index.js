@@ -8,6 +8,7 @@ import {
   Typography,
   Slider,
 } from "@material-ui/core";
+import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 
 const marks = [
   {
@@ -48,79 +49,90 @@ function MapSelector(props) {
     onClick,
   } = props;
   const classes = useStyles();
-  return (
-    <Drawer
-      BackdropProps={{
-        classes: {
-          root: classes.backDrop,
+
+  const theme = createMuiTheme({
+    overrides: {
+      MuiSlider: {
+        root: {
+          width: "80%",
+          marginLeft: 28,
         },
-      }}
-      classes={{ paper: classes.paper }}
-      anchor="left"
-      open={showMapSelector}
-      onClose={onClose}
-    >
-      <List classes={{ root: classes.list }}>
-        <Typography classes={{ root: classes.title }} variant="h6" gutterBottom>
-          Population
-        </Typography>
-        <Slider
-          defaultValue={0}
-          aria-labelledby="year-slider"
-          step={1}
-          value={layerIndex >= 1 && layerIndex < 4 ? layerIndex : null}
-          valueLabelDisplay="off"
-          marks={marks}
-          onChange={onSliderChange}
-          min={1}
-          max={3}
-          classes={{
-            root: classes.root,
-            markLabel: classes.markLabel,
-            track: classes.trackPop,
-            rail: classes.trackPop,
-            thumb: classes.trackPop,
-            mark: classes.trackPop,
-          }}
-        ></Slider>
-        <ListItem button onClick={() => onClick(4)}>
-          <Typography classes={{ root: classes.subtitle }}>
-            Change (1991-2011)
-          </Typography>
-        </ListItem>
-        <Divider classes={{ root: classes.divider }} />
-        <Typography classes={{ root: classes.title }} variant="h6">
-          Unoccupied Dwellings
-        </Typography>
-        <Slider
-          defaultValue={0}
-          aria-labelledby="year-slider"
-          step={1}
-          value={layerIndex >= 5 && layerIndex < 8 ? layerIndex : null}
-          valueLabelDisplay="off"
-          marks={marksUOH}
-          onChange={onSliderChange}
-          min={5}
-          max={7}
-          classes={{
-            root: classes.root,
-            markLabel: classes.markLabel,
-            track: classes.trackUOH,
-            rail: classes.trackUOH,
-            thumb: classes.trackUOH,
-            mark: classes.trackUOH,
-          }}
-        ></Slider>
-        <ListItem>
+        track: {
+          color: "#EB7254",
+        },
+        rail: { color: "#EB7254" },
+        thumb: { color: "#EB7254" },
+        markLabel: { color: "#FFFFFF", fontFamily: "Helvetica" },
+        markLabelActive: { color: "#FFFFFF", fontFamily: "Helvetica" },
+        mark: { color: "#EB7254" },
+        markActive: { color: "#EB7254" },
+      },
+    },
+  });
+
+  return (
+    <ThemeProvider theme={theme}>
+      <Drawer
+        BackdropProps={{
+          classes: {
+            root: classes.backDrop,
+          },
+        }}
+        classes={{ paper: classes.paper }}
+        anchor="left"
+        open={showMapSelector}
+        onClose={onClose}
+      >
+        <List classes={{ root: classes.list }}>
           <Typography
-            classes={{ root: classes.subtitle }}
-            onClick={() => onClick(8)}
+            classes={{ root: classes.title }}
+            variant="h6"
+            gutterBottom
           >
-            Change (1991-2011)
+            Population
           </Typography>
-        </ListItem>
-      </List>
-    </Drawer>
+          <Slider
+            defaultValue={0}
+            aria-labelledby="year-slider"
+            step={1}
+            value={layerIndex >= 1 && layerIndex < 4 ? layerIndex : null}
+            valueLabelDisplay="off"
+            marks={marks}
+            onChange={onSliderChange}
+            min={1}
+            max={3}
+          ></Slider>
+          <ListItem button onClick={() => onClick(4)}>
+            <Typography classes={{ root: classes.subtitle }}>
+              Change (1991-2011)
+            </Typography>
+          </ListItem>
+          <Divider classes={{ root: classes.divider }} />
+          <Typography classes={{ root: classes.title }} variant="h6">
+            Unoccupied Dwellings
+          </Typography>
+          <Slider
+            defaultValue={0}
+            aria-labelledby="year-slider"
+            step={1}
+            value={layerIndex >= 5 && layerIndex < 8 ? layerIndex : null}
+            valueLabelDisplay="off"
+            marks={marksUOH}
+            onChange={onSliderChange}
+            min={5}
+            max={7}
+          ></Slider>
+          <ListItem>
+            <Typography
+              classes={{ root: classes.subtitle }}
+              onClick={() => onClick(8)}
+            >
+              Change (1991-2011)
+            </Typography>
+          </ListItem>
+        </List>
+      </Drawer>
+    </ThemeProvider>
   );
 }
 

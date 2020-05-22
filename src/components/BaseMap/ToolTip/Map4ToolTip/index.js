@@ -36,7 +36,7 @@ export default function Map4ToolTip(props) {
             Tourism Index
           </Typography>
           <Typography classes={{ root: classes.body }}>
-            {hoveredObject.properties.tourism__1.toFixed(2)}
+            {hoveredObject.properties.tourism_sc.toFixed(2)}
           </Typography>
         </>
       )}
@@ -46,9 +46,7 @@ export default function Map4ToolTip(props) {
             Internationality
           </Typography>
           <Typography classes={{ root: classes.body }}>
-            {hoveredObject.properties.componen_6
-              ? hoveredObject.properties.componen_6
-              : 0}
+            {hoveredObject.properties.intl ? hoveredObject.properties.intl : 0}
           </Typography>
         </>
       )}

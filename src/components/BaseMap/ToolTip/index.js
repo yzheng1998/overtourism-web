@@ -4,6 +4,7 @@ import Map2ToolTip from "./Map2ToolTip";
 import Map3ToolTip from "./Map3ToolTip";
 import Map4ToolTip from "./Map4ToolTip";
 import Map5ToolTip from "./Map5ToolTip";
+import Map6ToolTip from "./Map6ToolTip";
 
 export default function ToolTip(props) {
   const { x, y, hoveredObject, hoveredLayer, layerIndex, mapIndex } = props;
@@ -45,6 +46,14 @@ export default function ToolTip(props) {
       )}
       {mapIndex === 5 && (
         <Map5ToolTip
+          x={x}
+          y={y}
+          hoveredLayer={hoveredLayer}
+          hoveredObject={hoveredObject}
+        />
+      )}
+      {mapIndex === 6 && (
+        <Map6ToolTip
           x={x}
           y={y}
           hoveredLayer={hoveredLayer}

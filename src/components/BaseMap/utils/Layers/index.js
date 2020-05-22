@@ -10,6 +10,7 @@ export default function renderLayer(
   onHover,
   onClick,
   mapState,
+  map3State,
   urbanFormState,
   mapIndex
 ) {
@@ -22,19 +23,19 @@ export default function renderLayer(
       );
       break;
     case 2:
-      layers.push(map2Layers(mapState, onHover));
+      layers.push(map2Layers(mapState, urbanFormState, onHover));
       break;
     case 3:
-      layers.push(map3Layers(mapState, onHover));
+      layers.push(map3Layers(map3State, urbanFormState, onHover));
       break;
     case 4:
-      layers.push(map4Layers(layerIndex, mapState, onHover));
+      layers.push(map4Layers(layerIndex, mapState, urbanFormState, onHover));
       break;
     case 5:
       layers.push(map5Layers(layerIndex, mapState, urbanFormState, onHover));
       break;
     case 6:
-      layers.push(map6Layers(mapState, onHover));
+      layers.push(map6Layers(mapState, urbanFormState, onHover));
       break;
     default:
       break;

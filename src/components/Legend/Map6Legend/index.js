@@ -2,22 +2,10 @@ import React from "react";
 import Typography from "@material-ui/core/Typography";
 import { tourismIndexLegend } from "../../BaseMap/utils/ColorScales/map4ColorScales";
 
-export default function Map4Legend(props) {
-  const { layerIndex, onClick, mapState } = props;
+export default function Map6Legend(props) {
+  const { onClick, mapState } = props;
 
-  var legend = tourismIndexLegend;
-
-  var updatedLegend;
-  updatedLegend = legend
-    .map(([x, y], i) => {
-      if (i === legend.length - 1) {
-        return [`>= ${x}`, y];
-      } else {
-        return [`${x} - ${legend[i + 1][0] - +(layerIndex === 3)}`, y];
-      }
-    })
-    .reverse();
-  updatedLegend = [...updatedLegend, [0, "#FFFFFF"]];
+  var updatedLegend = tourismIndexLegend.slice(4, 11).reverse();
 
   const disabled = (value) => {
     return mapState.includes(value);

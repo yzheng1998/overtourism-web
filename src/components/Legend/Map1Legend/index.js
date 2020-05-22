@@ -80,7 +80,7 @@ export default function Legend(props) {
                 width:
                   layerIndex < 4 || (layerIndex >= 5 && layerIndex <= 7)
                     ? 120
-                    : 130,
+                    : 140,
                 border: 0.5,
                 flexDirection: "row",
                 display: "inline-flex",

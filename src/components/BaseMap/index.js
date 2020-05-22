@@ -15,6 +15,7 @@ import Map3Legend from "../Legend/Map3Legend";
 import Map4Legend from "../Legend/Map4Legend";
 import Map5Legend from "../Legend/Map5Legend";
 import Map6Legend from "../Legend/Map6Legend";
+import Map3SizeLegend from "../Legend/Map3SizeLegend";
 
 import InfoMenu from "../InfoMenu";
 import ToolTip from "./ToolTip";
@@ -60,8 +61,10 @@ class BaseMap extends Component {
     layerIndex: 1,
     visibleInfo: [],
     mapState: [],
+    map3State: ["maskShops", "designerStores", "jewelryShops", "restaurants"],
     urbanFormState: [],
   };
+
   toggleDrawer = () => {
     this.setState({ showMapSelector: !this.state.showMapSelector });
   };
@@ -100,10 +103,11 @@ class BaseMap extends Component {
 
   render() {
     const { classes, mapIndex } = this.props;
-    const mapStyle = "mapbox://styles/yzheng1998/ckacrmxle0peu1iqvusnsmdl6";
+    const mapStyle = "mapbox://styles/yzheng1998/ckah9prf1005m1io8dzpidxw1";
     const {
       layerIndex,
       mapState,
+      map3State,
       showMapSelector,
       showInfoMenu,
       hoveredObject,
@@ -138,6 +142,7 @@ class BaseMap extends Component {
             this.onHover,
             this.onClick,
             mapState,
+            map3State,
             urbanFormState,
             mapIndex
           )}
@@ -171,16 +176,30 @@ class BaseMap extends Component {
             </>
           )}
           {mapIndex === 2 && (
-            <Map2Legend
-              mapState={mapState}
-              onClick={(x) => this.handleToggle(x, "mapState")}
-            />
+            <>
+              <Map2Legend
+                mapState={mapState}
+                onClick={(x) => this.handleToggle(x, "mapState")}
+              />
+              <LandmarksSelector
+                mapState={urbanFormState}
+                onClick={(x) => this.handleToggle(x, "urbanFormState")}
+              />
+            </>
           )}
           {mapIndex === 3 && (
-            <Map3Legend
-              mapState={mapState}
-              onClick={(x) => this.handleToggle(x, "mapState")}
-            />
+            <>
+              <Map3Legend
+                mapState={map3State}
+                onClick={(x) => this.handleToggle(x, "map3State")}
+              />
+              <Map3SizeLegend mapState={map3State} />
+              <LandmarksSelector
+                position={"top"}
+                mapState={urbanFormState}
+                onClick={(x) => this.handleToggle(x, "urbanFormState")}
+              />
+            </>
           )}
           {mapIndex === 4 && (
             <>
@@ -192,6 +211,11 @@ class BaseMap extends Component {
                 mapState={mapState}
                 layerIndex={layerIndex}
                 onClick={(x) => this.handleToggle(x, "mapState")}
+              />
+              <LandmarksSelector
+                position={"top"}
+                mapState={urbanFormState}
+                onClick={(x) => this.handleToggle(x, "urbanFormState")}
               />
             </>
           )}
@@ -213,10 +237,16 @@ class BaseMap extends Component {
             </>
           )}
           {mapIndex === 6 && (
-            <Map6Legend
-              mapState={mapState}
-              onClick={(x) => this.handleToggle(x, "mapState")}
-            />
+            <>
+              <Map6Legend
+                mapState={mapState}
+                onClick={(x) => this.handleToggle(x, "mapState")}
+              />
+              <LandmarksSelector
+                mapState={urbanFormState}
+                onClick={(x) => this.handleToggle(x, "urbanFormState")}
+              />
+            </>
           )}
           <ToolTip
             x={this.state.x}

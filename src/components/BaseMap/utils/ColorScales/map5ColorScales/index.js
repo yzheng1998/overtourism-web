@@ -41,3 +41,9 @@ export const openColorScale = (i, mapState) => {
     return hexRgb(x, { format: "array" }).slice(0, 3).concat([0]);
   } else return hexRgb(x, { format: "array" }).slice(0, 3);
 };
+
+export const openLineColor = (i, mapState) => {
+  return !mapState.includes("#FFFFFF") && i === 0
+    ? [140, 140, 140]
+    : [0, 0, 0, 0];
+};

@@ -38,10 +38,10 @@ export default function Map3ToolTip(props) {
           </Typography>
         </>
       )}
-      {hoveredLayer === "clothingShops" && (
+      {hoveredLayer === "designerStores" && (
         <>
           <Typography classes={{ root: classes.title }}>
-            Clothing Shop
+            Designer Stores
           </Typography>
           <Typography classes={{ root: classes.body }}>
             {hoveredObject.properties.name}
@@ -64,6 +64,10 @@ export default function Map3ToolTip(props) {
           <Typography classes={{ root: classes.body }}>
             {hoveredObject.properties.name}
           </Typography>
+          <Typography classes={{ root: classes.body }}>
+            Internationality:{" "}
+            {hoveredObject.properties.composite_ital_3.toFixed(2)}
+          </Typography>
         </>
       )}
       {hoveredLayer === "airbnb" && (
@@ -71,6 +75,17 @@ export default function Map3ToolTip(props) {
           <Typography classes={{ root: classes.title }}>AirBnb</Typography>
           <Typography classes={{ root: classes.body }}>
             {hoveredObject.properties.name}
+          </Typography>
+          <Typography classes={{ root: classes.body }}>
+            {hoveredObject.properties.beds} beds
+          </Typography>
+        </>
+      )}
+      {hoveredLayer === "landmarks" && (
+        <>
+          <Typography classes={{ root: classes.title }}>Landmark</Typography>
+          <Typography classes={{ root: classes.body }}>
+            {hoveredObject.properties.Name}
           </Typography>
         </>
       )}

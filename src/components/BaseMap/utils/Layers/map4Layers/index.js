@@ -2,10 +2,15 @@ import { GeoJsonLayer } from "@deck.gl/layers";
 import { hexagonMapping } from "../../../../../geojson/hexagon_mapping.js";
 import { hexagonBeds } from "../../../../../geojson/hexagon_beds.js";
 import { landmarks } from "../../../../../geojson/landmarks.js";
+import { canal } from "../../../../../geojson/canal.js";
+
 import {
   tourismIndexColorScale,
   internationalityColorScale,
   bedsColorScale,
+  tourismLineColor,
+  intlLineColor,
+  bedsLineColor,
 } from "../../ColorScales/map4ColorScales";
 
 export const map4Maps = [
@@ -14,7 +19,13 @@ export const map4Maps = [
   { id: "beds", name: "Number of Beds", index: 3 },
 ];
 
-export default function map4Layers(layerIndex, mapState, onHover, onClick) {
+export default function map4Layers(
+  layerIndex,
+  mapState,
+  urbanFormState,
+  onHover,
+  onClick
+) {
   var layers = [];
 
   const opacity = 0.8;
@@ -25,16 +36,10 @@ export default function map4Layers(layerIndex, mapState, onHover, onClick) {
         id: "tourismIndex",
         data: hexagonMapping,
         opacity,
-        getLineColor: (f) => {
-          return tourismIndexColorScale(
-            f.properties.tourism__1,
-            mapState
-          )[3] === 0
-            ? [220, 220, 220]
-            : [0, 0, 0, 0];
-        },
+        getLineColor: (f) =>
+          tourismLineColor(f.properties.tourism_sc, mapState),
         getFillColor: (f) => {
-          return tourismIndexColorScale(f.properties.tourism__1, mapState);
+          return tourismIndexColorScale(f.properties.tourism_sc, mapState);
         },
         getLineWidth: 2,
         pickable: true,
@@ -42,6 +47,7 @@ export default function map4Layers(layerIndex, mapState, onHover, onClick) {
         onClick: onClick,
         updateTriggers: {
           getFillColor: [layerIndex, mapState],
+          getLineColor: [layerIndex, mapState],
         },
       })
     );
@@ -52,22 +58,16 @@ export default function map4Layers(layerIndex, mapState, onHover, onClick) {
         id: "internationality",
         data: hexagonMapping,
         opacity,
-        getLineColor: (f) => {
-          return internationalityColorScale(
-            f.properties.componen_6,
-            mapState
-          )[3] === 0
-            ? [220, 220, 220]
-            : [0, 0, 0, 0];
-        },
+        getLineColor: (f) => intlLineColor(f.properties.intl, mapState),
         getFillColor: (f) => {
-          return internationalityColorScale(f.properties.componen_6, mapState);
+          return internationalityColorScale(f.properties.intl, mapState);
         },
         pickable: true,
         onHover: onHover,
         onClick: onClick,
         updateTriggers: {
           getFillColor: [layerIndex, mapState],
+          getLineColor: [layerIndex, mapState],
         },
       })
     );
@@ -78,12 +78,8 @@ export default function map4Layers(layerIndex, mapState, onHover, onClick) {
         id: "beds",
         data: hexagonBeds,
         opacity,
-        getLineColor: (f) => {
-          return bedsColorScale(Math.round(f.properties.beds), mapState)[3] ===
-            0
-            ? [220, 220, 220]
-            : [0, 0, 0, 0];
-        },
+        getLineColor: (f) =>
+          bedsLineColor(Math.round(f.properties.beds), mapState),
         getFillColor: (f) => {
           return bedsColorScale(Math.round(f.properties.beds), mapState);
         },
@@ -92,21 +88,38 @@ export default function map4Layers(layerIndex, mapState, onHover, onClick) {
         onClick: onClick,
         updateTriggers: {
           getFillColor: [layerIndex, mapState],
+          getLineColor: [layerIndex, mapState],
         },
       })
     );
-  layers.push(
-    new GeoJsonLayer({
-      id: "landmarks",
-      data: landmarks,
-      opacity,
-      getLineColor: [255, 255, 255, 0],
-      getFillColor: [0, 0, 0],
-      pickable: true,
-      onHover: onHover,
-      onClick: onClick,
-    })
-  );
+
+  !urbanFormState.includes(1) &&
+    layers.push(
+      new GeoJsonLayer({
+        id: "landmarks",
+        data: landmarks,
+        opacity,
+        getLineColor: [255, 255, 255, 0],
+        getFillColor: [0, 0, 0],
+        pickable: true,
+        onHover: onHover,
+        onClick: onClick,
+      })
+    );
+
+  !urbanFormState.includes(1) &&
+    layers.push(
+      new GeoJsonLayer({
+        id: "canal",
+        data: canal,
+        opacity,
+        getLineColor: [0, 0, 0],
+        getLineWidth: 4,
+        pickable: true,
+        onHover: onHover,
+        onClick: onClick,
+      })
+    );
 
   return layers;
 }

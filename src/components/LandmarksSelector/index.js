@@ -3,7 +3,7 @@ import Typography from "@material-ui/core/Typography";
 import { UrbanFormInfoArray } from "../BaseMap/utils/Layers/map1Layers";
 
 export default function UrbanFormSelector(props) {
-  const { mapState, onClick } = props;
+  const { mapState, onClick, position } = props;
 
   const display = (index) => {
     return !mapState.includes(index);
@@ -14,7 +14,8 @@ export default function UrbanFormSelector(props) {
       style={{
         position: "absolute",
         left: "24px",
-        bottom: "24px",
+        top: position === "top" ? "24px" : null,
+        bottom: position === "top" ? null : "24px",
         color: "#FFFFFF",
       }}
     >
@@ -35,7 +36,7 @@ export default function UrbanFormSelector(props) {
                 backgroundColor: display(index)
                   ? "rgba(46, 46, 46, 0.8)"
                   : "rgba(46, 46, 46, 0.2)",
-                width: 140,
+                width: 190,
                 border: 0.5,
                 flexDirection: "row",
                 display: "inline-flex",

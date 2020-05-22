@@ -2,7 +2,7 @@ import React from "react";
 import { Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
-export default function Map5ToolTip(props) {
+export default function Map6ToolTip(props) {
   const { x, y, hoveredObject, hoveredLayer } = props;
 
   const useStyles = makeStyles({
@@ -30,13 +30,13 @@ export default function Map5ToolTip(props) {
         left: x,
       }}
     >
-      {hoveredLayer === "open" && (
+      {hoveredLayer === "tourismIndex" && (
         <>
           <Typography classes={{ root: classes.title }}>
-            % Open Space
+            Tourism Index
           </Typography>
           <Typography classes={{ root: classes.body }}>
-            {(100 * hoveredObject.properties.open_pp).toFixed(2)}
+            {hoveredObject.properties.tourism_sc.toFixed(2)}
           </Typography>
         </>
       )}
@@ -44,15 +44,15 @@ export default function Map5ToolTip(props) {
         <>
           <Typography classes={{ root: classes.title }}>Landmark</Typography>
           <Typography classes={{ root: classes.body }}>
-            {hoveredObject.properties.name}
+            {hoveredObject.properties.Name}
           </Typography>
         </>
       )}
-      {/* {hoveredLayer === "streets" && (
+      {hoveredLayer === "canal" && (
         <>
-          <Typography classes={{ root: classes.title }}>Street</Typography>
+          <Typography classes={{ root: classes.title }}>Grand Canal</Typography>
         </>
-      )} */}
+      )}
     </div>
   ) : (
     <></>

@@ -5,7 +5,10 @@ import { tourismIndexLegend } from "../../BaseMap/utils/ColorScales/map4ColorSca
 export default function Map6Legend(props) {
   const { onClick, mapState } = props;
 
-  var updatedLegend = tourismIndexLegend.slice(4, 11).reverse();
+  var updatedLegend = [
+    ["Selected Zones", "rgb(255, 255, 0)"],
+    ...tourismIndexLegend.slice(4, 11).reverse(),
+  ];
 
   const disabled = (value) => {
     return mapState.includes(value);
@@ -37,7 +40,7 @@ export default function Map6Legend(props) {
                 backgroundColor: disabled(value[1])
                   ? "rgba(46,46,46,.2)"
                   : "rgba(46, 46, 46, 0.8)",
-                width: 120,
+                width: 160,
                 border: 0.5,
                 flexDirection: "row",
                 display: "inline-flex",

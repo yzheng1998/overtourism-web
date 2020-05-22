@@ -77,7 +77,7 @@ export default function Map4Legend(props) {
                 backgroundColor: disabled(value[1])
                   ? "rgba(46,46,46,.2)"
                   : "rgba(46, 46, 46, 0.8)",
-                width: 120,
+                width: 140,
                 border: 0.5,
                 flexDirection: "row",
                 display: "inline-flex",

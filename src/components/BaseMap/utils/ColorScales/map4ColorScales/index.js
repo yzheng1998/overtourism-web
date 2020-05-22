@@ -16,17 +16,17 @@ const schemeBuRd = [
 ];
 const tourismIndexSplit = [-6, -4, -2, -1, -0.05, 0.05, 1, 2, 4, 6];
 const tourismIndexLegendArr = [
-  "<-6",
-  "-6",
-  "-4 - -2",
-  "-2 - -1",
-  "-1 - -0.05",
-  " -.05 - 0.05",
-  "0.05 - 1",
-  "1 - 2",
-  "2 - 4",
-  "4 - 6",
-  ">6",
+  "<-6σ",
+  "-6σ",
+  "-4σ - -2σ",
+  "-2σ - -1σ",
+  "-1σ - -0.05σ",
+  " -.05σ - 0.05σ",
+  "0.05σ - 1σ",
+  "1σ - 2σ",
+  "2σ - 4σ",
+  "4σ - 6σ",
+  ">6σ",
 ];
 export const tourismIndexLegend = tourismIndexLegendArr.map((a, i) => [
   a,

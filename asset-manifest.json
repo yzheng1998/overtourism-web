@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.js": "/overtourism-web/static/js/main.d6d6eb70.chunk.js",
-    "main.js.map": "/overtourism-web/static/js/main.d6d6eb70.chunk.js.map",
+    "main.js": "/overtourism-web/static/js/main.13a30932.chunk.js",
+    "main.js.map": "/overtourism-web/static/js/main.13a30932.chunk.js.map",
     "runtime-main.js": "/overtourism-web/static/js/runtime-main.a9041afb.js",
     "runtime-main.js.map": "/overtourism-web/static/js/runtime-main.a9041afb.js.map",
-    "static/js/2.f7662eab.chunk.js": "/overtourism-web/static/js/2.f7662eab.chunk.js",
-    "static/js/2.f7662eab.chunk.js.map": "/overtourism-web/static/js/2.f7662eab.chunk.js.map",
+    "static/js/2.e833eb88.chunk.js": "/overtourism-web/static/js/2.e833eb88.chunk.js",
+    "static/js/2.e833eb88.chunk.js.map": "/overtourism-web/static/js/2.e833eb88.chunk.js.map",
     "index.html": "/overtourism-web/index.html",
-    "precache-manifest.fb8858e76f44724151fd0da3f73e3c7c.js": "/overtourism-web/precache-manifest.fb8858e76f44724151fd0da3f73e3c7c.js",
+    "precache-manifest.69fdb00ca6a6ad776bfc2b3a968ffd5c.js": "/overtourism-web/precache-manifest.69fdb00ca6a6ad776bfc2b3a968ffd5c.js",
     "service-worker.js": "/overtourism-web/service-worker.js",
-    "static/js/2.f7662eab.chunk.js.LICENSE.txt": "/overtourism-web/static/js/2.f7662eab.chunk.js.LICENSE.txt"
+    "static/js/2.e833eb88.chunk.js.LICENSE.txt": "/overtourism-web/static/js/2.e833eb88.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.a9041afb.js",
-    "static/js/2.f7662eab.chunk.js",
-    "static/js/main.d6d6eb70.chunk.js"
+    "static/js/2.e833eb88.chunk.js",
+    "static/js/main.13a30932.chunk.js"
   ]
 }

@@ -6,7 +6,7 @@ export const useStyles = makeStyles({
     marginLeft: 28,
   },
   paper: {
-    height: "320px",
+    height: "345px",
     position: "absolute",
     left: "20px",
     top: "20px",
@@ -29,6 +29,11 @@ export const useStyles = makeStyles({
   },
   subtitle: {
     fontFamily: "Helvetica",
+  },
+  note: {
+    fontFamily: "Helvetica",
+    fontSize: 13,
+    alignSelf: "center",
   },
   slider: {
     marginLeft: 10,

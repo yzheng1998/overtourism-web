@@ -7,11 +7,19 @@ import Map5ToolTip from "./Map5ToolTip";
 import Map6ToolTip from "./Map6ToolTip";
 
 export default function ToolTip(props) {
-  const { x, y, hoveredObject, hoveredLayer, layerIndex, mapIndex } = props;
+  const {
+    x,
+    y,
+    hoveredObject,
+    hoveredLayer,
+    layerIndex,
+    mapIndex,
+    show,
+  } = props;
 
   return (
     <>
-      {mapIndex === 1 && (
+      {mapIndex === 1 && show && (
         <Map1ToolTip
           x={x}
           y={y}

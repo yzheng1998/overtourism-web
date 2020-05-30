@@ -69,8 +69,19 @@ class BaseMap extends Component {
     this.setState({ showMapSelector: !this.state.showMapSelector });
   };
 
-  onHover = ({ x, y, object, layer }) => {
-    this.setState({ x, y, hoveredObject: object, hoveredLayer: layer.id });
+  onHover = (info) => {
+    const { x, y, object, layer } = info;
+    console.log(info);
+    this.setState({
+      x,
+      y,
+      hoveredObject: object,
+      hoveredLayer: layer.id,
+      show:
+        object &&
+        typeof layer.props.getFillColor === "function" &&
+        layer.props.getFillColor(object)[3] !== 0,
+    });
   };
 
   onClick = ({ x, y, object }) => {
@@ -252,6 +263,7 @@ class BaseMap extends Component {
             hoveredLayer={this.state.hoveredLayer}
             layerIndex={layerIndex}
             mapIndex={mapIndex}
+            show={this.state.show}
           />
         </DeckGL>
       </>

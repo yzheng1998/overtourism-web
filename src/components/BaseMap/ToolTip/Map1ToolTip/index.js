@@ -81,7 +81,7 @@ export default function Map1ToolTip(props) {
                   ? hoveredObject.properties.pop_11 === 0
                     ? "0"
                     : "-"
-                  : hoveredObject.properties.pop_pchang}
+                  : Math.round(hoveredObject.properties.pop_pchang)}
                 %
               </Typography>
             </>
@@ -129,7 +129,7 @@ export default function Map1ToolTip(props) {
                   ? hoveredObject.properties.uoh_11 === 0
                     ? "1"
                     : "-"
-                  : hoveredObject.properties.uoh_pchang}
+                  : Math.round(hoveredObject.properties.uoh_pchang)}
                 %
               </Typography>
             </>
@@ -138,7 +138,6 @@ export default function Map1ToolTip(props) {
       )}
       {hoveredLayer === "landmarks" && (
         <>
-          <Typography classes={{ root: classes.title }}>Landmark</Typography>
           <Typography classes={{ root: classes.body }}>
             {hoveredObject.properties.Name}
           </Typography>

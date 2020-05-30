@@ -131,6 +131,9 @@ function MapSelector(props) {
             </Typography>
           </ListItem>
         </List>
+        <Typography classes={{ root: classes.note }}>
+          Click on the Hexagons to view site-specific analyses
+        </Typography>
       </Drawer>
     </ThemeProvider>
   );

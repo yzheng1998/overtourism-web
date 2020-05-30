@@ -1,6 +1,26 @@
 import * as d3 from "d3";
 const hexRgb = require("hex-rgb");
 
+const buRd = [
+  "#2166ac",
+  "#67a9cf",
+  "#d1e5f0",
+  "#f7f7f7",
+  "#fddbc7",
+  "#ef8a62",
+  "#b2182b",
+];
+
+const buGn = [
+  "#2166ac",
+  "#67a9cf",
+  "#d1e5f0",
+  "#f7f7f7",
+  "#e5f5e0",
+  "#a1d99b",
+  "#31a354",
+];
+
 const popSplit = [20, 50, 100, 150, 200];
 export const popLegend = [0, ...popSplit].map((a, i) => [
   a,
@@ -17,7 +37,7 @@ export const popChangeLegend = [
   "50% - 100%",
   ">100%",
 ]
-  .map((a, i) => [a, d3.schemePiYG[7][i]])
+  .map((a, i) => [a, buRd[i]])
   .reverse()
   .concat([["-", "#808080"]]);
 
@@ -37,7 +57,7 @@ export const uohChangeLegend = [
   "100% - 400%",
   ">400%",
 ]
-  .map((a, i) => [a, d3.schemePuOr[7][i]])
+  .map((a, i) => [a, buGn[i]])
   .reverse()
   .concat([["-", "#808080"]]);
 
@@ -55,17 +75,18 @@ export const popLineColor = (i, mapState) => {
 };
 
 export const popChangeColorScale = (i, mapState, pop91, pop11) => {
-  var x = d3.scaleThreshold().domain(popChangeSplit).range(d3.schemePiYG[7])(i);
+  var x = d3.scaleThreshold().domain(popChangeSplit).range(buRd)(i);
+
   if (pop91 === 0) {
     x = "#808080";
   }
-  if (mapState.includes(x) || (pop91 === 0 && pop11 === 0)) {
+  if (mapState.includes(x) || (pop91 < 4 && pop11 < 4)) {
     return hexRgb(x, { format: "array" }).slice(0, 3).concat([0]);
   } else return hexRgb(x, { format: "array" }).slice(0, 3);
 };
 
 export const popChangeLineColor = (mapState, pop91, pop11) => {
-  return !mapState.includes("#FFFFFF") && pop91 === 0 && pop11 === 0
+  return !mapState.includes("#FFFFFF") && pop91 < 4 && pop11 < 4
     ? [140, 140, 140]
     : [0, 0, 0, 0];
 };
@@ -84,7 +105,7 @@ export const uohLineColor = (i, mapState) => {
 };
 
 export const uohChangeColorScale = (i, mapState, uoh91, uoh11) => {
-  var x = d3.scaleThreshold().domain(uohChangeSplit).range(d3.schemePuOr[7])(i);
+  var x = d3.scaleThreshold().domain(uohChangeSplit).range(buGn)(i);
   if (uoh91 === 0) {
     x = "#808080";
   }

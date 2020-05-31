@@ -3,18 +3,15 @@ import Typography from "@material-ui/core/Typography";
 import { map5Maps } from "../BaseMap/utils/Layers/map5Layers";
 
 export default function Map5Selector(props) {
-  const { layerIndex, onClick } = props;
+  const { mapState, onClick } = props;
 
   const display = (index) => {
-    return layerIndex === index;
+    return !mapState.includes(index);
   };
 
   return (
     <div
       style={{
-        position: "absolute",
-        left: "24px",
-        bottom: "24px",
         color: "#FFFFFF",
       }}
     >

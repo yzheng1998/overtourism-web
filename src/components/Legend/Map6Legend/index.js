@@ -6,7 +6,7 @@ export default function Map6Legend(props) {
   const { onClick, mapState } = props;
 
   var updatedLegend = [
-    ["Selected Zones", "rgb(255, 255, 0)"],
+    ["Selected Areas", "rgb(255, 255, 0)"],
     ...tourismIndexLegend.slice(4, 11).reverse(),
   ];
 

@@ -4,7 +4,7 @@ import { landmarksLegend } from "../../BaseMap/utils/ColorScales/map5ColorScales
 import { UrbanFormInfoArray } from "../../BaseMap/utils/Layers/map5Layers";
 
 export default function Map5SizeLegend(props) {
-  const { urbanFormState } = props;
+  const { urbanFormState, children } = props;
   var updatedLandmarksLegend = landmarksLegend
     .map(([x, y], i) => {
       if (i === landmarksLegend.length - 1) {
@@ -22,11 +22,11 @@ export default function Map5SizeLegend(props) {
       style={{
         position: "absolute",
         left: "24px",
-        bottom: "12px",
+        bottom: "24px",
         color: "#FFFFFF",
       }}
     >
-      <div style={{ marginBottom: 12 }}>
+      <div>
         {!urbanFormState.includes(1) && (
           <>
             <div
@@ -51,7 +51,6 @@ export default function Map5SizeLegend(props) {
                   style={{
                     display: "flex",
                     flexDirection: "row",
-                    justifyContent: "space-between",
                   }}
                   key={value[0]}
                   className="input"
@@ -63,7 +62,6 @@ export default function Map5SizeLegend(props) {
                       width: 150,
                       border: 0.5,
                       flexDirection: "row",
-                      justifyContent: "space-around",
                       display: "inline-flex",
                       alignItems: "center",
                       marginTop: 1,
@@ -72,24 +70,40 @@ export default function Map5SizeLegend(props) {
                     }}
                   >
                     <div
-                      className="legend-color"
                       style={{
-                        width: value[1] / 4,
-                        height: value[1] / 4,
-                        backgroundColor: UrbanFormInfoArray[0].color,
-                        borderRadius: value[1] / 4,
-                      }}
-                    ></div>
-                    <Typography
-                      variant={"subtitle2"}
-                      style={{
-                        fontFamily: "Helvetica",
-                        marginRight: "12px",
-                        color: "white",
+                        width: "30%",
+                        display: "flex",
+                        justifyContent: "center",
                       }}
                     >
-                      {value[0]}
-                    </Typography>
+                      <div
+                        className="legend-color"
+                        style={{
+                          width: value[1] / 4,
+                          height: value[1] / 4,
+                          backgroundColor: UrbanFormInfoArray[0].color,
+                          borderRadius: value[1] / 4,
+                        }}
+                      ></div>
+                    </div>
+                    <div
+                      style={{
+                        width: "70%",
+                        display: "flex",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <Typography
+                        variant={"subtitle2"}
+                        style={{
+                          fontFamily: "Helvetica",
+                          marginRight: "12px",
+                          color: "white",
+                        }}
+                      >
+                        {value[0]}
+                      </Typography>
+                    </div>
                   </button>
                 </div>
               );
@@ -97,6 +111,7 @@ export default function Map5SizeLegend(props) {
           </>
         )}
       </div>
+      ...{children}
     </div>
   );
 }

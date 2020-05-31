@@ -6,7 +6,7 @@ const schemeBuRd = [
   "#2166ac",
   "#4393c3",
   "#92c5de",
-  "#d1e5f0",
+  "#FFFFFF",
   "#f7f7f7",
   "#fddbc7",
   "#f4a582",
@@ -21,7 +21,7 @@ const tourismIndexLegendArr = [
   "-4σ - -2σ",
   "-2σ - -1σ",
   "-1σ - -0.05σ",
-  " -.05σ - 0.05σ",
+  " -0.05σ - 0.05σ",
   "0.05σ - 1σ",
   "1σ - 2σ",
   "2σ - 4σ",
@@ -34,7 +34,7 @@ export const tourismIndexLegend = tourismIndexLegendArr.map((a, i) => [
 ]);
 
 export const tourismLineColor = (i, mapState) => {
-  return !mapState.includes("#FFFFFF") && i === 0
+  return !mapState.includes("#FFFFFF") && i <= 0
     ? [140, 140, 140]
     : [0, 0, 0, 0];
 };
@@ -64,7 +64,7 @@ export const bedsLineColor = (i, mapState) => {
 
 export const tourismIndexColorScale = (i, mapState) => {
   var x = d3.scaleThreshold().domain(tourismIndexSplit).range(schemeBuRd)(i);
-  if (mapState.includes(x) || i === 0) {
+  if (mapState.includes(x) || i <= 0) {
     return hexRgb(x, { format: "array" }).slice(0, 3).concat([0]);
   } else return hexRgb(x, { format: "array" }).slice(0, 3);
 };

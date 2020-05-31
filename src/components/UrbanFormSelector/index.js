@@ -12,9 +12,6 @@ export default function UrbanFormSelector(props) {
   return (
     <div
       style={{
-        position: "absolute",
-        left: "24px",
-        top: "24px",
         color: "#FFFFFF",
       }}
     >
@@ -35,7 +32,7 @@ export default function UrbanFormSelector(props) {
                 backgroundColor: display(index)
                   ? "rgba(46, 46, 46, 0.8)"
                   : "rgba(46, 46, 46, 0.2)",
-                width: 200,
+                width: 130,
                 border: 0.5,
                 flexDirection: "row",
                 display: "inline-flex",

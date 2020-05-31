@@ -24,6 +24,7 @@ import ToolTip from "./ToolTip";
 import { Fab } from "@material-ui/core";
 import MapSelector from "../Map1Selector";
 import Map4Selector from "../Map4Selector";
+import Map5Selector from "../Map5Selector";
 
 import UrbanFormSelector from "../UrbanFormSelector";
 import LandmarksSelector from "../LandmarksSelector";
@@ -61,7 +62,13 @@ class BaseMap extends Component {
     layerIndex: 1,
     visibleInfo: [],
     mapState: [],
-    map3State: ["maskShops", "designerStores", "jewelryShops", "restaurants"],
+    map3State: [
+      "maskShops",
+      "designerStores",
+      "jewelryShops",
+      "restaurants",
+      "souvenirShops",
+    ],
     urbanFormState: [],
   };
 
@@ -124,7 +131,6 @@ class BaseMap extends Component {
       clickedObject,
       urbanFormState,
     } = this.state;
-
     return (
       <>
         {mapIndex === 1 && (
@@ -231,16 +237,22 @@ class BaseMap extends Component {
           )}
           {mapIndex === 5 && (
             <>
-              <UrbanFormSelector
-                mapState={urbanFormState}
-                onClick={(x) => this.handleToggle(x, "urbanFormState")}
-              />
               <Map5Legend
                 mapState={mapState}
                 layerIndex={layerIndex}
                 onClick={(x) => this.handleToggle(x, "mapState")}
-              />
-              <Map5SizeLegend urbanFormState={urbanFormState} />
+              >
+                <UrbanFormSelector
+                  mapState={urbanFormState}
+                  onClick={(x) => this.handleToggle(x, "urbanFormState")}
+                />
+              </Map5Legend>
+              <Map5SizeLegend urbanFormState={urbanFormState}>
+                <Map5Selector
+                  mapState={mapState}
+                  onClick={(x) => this.handleToggle(x, "urbanFormState")}
+                />
+              </Map5SizeLegend>
             </>
           )}
           {mapIndex === 6 && (

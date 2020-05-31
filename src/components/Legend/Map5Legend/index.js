@@ -3,7 +3,7 @@ import Typography from "@material-ui/core/Typography";
 import { openLegend } from "../../BaseMap/utils/ColorScales/map5ColorScales";
 
 export default function Map5Legend(props) {
-  const { layerIndex, onClick, mapState } = props;
+  const { layerIndex, onClick, mapState, children } = props;
 
   var legend;
   switch (layerIndex) {
@@ -110,6 +110,7 @@ export default function Map5Legend(props) {
           </div>
         );
       })}
+      ...{children}
     </div>
   );
 }

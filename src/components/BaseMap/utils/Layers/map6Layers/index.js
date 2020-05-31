@@ -1,4 +1,4 @@
-import { GeoJsonLayer } from "@deck.gl/layers";
+import { GeoJsonLayer, TextLayer } from "@deck.gl/layers";
 import { hexagonMapping } from "../../../../../geojson/hexagon_mapping.js";
 import { landmarks } from "../../../../../geojson/landmarks.js";
 import { canal } from "../../../../../geojson/canal.js";
@@ -6,6 +6,17 @@ import {
   tourismIndexColorScale,
   tourismLineColor,
 } from "../../ColorScales/map4ColorScales";
+
+const textArr = [
+  {
+    id: 578,
+    coordinates: [12.33675, 45.43304, 0],
+  },
+  {
+    id: 1584,
+    coordinates: [12.33068, 45.44647, 0],
+  },
+];
 
 export default function map6Layers(mapState, urbanFormState, onHover, onClick) {
   var layers = [];
@@ -62,6 +73,23 @@ export default function map6Layers(mapState, urbanFormState, onHover, onClick) {
         onClick: onClick,
       })
     );
+
+  layers.push(
+    new TextLayer({
+      id: "text",
+      data: textArr,
+      getPosition: (f) => f.coordinates,
+      getText: (f) => {
+        if (f.id === 1584) return "1";
+        else if (f.id === 578) return "2";
+      },
+      getSize: 18,
+      getAngle: 0,
+      getTextAnchor: "middle",
+      getAlignmentBaseline: "center",
+      fontFamily: "Helvetica",
+    })
+  );
 
   return layers;
 }

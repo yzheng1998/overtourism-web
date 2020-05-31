@@ -8,11 +8,11 @@ import {
   landmarksScale,
 } from "../../ColorScales/map5ColorScales";
 
-export const map5Maps = [{ id: "openSpace", name: "% Open Space", index: 1 }];
+export const map5Maps = [{ id: "openSpace", name: "% Open Space", index: 3 }];
 
 export const UrbanFormInfoArray = [
-  { id: "landmarks", name: "Landmarks", color: "rgb(0, 0, 205)", index: 1 },
-  { id: "streets", name: "Streets", color: "rgb(255, 0, 255)", index: 2 },
+  { id: "landmarks", name: "Landmarks", color: "rgb(255, 90, 95)", index: 1 },
+  { id: "streets", name: "Streets", color: "rgb(60, 60, 60)", index: 2 },
 ];
 
 export default function map5Layers(
@@ -29,7 +29,7 @@ export default function map5Layers(
   };
 
   const opacity = 0.6;
-  layerIndex === 1 &&
+  display(3) &&
     layers.push(
       new GeoJsonLayer({
         id: "open",
@@ -56,8 +56,8 @@ export default function map5Layers(
       new GeoJsonLayer({
         id: "streets",
         data: streets,
-        opacity,
-        getLineColor: [255, 0, 255],
+        opacity: 1,
+        getLineColor: [60, 60, 60],
         getLineWidth: (f) => f.properties.Length,
         pickable: true,
         onHover: onHover,
@@ -75,7 +75,7 @@ export default function map5Layers(
         data: landmarksPoints,
         opacity: 0.5,
         getLineColor: [255, 255, 255, 0],
-        getFillColor: [0, 0, 205],
+        getFillColor: [255, 90, 95],
         getRadius: (f) => landmarksScale(f.properties.user_ratings_total),
         pickable: true,
         onHover: onHover,

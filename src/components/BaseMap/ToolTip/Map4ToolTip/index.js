@@ -60,6 +60,13 @@ export default function Map4ToolTip(props) {
           </Typography>
         </>
       )}
+      {hoveredLayer === "landmarks" && (
+        <>
+          <Typography classes={{ root: classes.body }}>
+            {hoveredObject.properties.Name}
+          </Typography>
+        </>
+      )}
     </div>
   ) : (
     <></>

@@ -5,6 +5,7 @@ import { jewelryShops } from "../../../../../geojson/jewelry_shops.js";
 import { clothingShops } from "../../../../../geojson/clothing_shops.js";
 import { maskShops } from "../../../../../geojson/mask_shops.js";
 import { landmarks } from "../../../../../geojson/landmarks.js";
+import { souvenirShops } from "../../../../../geojson/souvenir_shops.js";
 
 import {
   restaurantSizeScale,
@@ -17,6 +18,7 @@ export const map3InfoArray = [
   { id: "maskShops", name: "Mask Shops", color: "rgb(255, 0, 255)" },
   { id: "designerStores", name: "Designer Stores", color: "rgb(0, 140, 0)" },
   { id: "jewelryShops", name: "Jewelry Shops", color: "rgb(255, 215, 0)" },
+  { id: "souvenirShops", name: "Souvenir Shops", color: "rgb(0, 0, 255)" },
 ];
 
 export default function map3Layers(mapState, urbanFormState, onHover, onClick) {
@@ -49,7 +51,7 @@ export default function map3Layers(mapState, urbanFormState, onHover, onClick) {
         id: "maskShops",
         data: maskShops,
         opacity,
-        getRadius: 15,
+        getRadius: 12,
         pointRadiusMaxPixels: 5,
         stroked: false,
         getFillColor: [255, 0, 255],
@@ -65,7 +67,7 @@ export default function map3Layers(mapState, urbanFormState, onHover, onClick) {
         id: "designerStores",
         data: clothingShops,
         opacity,
-        getRadius: 15,
+        getRadius: 12,
         pointRadiusMaxPixels: 5,
         stroked: false,
         getFillColor: [0, 140, 0],
@@ -82,9 +84,25 @@ export default function map3Layers(mapState, urbanFormState, onHover, onClick) {
         data: jewelryShops,
         opacity,
         stroked: false,
-        getRadius: 15,
+        getRadius: 12,
         pointRadiusMaxPixels: 5,
         getFillColor: [255, 215, 0],
+        pickable: true,
+        onHover: onHover,
+        onClick: onClick,
+      })
+    );
+
+  display("souvenirShops") &&
+    layers.push(
+      new GeoJsonLayer({
+        id: "souvenirShops",
+        data: souvenirShops,
+        opacity,
+        getRadius: 12,
+        pointRadiusMaxPixels: 5,
+        stroked: false,
+        getFillColor: [0, 0, 255],
         pickable: true,
         onHover: onHover,
         onClick: onClick,

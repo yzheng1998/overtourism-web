@@ -34,12 +34,15 @@ export default function Map4Legend(props) {
         if (i === legend.length - 1) {
           return [`>= ${x}`, y];
         } else if (i === 0) {
-          return [
-            `${x + +(layerIndex === 3)} - ${
-              legend[i + 1][0] - +(layerIndex === 3)
-            }`,
-            y,
-          ];
+          const a = x + +(layerIndex === 3);
+          const b = legend[i + 1][0] - +(layerIndex === 3);
+          const z = a === b ? [a, y] : [`${a} - ${b}`, y];
+          return z;
+        } else if (
+          x + +(layerIndex === 3) ===
+          legend[i + 1][0] - +(layerIndex === 3)
+        ) {
+          return [x, y];
         } else {
           return [`${x} - ${legend[i + 1][0] - +(layerIndex === 3)}`, y];
         }

@@ -83,7 +83,6 @@ export default function Map3ToolTip(props) {
       )}
       {hoveredLayer === "landmarks" && (
         <>
-          <Typography classes={{ root: classes.title }}>Landmark</Typography>
           <Typography classes={{ root: classes.body }}>
             {hoveredObject.properties.Name}
           </Typography>

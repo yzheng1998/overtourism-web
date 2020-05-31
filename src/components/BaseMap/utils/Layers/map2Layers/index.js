@@ -1,5 +1,6 @@
-import { GeoJsonLayer } from "@deck.gl/layers";
+import { GeoJsonLayer, IconLayer } from "@deck.gl/layers";
 import { PathStyleExtension } from "@deck.gl/extensions";
+import Plus from "./plus.png";
 import { groceries } from "../../../../../geojson/groceries.js";
 import { schools } from "../../../../../geojson/schools.js";
 import { stops } from "../../../../../geojson/stops.js";
@@ -7,10 +8,10 @@ import { transitLines } from "../../../../../geojson/transitLines.js";
 import { landmarks } from "../../../../../geojson/landmarks.js";
 
 export const map2InfoArray = [
-  { id: "transitLines", name: "Transit Lines", color: "rgb(255, 0, 0)" },
-  { id: "stops", name: "Transit Stops", color: "rgb(182, 252, 207)" },
-  { id: "groceries", name: "Groceries", color: "rgb(207, 23, 185)" },
-  { id: "schools", name: "Schools", color: "rgb(245, 227, 27)" },
+  { id: "transitLines", name: "Transit Lines", color: "rgb(0, 0, 0)" },
+  { id: "stops", name: "Transit Stops", color: "rgb(0, 0, 0)" },
+  { id: "groceries", name: "Groceries", color: "rgb(255, 0, 0)" },
+  { id: "schools", name: "Schools", color: "rgb(0, 255, 0)" },
 ];
 
 export default function map2Layers(mapState, urbanFormState, onHover, onClick) {
@@ -41,19 +42,23 @@ export default function map2Layers(mapState, urbanFormState, onHover, onClick) {
       })
     );
 
+  const ICON_MAPPING = {
+    stop: { x: 0, y: 0, width: 981, height: 981 },
+  };
+
   display("stops") &&
     layers.push(
-      new GeoJsonLayer({
+      new IconLayer({
         id: "stops",
-        data: stops,
-        opacity,
-        getRadius: 12,
-        pointRadiusMaxPixels: 5,
-        stroked: false,
-        getFillColor: [0, 0, 255],
+        data: stops.features,
+        iconAtlas: Plus,
+        iconMapping: ICON_MAPPING,
+        sizeScale: 1,
+        getSize: 20,
         pickable: true,
-        onHover: onHover,
-        onClick: onClick,
+        getPosition: (d) => [...d.geometry.coordinates[0], 0],
+        getIcon: (d) => "stop",
+        onHover,
       })
     );
 

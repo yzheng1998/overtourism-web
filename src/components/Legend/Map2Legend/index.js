@@ -1,4 +1,5 @@
 import React from "react";
+import Plus from "./plus.png";
 import Typography from "@material-ui/core/Typography";
 import { map2InfoArray } from "../../BaseMap/utils/Layers/map2Layers";
 
@@ -46,16 +47,24 @@ export default function Map2Legend(props) {
               }}
               onClick={() => onClick(id)}
             >
-              <div
-                className="map2-info-selector-color"
-                style={{
-                  backgroundColor: color,
-                  height: "10px",
-                  width: "10px",
-                  borderRadius: "6px",
-                  marginRight: "12px",
-                }}
-              ></div>
+              {id === "stops" ? (
+                <img
+                  src={Plus}
+                  alt="P"
+                  style={{ height: 10, width: 10, marginRight: 12 }}
+                />
+              ) : (
+                <div
+                  className="map2-info-selector-color"
+                  style={{
+                    backgroundColor: color,
+                    height: "10px",
+                    width: "10px",
+                    borderRadius: "6px",
+                    marginRight: "12px",
+                  }}
+                ></div>
+              )}
               <Typography
                 variant={"subtitle2"}
                 style={{

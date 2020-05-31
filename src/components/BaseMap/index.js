@@ -71,7 +71,6 @@ class BaseMap extends Component {
 
   onHover = (info) => {
     const { x, y, object, layer } = info;
-    console.log(info);
     this.setState({
       x,
       y,

@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/overtourism-web/precache-manifest.4290b1d4685d978716cd81513baf4d93.js"
+  "/overtourism-web/precache-manifest.e3eeef2713c587c37aebd810866916e3.js"
 );
 
 self.addEventListener('message', (event) => {

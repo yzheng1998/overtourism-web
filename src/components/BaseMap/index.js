@@ -24,7 +24,6 @@ import ToolTip from "./ToolTip";
 import { Fab } from "@material-ui/core";
 import MapSelector from "../Map1Selector";
 import Map4Selector from "../Map4Selector";
-import Map5Selector from "../Map5Selector";
 
 import UrbanFormSelector from "../UrbanFormSelector";
 import LandmarksSelector from "../LandmarksSelector";
@@ -63,7 +62,6 @@ class BaseMap extends Component {
     visibleInfo: [],
     mapState: [],
     map3State: [
-      "maskShops",
       "designerStores",
       "jewelryShops",
       "restaurants",
@@ -120,7 +118,10 @@ class BaseMap extends Component {
 
   render() {
     const { classes, mapIndex } = this.props;
-    const mapStyle = "mapbox://styles/yzheng1998/ckah9prf1005m1io8dzpidxw1";
+    const mapStyle =
+      mapIndex === 2
+        ? "mapbox://styles/yzheng1998/ckah9prf1005m1io8dzpidxw1"
+        : "mapbox://styles/yzheng1998/ckb19b6hc1kam1ip6g67eyy2m";
     const {
       layerIndex,
       mapState,
@@ -237,20 +238,16 @@ class BaseMap extends Component {
           )}
           {mapIndex === 5 && (
             <>
-              <Map5Legend
-                mapState={mapState}
-                layerIndex={layerIndex}
-                onClick={(x) => this.handleToggle(x, "mapState")}
-              >
-                <UrbanFormSelector
-                  mapState={urbanFormState}
-                  onClick={(x) => this.handleToggle(x, "urbanFormState")}
-                />
-              </Map5Legend>
+              <UrbanFormSelector
+                mapState={urbanFormState}
+                onClick={(x) => this.handleToggle(x, "urbanFormState")}
+              />
               <Map5SizeLegend urbanFormState={urbanFormState}>
-                <Map5Selector
+                <Map5Legend
+                  urbanFormState={urbanFormState}
                   mapState={mapState}
-                  onClick={(x) => this.handleToggle(x, "urbanFormState")}
+                  layerIndex={layerIndex}
+                  onClick={(x) => this.handleToggle(x, "mapState")}
                 />
               </Map5SizeLegend>
             </>

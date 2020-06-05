@@ -1,17 +1,17 @@
 import { GeoJsonLayer, IconLayer } from "@deck.gl/layers";
-import { PathStyleExtension } from "@deck.gl/extensions";
-import Plus from "./plus.png";
+// import { PathStyleExtension } from "@deck.gl/extensions";
+import Plus from "../../../../../assets/plus.png";
 import { groceries } from "../../../../../geojson/groceries.js";
 import { schools } from "../../../../../geojson/schools.js";
 import { stops } from "../../../../../geojson/stops.js";
-import { transitLines } from "../../../../../geojson/transitLines.js";
+// import { transitLines } from "../../../../../geojson/transitLines.js";
 import { landmarks } from "../../../../../geojson/landmarks.js";
 
 export const map2InfoArray = [
-  { id: "transitLines", name: "Transit Lines", color: "rgb(0, 0, 0)" },
+  //   { id: "transitLines", name: "Transit Lines", color: "rgb(0, 0, 0)" },
   { id: "stops", name: "Transit Stops", color: "rgb(0, 0, 0)" },
-  { id: "groceries", name: "Groceries", color: "rgb(255, 0, 0)" },
-  { id: "schools", name: "Schools", color: "rgb(0, 255, 0)" },
+  { id: "groceries", name: "Groceries", color: "rgb(178, 24, 43)" },
+  { id: "schools", name: "Schools", color: "rgb(49, 163, 84)" },
 ];
 
 export default function map2Layers(mapState, urbanFormState, onHover, onClick) {
@@ -23,27 +23,27 @@ export default function map2Layers(mapState, urbanFormState, onHover, onClick) {
 
   const opacity = 0.8;
 
-  display("transitLines") &&
-    layers.push(
-      new GeoJsonLayer({
-        id: "transitLines",
-        data: transitLines,
-        opacity,
-        getLineColor: [0, 0, 0],
-        extensions: [new PathStyleExtension({ dash: true })],
-        getDashArray: [4, 3],
-        dashJustified: true,
-        stroked: true,
-        extruded: false,
-        getLineWidth: 4,
-        pickable: true,
-        onHover: onHover,
-        onClick: onClick,
-      })
-    );
+  //   display("transitLines") &&
+  //     layers.push(
+  //       new GeoJsonLayer({
+  //         id: "transitLines",
+  //         data: transitLines,
+  //         opacity,
+  //         getLineColor: [0, 0, 0],
+  //         extensions: [new PathStyleExtension({ dash: true })],
+  //         getDashArray: [9, 9],
+  //         dashJustified: true,
+  //         stroked: true,
+  //         extruded: false,
+  //         getLineWidth: 6,
+  //         pickable: true,
+  //         onHover: onHover,
+  //         onClick: onClick,
+  //       })
+  //     );
 
   const ICON_MAPPING = {
-    stop: { x: 0, y: 0, width: 981, height: 981 },
+    stop: { x: 0, y: 0, width: 512, height: 512 },
   };
 
   display("stops") &&
@@ -54,7 +54,7 @@ export default function map2Layers(mapState, urbanFormState, onHover, onClick) {
         iconAtlas: Plus,
         iconMapping: ICON_MAPPING,
         sizeScale: 1,
-        getSize: 20,
+        getSize: 12,
         pickable: true,
         getPosition: (d) => [...d.geometry.coordinates[0], 0],
         getIcon: (d) => "stop",
@@ -71,7 +71,7 @@ export default function map2Layers(mapState, urbanFormState, onHover, onClick) {
         stroked: false,
         getRadius: 12,
         pointRadiusMaxPixels: 5,
-        getFillColor: [255, 0, 0],
+        getFillColor: [178, 24, 43],
         pickable: true,
         onHover: onHover,
         onClick: onClick,
@@ -87,7 +87,7 @@ export default function map2Layers(mapState, urbanFormState, onHover, onClick) {
         stroked: false,
         getRadius: 12,
         pointRadiusMaxPixels: 5,
-        getFillColor: [0, 255, 0],
+        getFillColor: [49, 163, 84],
         pickable: true,
         onHover: onHover,
         onClick: onClick,

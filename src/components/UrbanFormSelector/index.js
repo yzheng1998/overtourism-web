@@ -3,7 +3,7 @@ import Typography from "@material-ui/core/Typography";
 import { UrbanFormInfoArray } from "../BaseMap/utils/Layers/map5Layers";
 
 export default function UrbanFormSelector(props) {
-  const { mapState, onClick } = props;
+  const { mapState, onClick, children } = props;
 
   const display = (index) => {
     return !mapState.includes(index);
@@ -13,6 +13,9 @@ export default function UrbanFormSelector(props) {
     <div
       style={{
         color: "#FFFFFF",
+        position: "absolute",
+        right: 20,
+        bottom: 20,
       }}
     >
       {UrbanFormInfoArray.map(({ id, name, color, index }) => {
@@ -32,7 +35,7 @@ export default function UrbanFormSelector(props) {
                 backgroundColor: display(index)
                   ? "rgba(46, 46, 46, 0.8)"
                   : "rgba(46, 46, 46, 0.2)",
-                width: 130,
+                width: 170,
                 border: 0.5,
                 flexDirection: "row",
                 display: "inline-flex",
@@ -43,16 +46,47 @@ export default function UrbanFormSelector(props) {
               }}
               onClick={() => onClick(index)}
             >
-              <div
-                className="legend-color"
-                style={{
-                  width: 10,
-                  height: 10,
-                  borderRadius: 5,
-                  marginRight: 10,
-                  backgroundColor: color,
-                }}
-              ></div>
+              {id === "openSpace" ? (
+                <>
+                  <div
+                    style={{
+                      float: "left",
+                      borderRight: `3px solid ${color}`,
+                      borderTop: "5.2px solid transparent",
+                      borderBottom: "5.2px solid transparent",
+                    }}
+                  ></div>
+                  <div
+                    className="legend-color"
+                    style={{
+                      float: "left",
+                      width: "6px",
+                      height: "10.4px",
+                      backgroundColor: color,
+                    }}
+                  ></div>
+                  <div
+                    style={{
+                      float: "left",
+                      borderLeft: `3px solid ${color}`,
+                      borderTop: "5.2px solid transparent",
+                      borderBottom: "5.2px solid transparent",
+                      marginRight: "9px",
+                    }}
+                  ></div>
+                </>
+              ) : (
+                <div
+                  className="legend-color"
+                  style={{
+                    width: 10,
+                    height: 10,
+                    borderRadius: 5,
+                    marginRight: 10,
+                    backgroundColor: color,
+                  }}
+                ></div>
+              )}
               <Typography
                 variant={"subtitle2"}
                 style={{
@@ -69,6 +103,7 @@ export default function UrbanFormSelector(props) {
           </div>
         );
       })}
+      ...{children}
     </div>
   );
 }

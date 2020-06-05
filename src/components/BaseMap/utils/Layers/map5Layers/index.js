@@ -8,11 +8,15 @@ import {
   landmarksScale,
 } from "../../ColorScales/map5ColorScales";
 
-export const map5Maps = [{ id: "openSpace", name: "% Open Space", index: 3 }];
-
 export const UrbanFormInfoArray = [
   { id: "landmarks", name: "Landmarks", color: "rgb(255, 90, 95)", index: 1 },
   { id: "streets", name: "Streets", color: "rgb(60, 60, 60)", index: 2 },
+  {
+    id: "openSpace",
+    name: "% Open Space",
+    color: "rgb(49, 163, 84)",
+    index: 3,
+  },
 ];
 
 export default function map5Layers(

@@ -1,5 +1,5 @@
 import React from "react";
-import Plus from "./plus.png";
+import Plus from "../../../assets/plus.png";
 import Typography from "@material-ui/core/Typography";
 import { map2InfoArray } from "../../BaseMap/utils/Layers/map2Layers";
 

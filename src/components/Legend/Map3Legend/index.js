@@ -18,7 +18,7 @@ export default function Map3Legend(props) {
         color: "#FFFFFF",
       }}
     >
-      {map3InfoArray.map(({ id, name, color }) => {
+      {map3InfoArray.map(({ id, name, color, icon, filter }) => {
         return (
           <div
             style={{
@@ -46,16 +46,29 @@ export default function Map3Legend(props) {
               }}
               onClick={() => onClick(id)}
             >
-              <div
-                className="map3-info-selector-color"
-                style={{
-                  backgroundColor: color,
-                  height: "10px",
-                  width: "10px",
-                  borderRadius: "6px",
-                  marginRight: "12px",
-                }}
-              ></div>
+              {icon ? (
+                <img
+                  src={icon}
+                  style={{
+                    height: 10,
+                    marginLeft: id === "maskShops" ? -3 : 0,
+                    marginRight: id === "maskShops" ? 4.5 : 12,
+                    filter: filter,
+                  }}
+                  alt=""
+                />
+              ) : (
+                <div
+                  className="map3-info-selector-color"
+                  style={{
+                    backgroundColor: color,
+                    height: "10px",
+                    width: "10px",
+                    borderRadius: "6px",
+                    marginRight: "12px",
+                  }}
+                ></div>
+              )}
               <Typography
                 variant={"subtitle2"}
                 style={{

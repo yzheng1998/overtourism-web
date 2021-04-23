@@ -66,7 +66,7 @@ export default function Map3ToolTip(props) {
           </Typography>
           <Typography classes={{ root: classes.body }}>
             Internationality:{" "}
-            {hoveredObject.properties.composite_ital_3.toFixed(2)}
+            {hoveredObject && hoveredObject.properties && hoveredObject.properties.composite_ital_3 ? hoveredObject.properties.composite_ital_3.toFixed(2) : ""}
           </Typography>
         </>
       )}

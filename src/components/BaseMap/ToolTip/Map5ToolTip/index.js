@@ -36,7 +36,7 @@ export default function Map5ToolTip(props) {
             % Open Space
           </Typography>
           <Typography classes={{ root: classes.body }}>
-            {(100 * hoveredObject.properties.open_pp).toFixed(2)}
+            {hoveredObject && hoveredObject.properties && hoveredObject.properties.open_pp ? (100 * hoveredObject.properties.open_pp).toFixed(2) : ""}
           </Typography>
         </>
       )}

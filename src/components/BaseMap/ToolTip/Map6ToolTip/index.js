@@ -36,7 +36,7 @@ export default function Map6ToolTip(props) {
             Tourism Index
           </Typography>
           <Typography classes={{ root: classes.body }}>
-            {hoveredObject.properties.tourism_sc.toFixed(2)}
+            {hoveredObject && hoveredObject.properties && hoveredObject.properties.tourism_sc ? hoveredObject.properties.tourism_sc.toFixed(2) : ""}
           </Typography>
         </>
       )}
